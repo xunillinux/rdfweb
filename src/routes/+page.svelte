@@ -1,2 +1,7 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+	//TODO implement
+</script>
+
+<h1>Robot Dog Funeral</h1>
+
+Welcome to our website.
