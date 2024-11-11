@@ -1,7 +1,5 @@
 <script>
-	//TODO implement
+	import Carousel from './carousel.svelte';
 </script>
 
-<h1>Robot Dog Funeral</h1>
-
-Welcome to our website.
+<Carousel />
