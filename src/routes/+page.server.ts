@@ -2,6 +2,8 @@ import * as db from '$lib/mock/database.js';
 
 export function load() {
 	return {
-		concerts: db.getConcerts()
+		feature: db.getFeature(),
+		concerts: db.getConcerts(),
+		presstexts: db.getPresstexts()
 	};
 }

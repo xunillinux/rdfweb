@@ -6,10 +6,25 @@ html, body {
 	margin: 0;
 	padding: 0;
 	overflow-x: hidden;
-	font-family: 'Arial', sans-serif;
+	font-family: 'Separat', sans-serif;
 }
 
 .container {
 	max-width: 800px;
 	margin: 0 auto;
 }
+
+@font-face {
+	font-family: 'Separat';
+	src: url('/fonts/Separat-Regular.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+  font-family: 'Separat';
+  src: url('/fonts/Separat-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
