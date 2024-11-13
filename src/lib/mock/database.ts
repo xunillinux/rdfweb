@@ -65,12 +65,12 @@ const members: Member[] = [
 ];
 
 const links: Link[] = [
-	{ text: 'Booking', href: 'mailto:contact@robotdogfuneral.com' },
 	{ text: 'Press Text', href: 'https://drive.google.com/drive/folders/1GNfsOAI5vvnOvRETmqsDymSJY84oIBxF' },
-	{ text: 'Band Photos', href: 'https://drive.google.com/drive/folders/1HWUOQHmP5KUaSBAQV6fztaDKaDDZRsPt' }
+	{ text: 'Band Photos', href: 'https://drive.google.com/drive/folders/1HWUOQHmP5KUaSBAQV6fztaDKaDDZRsPt' },
+	{ text: 'Booking', href: 'mailto:contact@robotdogfuneral.com' },
 ];
 
-const socialMediaLinks: SocialMediaLinks = {
+const socialMediaLinks: SocialMediaLinksType = {
 	linkInstagram: 'https://www.instagram.com/robotdogfuneralband/',
 	linkYoutube: 'https://www.youtube.com/channel/UCyVw9Z6y2CoHXI75expU34g',
 	linkSpotify: 'https://open.spotify.com/artist/0VWexRbUH4PpcsbMjUJxJi?si=3rhsLtfpSIK-yjBXBEL4iw',
@@ -97,7 +97,7 @@ export type Link = {
 	marginBottom?: string;
 }
 
-export type SocialMediaLinks = {
+export type SocialMediaLinksType = {
 	linkInstagram?: string;
 	linkYoutube?: string;
 	linkSpotify?: string;

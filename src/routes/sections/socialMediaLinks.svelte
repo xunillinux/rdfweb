@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SocialMediaLinks } from '$lib/mock/database';
+	import type { SocialMediaLinksType } from '$lib/mock/database';
 	import { faInstagram, faYoutube, faFacebook, faSpotify } from '@fortawesome/free-brands-svg-icons';
 	import { Fa } from 'svelte-fa';
 
@@ -10,7 +10,7 @@
 		textSize = 'text-2xl',
 		spaceX = 'space-x-6',
 		translateY = '0'
-	}: { socialMediaLinks: SocialMediaLinks; textSize?: string; spaceX?: string; translateY?: string } = $props();
+	}: { socialMediaLinks: SocialMediaLinksType; textSize?: string; spaceX?: string; translateY?: string } = $props();
 </script>
 
 <div class="flex {spaceX} {textSize}">

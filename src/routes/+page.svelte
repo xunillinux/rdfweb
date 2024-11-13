@@ -13,23 +13,23 @@
 
 <Header socialMediaLinks={data.socialMediaLinks} />
 
-<main class="main">
-	<section class="carousel-section">
+<main id="top" class="main">
+	<section id="carousel" class="carousel-section">
 		<Carousel />
 	</section>
-	<section class="feature-section">
+	<section id="feature" class="feature-section">
 		<Feature feature={data.feature} />
 	</section>
-	<section class="concert-section">
+	<section id="concerts" class="concert-section">
 		<Concerts concerts={data.concerts} />
 	</section>
-	<section class="presstext-section">
+	<section id="presstexts" class="presstext-section">
 		<Presstext presstexts={data.presstexts} />
 	</section>
-	<section class="members-section">
+	<section id="members" class="members-section">
 		<Members members={data.members} />
 	</section>
-	<section class="links-section">
+	<section id="links" class="links-section">
 		<Links links={data.links} socialMediaLinks={data.socialMediaLinks} />
 	</section>
 </main>

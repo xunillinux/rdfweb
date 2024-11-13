@@ -2,7 +2,7 @@
 	import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 	import { Fa } from 'svelte-fa';
 	import SocialMediaLinks from './socialMediaLinks.svelte';
-	import type { SocialMediaLinks as SocialMediaLinksType } from '$lib/mock/database';
+	import type { SocialMediaLinksType } from '$lib/mock/database';
 
 	let { socialMediaLinks }: { socialMediaLinks: SocialMediaLinksType } = $props();
 
@@ -11,23 +11,66 @@
 	function toggleMenu() {
 		isMenuOpen = !isMenuOpen;
 	}
+
+	function scrollToSection(id: string) {
+		const section = document.querySelector(id);
+		if (section) {
+			section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+		isMenuOpen = false; // Close the menu if it's open
+	}
 </script>
 
 <header class="bg-white shadow-md">
 	<nav class="mx-auto w-full px-6 py-4">
 		<div class="flex items-center justify-between">
 			<!-- Logo -->
-			<a href="#top" class="text-2xl font-bold text-gray-800 sm:block">
+			<a
+				href="#top"
+				class="text-2xl font-bold text-gray-800 sm:block"
+				onclick={(event) => {
+					event.preventDefault();
+					scrollToSection('#top');
+				}}
+			>
 				<span class="hidden sm:inline">Robot Dog Funeral</span>
 				<span class="sm:hidden">RDF</span>
 			</a>
 
 			<!-- Desktop Navigation -->
 			<div class="hidden space-x-6 text-xl sm:flex">
-				<a href="#listen" class="text-gray-800 hover:underline">Listen</a>
-				<a href="#see" class="text-gray-800 hover:underline">See</a>
-				<a href="#about" class="text-gray-800 hover:underline">About</a>
-				<a href="#contact" class="text-gray-800 hover:underline">Contact</a>
+				<a
+					href="#listen"
+					class="text-gray-800 hover:underline"
+					onclick={(event) => {
+						event.preventDefault();
+						scrollToSection('#feature');
+					}}>Listen</a
+				>
+				<a
+					href="#see"
+					class="text-gray-800 hover:underline"
+					onclick={(event) => {
+						event.preventDefault();
+						scrollToSection('#concerts');
+					}}>See</a
+				>
+				<a
+					href="#about"
+					class="text-gray-800 hover:underline"
+					onclick={(event) => {
+						event.preventDefault();
+						scrollToSection('#presstexts');
+					}}>About</a
+				>
+				<a
+					href="#contact"
+					class="text-gray-800 hover:underline"
+					onclick={(event) => {
+						event.preventDefault();
+						scrollToSection('#links');
+					}}>Contact</a
+				>
 				<div class="text-gray-800">
 					<SocialMediaLinks {socialMediaLinks} translateY="0.15" />
 				</div>
@@ -49,10 +92,10 @@
 
 				<!-- Centered Links -->
 				<div class="flex flex-grow flex-col items-center justify-center space-y-6">
-					<a href="#listen" class="text-2xl text-gray-800 hover:underline" onclick={() => (isMenuOpen = false)}>Listen</a>
-					<a href="#see" class="text-2xl text-gray-800 hover:underline" onclick={() => (isMenuOpen = false)}>See</a>
-					<a href="#about" class="text-2xl text-gray-800 hover:underline" onclick={() => (isMenuOpen = false)}>About</a>
-					<a href="#contact" class="text-2xl text-gray-800 hover:underline" onclick={() => (isMenuOpen = false)}>Contact</a>
+					<a href="#listen" class="text-2xl text-gray-800 hover:underline" onclick={() => scrollToSection('#feature')}>Listen</a>
+					<a href="#see" class="text-2xl text-gray-800 hover:underline" onclick={() => scrollToSection('#concerts')}>See</a>
+					<a href="#about" class="text-2xl text-gray-800 hover:underline" onclick={() => scrollToSection('#presstexts')}>About</a>
+					<a href="#contact" class="text-2xl text-gray-800 hover:underline" onclick={() => scrollToSection('#links')}>Contact</a>
 				</div>
 
 				<!-- Social Media Links -->

@@ -1,8 +1,10 @@
 <script lang="ts">
 	import SocialMediaLinks from './socialMediaLinks.svelte';
-	import type { Link } from '$lib/mock/database';
+	import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+	import { Fa } from 'svelte-fa';
+	import type { Link, SocialMediaLinksType } from '$lib/mock/database';
 
-	let { links, socialMediaLinks }: { links: Link[]; socialMediaLinks: SocialMediaLinks } = $props();
+	let { links, socialMediaLinks }: { links: Link[]; socialMediaLinks: SocialMediaLinksType } = $props();
 </script>
 
 <div class="bg-white py-12 text-black">
@@ -14,7 +16,15 @@
 				rel="noopener noreferrer"
 				class="text-2xl font-bold uppercase hover:underline sm:text-3xl"
 			>
-				{link.text}
+				{#if link.href.startsWith('mailto:')}
+					<!-- Flex container for icon and text -->
+					<div class="flex items-center space-x-2">
+						<Fa icon={faEnvelope} class="fa-solid" translateY="0.02" />
+						<span>{link.text}</span>
+					</div>
+				{:else}
+					{link.text}
+				{/if}
 			</a>
 		{/each}
 

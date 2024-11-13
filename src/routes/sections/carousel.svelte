@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
-	// Classify images into landscape and portrait groups
 	const landscapeImages = ['/images/carousel_img_1.jpg', '/images/carousel_img_2.jpg'];
 	const portraitImages = [
 		'/images/carousel_img_3.jpg',
@@ -12,17 +11,38 @@
 		'/images/carousel_img_7.jpg'
 	];
 
-	let images: string[] = []; // Active image list
+	let images: string[] = [];
+	let preloadedImages: string[] = [];
 	let currentSlide = 0;
 	let carouselHeight = '100vh';
+	let isImagesPreloaded = false;
+
+	// Preload images
+	async function preloadImages(imageList: string[]) {
+		const promises = imageList.map((src) => {
+			return new Promise<void>((resolve) => {
+				const img = new Image();
+				img.src = src;
+				img.onload = () => resolve();
+			});
+		});
+		await Promise.all(promises);
+		isImagesPreloaded = true;
+	}
 
 	// Function to determine screen ratio and select appropriate images
-	function updateImagesBasedOnRatio() {
+	async function updateImagesBasedOnRatio() {
 		const screenWidth = window.innerWidth;
 		const screenHeight = window.innerHeight;
 
 		// If the width is greater than height, use landscape images, otherwise portrait
-		images = screenWidth > screenHeight ? landscapeImages : portraitImages;
+		const selectedImages = screenWidth > screenHeight ? landscapeImages : portraitImages;
+
+		// Preload the selected images
+		await preloadImages(selectedImages);
+
+		// Update the active image list after preloading
+		images = selectedImages;
 
 		// Reset current slide to avoid index out-of-bounds issues
 		currentSlide = 0;
@@ -49,19 +69,27 @@
 </script>
 
 <div class="relative w-full overflow-hidden" style="height: {carouselHeight};">
-	<!-- Carousel Image -->
-	<div
-		class="absolute left-0 top-0 h-full w-full"
-		style="background-image: url({images[currentSlide]}); background-size: cover; background-position: center;"
-		transition:fade
-	></div>
+	<!-- Show a loading spinner or fallback content until images are preloaded -->
+	{#if isImagesPreloaded}
+		<!-- Carousel Image -->
+		<div
+			class="absolute left-0 top-0 h-full w-full"
+			style="background-image: url({images[currentSlide]}); background-size: cover; background-position: center;"
+			transition:fade
+		></div>
 
-	<!-- Overlay Text -->
-	<div class="absolute inset-0 flex items-center justify-center text-center text-white">
-		<div class="text-5xl font-bold uppercase leading-snug sm:text-7xl md:text-8xl lg:text-9xl">
-			<div>Robot</div>
-			<div>Dog</div>
-			<div>Funeral</div>
+		<!-- Overlay Text -->
+		<div class="absolute inset-0 flex items-center justify-center text-center text-white">
+			<div class="text-5xl font-bold uppercase leading-snug sm:text-7xl md:text-8xl lg:text-9xl">
+				<div>Robot</div>
+				<div>Dog</div>
+				<div>Funeral</div>
+			</div>
 		</div>
-	</div>
+	{:else}
+		<!-- Optional Loading State -->
+		<div class="absolute inset-0 flex items-center justify-center text-xl text-white">
+			<p>Loading images...</p>
+		</div>
+	{/if}
 </div>
