@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	const landscapeImages = ['/images/carousel_img_1.jpg', '/images/carousel_img_2.jpg'];
@@ -14,8 +15,6 @@
 	let currentSlide = $state(0);
 	let carouselHeight = $state('100vh');
 	let isImagesPreloaded = $state(false);
-	let fading = $state(false);
-	let hasLoaded = $state(false);
 
 	async function preloadImages(imageList: string[]) {
 		const promises = imageList.map((src) => {
@@ -27,9 +26,6 @@
 		});
 		await Promise.all(promises);
 		isImagesPreloaded = true;
-		setTimeout(() => {
-			hasLoaded = true;
-		}, 200);
 	}
 
 	async function updateImagesBasedOnRatio() {
@@ -42,7 +38,7 @@
 
 		images = selectedImages;
 
-		if (images.length < currentSlide) {
+		if (images.length <= currentSlide) {
 			currentSlide = 0;
 		}
 	}
@@ -54,7 +50,7 @@
 
 		const interval = setInterval(() => {
 			fadeToNextSlide();
-		}, 7500);
+		}, 5000);
 
 		return () => {
 			clearInterval(interval);
@@ -62,26 +58,19 @@
 		};
 	});
 
-	async function fadeToNextSlide() {
-		fading = true;
-		await new Promise((resolve) => setTimeout(resolve, 400)); // Match fade duration
+	function fadeToNextSlide() {
 		currentSlide = (currentSlide + 1) % images.length;
-		fading = false;
 	}
 </script>
 
 <div class="relative w-full overflow-hidden" style="height: {carouselHeight};">
 	{#if isImagesPreloaded}
-		<!-- Carousel Image -->
-		<div
-			class="absolute left-0 top-0 h-full w-full transition-opacity duration-500"
-			style="background-image: url({images[currentSlide]}); background-size: cover; background-position: center;"
-			class:opacity-100={!fading}
-			class:opacity-0={fading}
-		></div>
-
-		<!-- Fade-to-Black Overlay -->
-		<div class="absolute inset-0 bg-black transition-opacity duration-500" class:opacity-100={fading} class:opacity-0={!fading}></div>
+		<!-- Render Current Slide -->
+		{#each images as image, index (image)}
+			{#if index === currentSlide}
+				<img src={image} alt="" class="absolute inset-0 h-full w-full object-cover" transition:fade={{ duration: 500 }} />
+			{/if}
+		{/each}
 
 		<!-- Overlay Text -->
 		<div class="absolute inset-0 flex items-center justify-center text-center text-white">
