@@ -80,7 +80,7 @@
 
 		<!-- Overlay Text -->
 		<div class="absolute inset-0 flex items-center justify-center text-center text-white">
-			<div class="text-5xl font-bold uppercase leading-snug sm:text-7xl md:text-8xl lg:text-9xl">
+			<div class="text-5xl font-bold uppercase leading-snug md:text-7xl lg:text-9xl">
 				<div>Robot</div>
 				<div>Dog</div>
 				<div>Funeral</div>
