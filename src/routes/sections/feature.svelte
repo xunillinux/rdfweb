@@ -20,18 +20,14 @@
 
 	<!-- Image -->
 	<div class="mt-6 p-6">
-		<img
-			src={feature.image}
-			alt="Feature"
-			class="w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192"
-		/>
+		<img src={feature.image} alt="Feature" class="w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192" />
 	</div>
 
 	<!-- Links -->
-	<div class="mt-12 space-y-4 text-center text-xl font-bold uppercase">
+	<div class="mt-12 space-y-4 text-center">
 		{#each feature.featureLinks as featureLink}
-			<div class="text-2xl">
-				<a href={featureLink.link} class="hover:underline" target="_blank">{featureLink.text}</a>
+			<div>
+				<a href={featureLink.href} class="text-2xl font-bold uppercase hover:underline" target="_blank">{featureLink.text}</a>
 			</div>
 		{/each}
 	</div>

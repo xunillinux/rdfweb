@@ -6,11 +6,12 @@
 	import Footer from './sections/footer.svelte';
 	import Presstext from './sections/presstext.svelte';
 	import Members from './sections/members.svelte';
+	import Links from './sections/links.svelte';
 
 	let { data } = $props();
 </script>
 
-<Header />
+<Header socialMediaLinks={data.socialMediaLinks} />
 
 <main class="main">
 	<section class="carousel-section">
@@ -27,6 +28,9 @@
 	</section>
 	<section class="members-section">
 		<Members members={data.members} />
+	</section>
+	<section class="links-section">
+		<Links links={data.links} socialMediaLinks={data.socialMediaLinks} />
 	</section>
 </main>
 

@@ -2,21 +2,49 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
-	const images = [
-		'/images/carousel_img_1.jpg',
-		'/images/carousel_img_2.jpg',
-		'/images/carousel_img_3.jpg'
+	// Classify images into landscape and portrait groups
+	const landscapeImages = ['/images/carousel_img_1.jpg', '/images/carousel_img_2.jpg'];
+	const portraitImages = [
+		'/images/carousel_img_3.jpg',
+		'/images/carousel_img_4.jpg',
+		'/images/carousel_img_5.jpg',
+		'/images/carousel_img_6.jpg',
+		'/images/carousel_img_7.jpg'
 	];
 
+	let images: string[] = []; // Active image list
 	let currentSlide = 0;
 	let carouselHeight = '100vh';
 
+	// Function to determine screen ratio and select appropriate images
+	function updateImagesBasedOnRatio() {
+		const screenWidth = window.innerWidth;
+		const screenHeight = window.innerHeight;
+
+		// If the width is greater than height, use landscape images, otherwise portrait
+		images = screenWidth > screenHeight ? landscapeImages : portraitImages;
+
+		// Reset current slide to avoid index out-of-bounds issues
+		currentSlide = 0;
+	}
+
 	onMount(() => {
+		// Set the initial images based on the current screen ratio
+		updateImagesBasedOnRatio();
+
+		// Re-check when the window is resized
+		window.addEventListener('resize', updateImagesBasedOnRatio);
+
+		// Start the image rotation interval
 		const interval = setInterval(() => {
 			currentSlide = (currentSlide + 1) % images.length;
 		}, 5000);
 
-		return () => clearInterval(interval);
+		return () => {
+			// Cleanup
+			clearInterval(interval);
+			window.removeEventListener('resize', updateImagesBasedOnRatio);
+		};
 	});
 </script>
 
@@ -24,9 +52,7 @@
 	<!-- Carousel Image -->
 	<div
 		class="absolute left-0 top-0 h-full w-full"
-		style="background-image: url({images[
-			currentSlide
-		]}); background-size: cover; background-position: center;"
+		style="background-image: url({images[currentSlide]}); background-size: cover; background-position: center;"
 		transition:fade
 	></div>
 

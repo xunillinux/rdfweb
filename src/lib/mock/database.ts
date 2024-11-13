@@ -1,10 +1,26 @@
 const concerts: Concert[] = [
-	{ date: new Date('2024-03-12'),	name: 'Hallebar',	location: 'Buchs'	},
-	{ date: new Date('2023-05-14'),	name: 'Mida',	location: 'Aarau'	},
-	{ date: new Date('2024-07-14'),	name: 'Herbstmesse',	location: 'Solothurn'	},
-	{ date: new Date('2024-02-04'),	name: 'Kofmehl',	location: 'Solothurn'	},
-	{ date: new Date('2024-12-28'),	name: 'Kiff',	location: 'Aarau'	},
-	{ date: new Date('2025-01-10'),	name: 'Kreuz Kultur',	location: 'Solothurn'	},
+	{ date: new Date('2020-08-28'),	name: 'Gummizelle',	location: 'Langendorf' },
+	{ date: new Date('2021-09-11'),	name: 'Träffpunkt Festival',	location: 'Biberist' },
+	{ date: new Date('2021-11-13'),	name: 'Jamarama',	location: 'Aarau'	},
+	{ date: new Date('2022-03-24'),	name: 'Kiff',	location: 'Aarau' },
+	{ date: new Date('2022-08-27'),	name: 'Mida Festival',	location: 'Aarau' },
+	{ date: new Date('2022-09-2'),	name: 'Sub Divo Festival',	location: 'Windisch' },
+	{ date: new Date('2022-11-12'),	name: 'Heimspiel',	location: 'Flösserplatz, Aarau' },
+	{ date: new Date('2023-03-31'),	name: 'Album Release\nDog Daughterz',	location: 'APA Kulta, Olten' },
+	{ date: new Date('2023-04-29'),	name: 'Hallebar',	location: 'Buchs (AG)' },
+	{ date: new Date('2023-05-19'),	name: 'Strom & Drang',	location: 'Kiff, Aarau' },
+	{ date: new Date('2023-06-23'),	name: 'Summerside Festival',	location: 'Grenchen' },
+	{ date: new Date('2023-07-3'),	name: 'SfGA',	location: 'Aarau' },
+	{ date: new Date('2023-11-18'),	name: 'Kreuzkultur',	location: 'Solothurn' },
+	{ date: new Date('2024-05-10'),	name: 'Kulturfabrik Kofmehl',	location: 'Solothurn' },
+	{ date: new Date('2024-05-17'),	name: 'Vario Bar',	location: 'Olten' },
+	{ date: new Date('2024-07-1'),	name: 'SfGA',	location: 'Aarau' },
+	{ date: new Date('2024-07-27'),	name: 'Waudstock Festival',	location: 'Subingen' },
+	{ date: new Date('2024-09-13'),	name: 'Album Release',	location: 'Kreuzkultur,\nSolothurn' },
+	{ date: new Date('2024-09-14'),	name: 'Synergia Openair',	location: 'Effretikon' },
+	{ date: new Date('2024-09-27'),	name: 'Hallebar',	location: 'Buchs' },
+	{ date: new Date('2024-09-28'),	name: 'Heso Jugendzelt',	location: 'Solothurn' },
+	{ date: new Date('2024-12-28'),	name: 'Album Release\nGod In Therapy',	location: 'Kiff, Aarau' },
 ];
 
 const feature: Feature = {
@@ -13,10 +29,10 @@ const feature: Feature = {
 	subheading: 'Debut Album',
 	caption: 'Out Now',
 	featureLinks: [
-		{ text: 'Spotify', link: '#top' },
-		{ text: 'Apple Music', link: '#top' },
-		{ text: 'Youtube', link: '#top' },
-		{ text: 'Tidal', link: '#top' }
+		{ text: 'Spotify', href: 'https://open.spotify.com/album/51QY6YWKIF6NFOm5ecR00w?si=WgQwaZQ-RsqBwXxaWHFOMQ' },
+		{ text: 'Apple Music', href: 'https://music.apple.com/ch/album/dead-inside/1753775361' },
+		{ text: 'Youtube', href: 'https://www.youtube.com/watch?v=5a-EhAtO9wc&list=OLAK5uy_k3bfz7OmGqpWJWuz9VCF6ri5ukcPXnUeI' },
+		{ text: 'Tidal', href: 'https://listen.tidal.com/album/371165643' }
 	]
 }
 
@@ -48,6 +64,19 @@ const members: Member[] = [
 	},
 ];
 
+const links: Link[] = [
+	{ text: 'Booking', href: 'mailto:contact@robotdogfuneral.com' },
+	{ text: 'Press Text', href: 'https://drive.google.com/drive/folders/1GNfsOAI5vvnOvRETmqsDymSJY84oIBxF' },
+	{ text: 'Band Photos', href: 'https://drive.google.com/drive/folders/1HWUOQHmP5KUaSBAQV6fztaDKaDDZRsPt' }
+];
+
+const socialMediaLinks: SocialMediaLinks = {
+	linkInstagram: 'https://www.instagram.com/robotdogfuneralband/',
+	linkYoutube: 'https://www.youtube.com/channel/UCyVw9Z6y2CoHXI75expU34g',
+	linkSpotify: 'https://open.spotify.com/artist/0VWexRbUH4PpcsbMjUJxJi?si=3rhsLtfpSIK-yjBXBEL4iw',
+	linkFacebook: 'https://www.facebook.com/robotdogfuneralband/',
+}
+
 export type Concert = {
 	date: Date;
 	name: string;
@@ -59,12 +88,20 @@ export type Feature = {
 	heading: string;
 	subheading: string;
 	caption: string;
-	featureLinks: FeatureLink[];
+	featureLinks: Link[];
 }
 
-export type FeatureLink = {
+export type Link = {
 	text: string;
-	link: string;
+	href: string;
+	marginBottom?: string;
+}
+
+export type SocialMediaLinks = {
+	linkInstagram?: string;
+	linkYoutube?: string;
+	linkSpotify?: string;
+	linkFacebook?: string;
 }
 
 export type PressText = {
@@ -93,3 +130,12 @@ export function getPresstexts() {
 export function getMembers() {
 	return members;
 }
+
+export function getLinks() {
+	return links;
+}
+
+export function getSocialMediaLinks() {
+	return socialMediaLinks;
+}
+

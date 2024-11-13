@@ -8,14 +8,10 @@
 <h2 class="mb-7 text-center text-4xl font-bold uppercase tracking-wide">{title}</h2>
 
 {#if concerts?.length > 0}
-	<div class="mx-auto max-w-xl">
+	<div class="mx-auto max-w-xl lg:max-w-4xl">
 		<div class="grid grid-cols-1">
 			{#each concerts as concert, index}
-				<div
-					class="grid grid-cols-2 border-black py-2 text-lg sm:py-4 sm:text-2xl {index === 0
-						? 'border-t'
-						: ''} border-b"
-				>
+				<div class="text-md grid grid-cols-2 border-black py-2 sm:py-4 sm:text-xl md:text-2xl {index === 0 ? 'border-t' : ''} border-b">
 					<!-- Left Column: Date -->
 					<div class="border-r border-black pr-3 text-right sm:pr-6">
 						<p class="uppercase">
@@ -26,8 +22,8 @@
 
 					<!-- Right Column: Name and Location -->
 					<div class="pl-3 text-left sm:pl-6">
-						<p class="uppercase">{concert.name}</p>
-						<p class="uppercase">{concert.location}</p>
+						<p class="uppercase sm:whitespace-pre-line lg:whitespace-normal">{concert.name}</p>
+						<p class="uppercase sm:whitespace-pre-line lg:whitespace-normal">{concert.location}</p>
 					</div>
 				</div>
 			{/each}
