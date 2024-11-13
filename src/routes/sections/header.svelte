@@ -17,7 +17,7 @@
 		if (section) {
 			section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		}
-		isMenuOpen = false; // Close the menu if it's open
+		isMenuOpen = false;
 	}
 </script>
 
@@ -33,8 +33,8 @@
 					scrollToSection('#top');
 				}}
 			>
-				<span class="hidden sm:inline">Robot Dog Funeral</span>
-				<span class="sm:hidden">RDF</span>
+				<span class="hidden md:inline">Robot Dog Funeral</span>
+				<span class="md:hidden">RDF</span>
 			</a>
 
 			<!-- Desktop Navigation -->
