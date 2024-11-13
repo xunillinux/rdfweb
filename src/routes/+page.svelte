@@ -5,6 +5,7 @@
 	import Concerts from './sections/concerts.svelte';
 	import Footer from './sections/footer.svelte';
 	import Presstext from './sections/presstext.svelte';
+	import Members from './sections/members.svelte';
 
 	let { data } = $props();
 </script>
@@ -23,6 +24,9 @@
 	</section>
 	<section class="presstext-section">
 		<Presstext presstexts={data.presstexts} />
+	</section>
+	<section class="members-section">
+		<Members members={data.members} />
 	</section>
 </main>
 

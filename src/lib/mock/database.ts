@@ -25,6 +25,29 @@ const presstexts: PressText[] = [
 	{language: 'DE', text: 'Nach vier Jahren energiegeladener, sagenumwobener Robot-Dog-Funeral-Liveshows ist es endlich so weit: Die Band veröffentlicht am 13. September 2024 ihr Debüt Album «Dead Inside».\n\nGenau hier liegt der Hund begraben: In elf Songs über Weltschmerz, Liebe und Zerrissenheit, in Ohrwurm-induzierenden Gitarrenriffs und in den puren Emotionen einer unverkennbaren Stimme. Tanzbare Synthesizer-Akkorde und wuchtige Drums treffen aufeinander und explodieren zu einem ganz einzigartigen Stil, der irgendwo im Universum des Alternative Rock herumschwirrt.\n\nRobot Dog Funeral ist das was passiert, wenn ein Mensch mit Multigenre-Enthusiasmus und einer Leidenschaft für Bass und Gesang, ein Präzisionsschlagzeuger mit Metal-Hintergrund, ein Indie-Nerd mit Synthesizer-Sammlung und ein Gitarrist mit Retro-Flair zusammenfinden.\n\nIn dieser Konstellation entstand über fünf Jahre hinweg Musik, die ihre Referenzen aus Psychedelic Rock, Metal, Rap, Postpunk und Indietronica natürlich und auf aufregende Art zu einer neuen, eigenen Handschrift zusammenwebt. Mal lässt der Sound einen zu schnellen Rhythmen herumwirbeln und tanzen, mal kracht alles unter Verzerrung und Schreien zusammen, um in halbem Tempo und in doppelter Intensität weiterzumachen. Die Texte strotzen vor Gesellschaftskritik und Rebellion, gehen aber auch mitten ins Herz mit verschlüsselten Nachrichten an Geliebte und die Welt.\n\nEntstanden aus interregionalen Freundschaften und seither aktiv überall zwischen und um Solothurn und Aarau sind Robot Dog Funeral zu einem festen Bestandteil der Nordwestschweizer Musikszene herangewachsen. Konzerte an Veranstaltungen wie dem Summerside Festival, Träffpunkt Festival oder Sub Divo, um nur einige zu nennen, ergänzen Auftritte als Vorband von Dirty Sound Magnet, am Musig i de Altstadt Festival oder im Kofmehl Solothurn.'},
 ];
 
+const members: Member[] = [
+	{
+		name: "Johnny 7",
+		role: "Vocals / Bass",
+		image: "/images/portrait_jonathan.jpg",
+	},
+	{
+		name: "Zisi",
+		role: "2nd Vocals / Guitar",
+		image: "/images/portrait_jan.jpg",
+	},
+	{
+		name: "Jonny 0",
+		role: "Drums",
+		image: "/images/portrait_jonas.jpg",
+	},
+	{
+		name: "Dino",
+		role: "Synths",
+		image: "/images/portrait_martin.jpg",
+	},
+];
+
 export type Concert = {
 	date: Date;
 	name: string;
@@ -32,7 +55,7 @@ export type Concert = {
 }
 
 export type Feature = {
-	image: string; // should be blob,
+	image: string; // should be blob
 	heading: string;
 	subheading: string;
 	caption: string;
@@ -49,6 +72,12 @@ export type PressText = {
 	text: string;
 }
 
+export type Member = {
+	name: string;
+	role: string;
+	image: string; // should be blob
+}
+
 export function getConcerts() {
 	return concerts;
 }
@@ -59,4 +88,8 @@ export function getFeature() {
 
 export function getPresstexts() {
 	return presstexts;
+}
+
+export function getMembers() {
+	return members;
 }
