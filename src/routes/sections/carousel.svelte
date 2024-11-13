@@ -42,7 +42,9 @@
 
 		images = selectedImages;
 
-		currentSlide = 0;
+		if (images.length < currentSlide) {
+			currentSlide = 0;
+		}
 	}
 
 	onMount(() => {
