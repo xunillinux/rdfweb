@@ -54,7 +54,7 @@
 
 		const interval = setInterval(() => {
 			fadeToNextSlide();
-		}, 5000);
+		}, 7500);
 
 		return () => {
 			clearInterval(interval);
@@ -64,7 +64,7 @@
 
 	async function fadeToNextSlide() {
 		fading = true;
-		await new Promise((resolve) => setTimeout(resolve, 200)); // Match fade duration
+		await new Promise((resolve) => setTimeout(resolve, 400)); // Match fade duration
 		currentSlide = (currentSlide + 1) % images.length;
 		fading = false;
 	}
@@ -76,9 +76,12 @@
 		<div
 			class="absolute left-0 top-0 h-full w-full transition-opacity duration-500"
 			style="background-image: url({images[currentSlide]}); background-size: cover; background-position: center;"
-			class:opacity-0={!hasLoaded || fading}
-			class:opacity-100={hasLoaded && !fading}
+			class:opacity-100={!fading}
+			class:opacity-0={fading}
 		></div>
+
+		<!-- Fade-to-Black Overlay -->
+		<div class="absolute inset-0 bg-black transition-opacity duration-500" class:opacity-100={fading} class:opacity-0={!fading}></div>
 
 		<!-- Overlay Text -->
 		<div class="absolute inset-0 flex items-center justify-center text-center text-white">
