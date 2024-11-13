@@ -12,14 +12,14 @@
 		{#if pressTextEN}
 			<div class="max-w-4xl border-black py-6 sm:mx-auto">
 				<h2 class="mb-4 text-3xl font-bold uppercase">{pressTextEN.language}</h2>
-				<p class="whitespace-pre-line leading-relaxed lg:text-2xl">{pressTextEN.text}</p>
+				<p class="whitespace-pre-line leading-relaxed lg:text-xl">{pressTextEN.text}</p>
 			</div>
 		{/if}
 
 		{#if pressTextDE}
-			<div class="max-w-4xl border-black pb-6 sm:mx-auto">
+			<div class="max-w-4xl border-black pb-6 sm:mx-auto sm:py-6">
 				<h2 class="mb-4 text-3xl font-bold uppercase">{pressTextDE.language}</h2>
-				<p class="whitespace-pre-line leading-relaxed lg:text-2xl">{pressTextDE.text}</p>
+				<p class="whitespace-pre-line leading-relaxed lg:text-xl">{pressTextDE.text}</p>
 			</div>
 		{/if}
 	</div>
