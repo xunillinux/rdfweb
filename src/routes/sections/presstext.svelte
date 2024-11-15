@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PressText } from '$lib/model/rdfDataModel';
+	import { replaceEscapedNewlines } from '$lib/helper/helper';
 
 	let { presstexts }: { presstexts: PressText[] } = $props();
-	import { replaceEscapedNewlines } from '$lib/helper/helper';
 
 	const pressTextEN = presstexts.find((presstext) => presstext.language?.toUpperCase() === 'EN');
 	const pressTextDE = presstexts.find((presstext) => presstext.language?.toUpperCase() === 'DE');
