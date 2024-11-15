@@ -1,0 +1,19 @@
+import type { RdfWebData } from "$lib/model/rdfDataModel";
+import type { DocumentData } from "firebase/firestore";
+
+export function mapDocDataToRdfWebData(docData: DocumentData): RdfWebData {
+  return {
+    feature: docData.feature ?? null,
+    concerts: docData.concerts?.map((concert: any) => {
+      return {
+        date: concert.date.toDate(),
+        name: concert.name,
+        location: concert.location,
+      };
+    }) ?? null,
+    presstexts: docData.presstexts ?? null,
+    members: docData.members ?? null,
+    links: docData.links ?? null,
+    socialMediaLinks: docData.socialMediaLinks ?? null,
+  };
+}

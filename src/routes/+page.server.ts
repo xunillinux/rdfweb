@@ -1,40 +1,25 @@
-import * as db from '$lib/server/database.js';
-import { getDocument } from '$lib/server/firebase.js';
+import { mapDocDataToRdfWebData } from '$lib/server/dataMapper';
+import { getDocument } from '$lib/server/firebase';
+import { error as svelteError } from '@sveltejs/kit';
 
 export const load = async () => {
 	try {
 		const docData = await getDocument('rdfweb', 'data');
 		if (docData) {
+			const rdfWebData = mapDocDataToRdfWebData(docData);
 			return {
-				feature: docData.feature,
-				concerts: db.getConcerts(),
-				presstexts: db.getPresstexts(),
-				members: db.getMembers(),
-				links: db.getLinks(),
-				socialMediaLinks: db.getSocialMediaLinks(),
-			}
+				feature: rdfWebData.feature,
+				concerts: rdfWebData.concerts,
+				presstexts: rdfWebData.presstexts,
+				members: rdfWebData.members,
+				links: rdfWebData.links,
+				socialMediaLinks: rdfWebData.socialMediaLinks
+			};
 		} else {
-			console.error('Document not found');
-			return {
-				feature: null,
-				concerts: db.getConcerts(),
-				presstexts: db.getPresstexts(),
-				members: db.getMembers(),
-				links: db.getLinks(),
-				socialMediaLinks: db.getSocialMediaLinks(),
-				error: 'Document not found'
-			}
+			throw svelteError(404, 'Document not found');
 		}
-	} catch (error: unknown) {
-		console.error('Error fetching Firestore document:', error);
-		return {
-			feature: null,
-			concerts: db.getConcerts(),
-			presstexts: db.getPresstexts(),
-			members: db.getMembers(),
-			links: db.getLinks(),
-			socialMediaLinks: db.getSocialMediaLinks(),
-			error: error
-		};
+	} catch (err: unknown) {
+		console.error('Error fetching Firestore document:', err);
+		throw svelteError(500, 'Error fetching Firestore document');
 	}
 };

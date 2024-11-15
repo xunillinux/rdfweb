@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { Concert } from '$lib/server/database';
+	import type { Concert } from '$lib/model/rdfDataModel';
 
 	let { title, concerts }: { title: string; concerts: Concert[] } = $props();
+	import { replaceEscapedNewlines } from '$lib/helper/helper';
 </script>
 
 <!-- Heading -->
@@ -22,8 +23,8 @@
 
 					<!-- Right Column: Name and Location -->
 					<div class="pl-3 text-left sm:pl-6">
-						<p class="uppercase sm:whitespace-pre-line lg:whitespace-normal">{concert.name}</p>
-						<p class="uppercase sm:whitespace-pre-line lg:whitespace-normal">{concert.location}</p>
+						<p class="uppercase sm:whitespace-pre-line lg:whitespace-normal">{replaceEscapedNewlines(concert.name)}</p>
+						<p class="uppercase sm:whitespace-pre-line lg:whitespace-normal">{replaceEscapedNewlines(concert.location)}</p>
 					</div>
 				</div>
 			{/each}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Concert } from '$lib/server/database';
+	import type { Concert } from '$lib/model/rdfDataModel';
 	import ConcertList from './concertList.svelte';
 
 	let { concerts }: { concerts: Concert[] } = $props();
