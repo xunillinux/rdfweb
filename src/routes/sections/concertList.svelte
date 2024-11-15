@@ -23,8 +23,8 @@
 
 					<!-- Right Column: Name and Location -->
 					<div class="pl-3 text-left sm:pl-6">
-						<p class="uppercase sm:whitespace-pre-line lg:whitespace-normal">{replaceEscapedNewlines(concert.name)}</p>
-						<p class="uppercase sm:whitespace-pre-line lg:whitespace-normal">{replaceEscapedNewlines(concert.location)}</p>
+						<p class="whitespace-pre-line uppercase lg:whitespace-normal">{replaceEscapedNewlines(concert.name)}</p>
+						<p class="whitespace-pre-line uppercase lg:whitespace-normal">{replaceEscapedNewlines(concert.location)}</p>
 					</div>
 				</div>
 			{/each}
