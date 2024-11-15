@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Feature } from '$lib/mock/database';
+	import type { Feature } from '$lib/server/database';
 
 	let { feature }: { feature: Feature } = $props();
 </script>

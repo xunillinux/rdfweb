@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SocialMediaLinksType } from '$lib/mock/database';
+	import type { SocialMediaLinksType } from '$lib/server/database';
 	import { faInstagram, faYoutube, faFacebook, faSpotify } from '@fortawesome/free-brands-svg-icons';
 	import { Fa } from 'svelte-fa';
 

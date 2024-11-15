@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PressText } from '$lib/mock/database';
+	import type { PressText } from '$lib/server/database';
 
 	let { presstexts }: { presstexts: PressText[] } = $props();
 

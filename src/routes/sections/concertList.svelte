@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Concert } from '$lib/mock/database';
+	import type { Concert } from '$lib/server/database';
 
 	let { title, concerts }: { title: string; concerts: Concert[] } = $props();
 </script>

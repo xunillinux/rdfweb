@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Member } from '$lib/mock/database';
+	import type { Member } from '$lib/server/database';
 
 	let { members }: { members: Member[] } = $props();
 </script>
