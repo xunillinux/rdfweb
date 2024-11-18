@@ -15,10 +15,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const userDoc = (userId: string) => doc(db, "users", userId)
-export {
-  auth
-};
 
 const getDocument = async (collectionName: string, docId: string) => {
   const docRef = doc(db, collectionName, docId);
@@ -26,5 +22,4 @@ const getDocument = async (collectionName: string, docId: string) => {
   return docSnap.exists() ? docSnap.data() : null;
 };
 
-
-export { db, getDocument };
+export { auth, db, getDocument };
