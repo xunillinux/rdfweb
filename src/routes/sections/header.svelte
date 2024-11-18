@@ -3,6 +3,8 @@
 	import { Fa } from 'svelte-fa';
 	import SocialMediaLinks from './socialMediaLinks.svelte';
 	import type { SocialMediaLinksType } from '$lib/model/rdfDataModel';
+	import { fade, fly, scale } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 
 	let { socialMediaLinks }: { socialMediaLinks: SocialMediaLinksType } = $props();
 
@@ -12,7 +14,8 @@
 		isMenuOpen = !isMenuOpen;
 	}
 
-	function scrollToSection(id: string) {
+	function scrollToSection(event: any, id: string) {
+		event.preventDefault();
 		const section = document.querySelector(id);
 		if (section) {
 			section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -29,8 +32,7 @@
 				href="#top"
 				class="text-2xl font-bold text-gray-800 sm:block"
 				onclick={(event) => {
-					event.preventDefault();
-					scrollToSection('#top');
+					scrollToSection(event, '#top');
 				}}
 			>
 				<span class="hidden md:inline">Robot Dog Funeral</span>
@@ -43,32 +45,28 @@
 					href="#listen"
 					class="text-gray-800 hover:underline"
 					onclick={(event) => {
-						event.preventDefault();
-						scrollToSection('#feature');
+						scrollToSection(event, '#feature');
 					}}>Listen</a
 				>
 				<a
 					href="#see"
 					class="text-gray-800 hover:underline"
 					onclick={(event) => {
-						event.preventDefault();
-						scrollToSection('#concerts');
+						scrollToSection(event, '#concerts');
 					}}>See</a
 				>
 				<a
 					href="#about"
 					class="text-gray-800 hover:underline"
 					onclick={(event) => {
-						event.preventDefault();
-						scrollToSection('#presstexts');
+						scrollToSection(event, '#presstexts');
 					}}>About</a
 				>
 				<a
 					href="#contact"
 					class="text-gray-800 hover:underline"
 					onclick={(event) => {
-						event.preventDefault();
-						scrollToSection('#links');
+						scrollToSection(event, '#links');
 					}}>Contact</a
 				>
 				<div class="text-gray-800">
@@ -84,7 +82,11 @@
 
 		<!-- Fullscreen Mobile Navigation -->
 		{#if isMenuOpen}
-			<div class="fixed inset-0 z-50 flex flex-col bg-white">
+			<div
+				in:fly={{ duration: 250, x: 100, y: 0, easing: quintOut }}
+				out:fade={{ easing: quintOut }}
+				class="fixed inset-0 z-50 flex flex-col bg-white"
+			>
 				<!-- Close Button -->
 				<button class="absolute right-6 top-6 text-gray-800 focus:outline-none" onclick={toggleMenu}>
 					<Fa icon={faTimes} scale={1.5} />
@@ -92,10 +94,10 @@
 
 				<!-- Centered Links -->
 				<div class="flex flex-grow flex-col items-center justify-center space-y-6">
-					<a href="#listen" class="text-2xl text-gray-800 hover:underline" onclick={() => scrollToSection('#feature')}>Listen</a>
-					<a href="#see" class="text-2xl text-gray-800 hover:underline" onclick={() => scrollToSection('#concerts')}>See</a>
-					<a href="#about" class="text-2xl text-gray-800 hover:underline" onclick={() => scrollToSection('#presstexts')}>About</a>
-					<a href="#contact" class="text-2xl text-gray-800 hover:underline" onclick={() => scrollToSection('#links')}>Contact</a>
+					<a href="#listen" class="text-2xl text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#feature')}>Listen</a>
+					<a href="#see" class="text-2xl text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#concerts')}>See</a>
+					<a href="#about" class="text-2xl text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#presstexts')}>About</a>
+					<a href="#contact" class="text-2xl text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#links')}>Contact</a>
 				</div>
 
 				<!-- Social Media Links -->
