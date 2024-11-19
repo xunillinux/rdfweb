@@ -6,12 +6,6 @@
 	<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
 		<h1 class="mb-6 text-center text-2xl font-semibold text-gray-800">Login</h1>
 
-		{#if form?.error}
-			<div class="mb-4 rounded bg-red-100 p-3 text-red-800">
-				{form.error.message}
-			</div>
-		{/if}
-
 		<form method="POST" action="?/login" class="space-y-4">
 			<div>
 				<label for="email" class="mb-1 block text-sm font-medium text-gray-600">Email</label>
@@ -36,6 +30,12 @@
 					placeholder="Enter your password"
 				/>
 			</div>
+
+			{#if form?.error}
+				<div class="mb-4 rounded bg-red-100 p-3 text-red-800">
+					{form.error}
+				</div>
+			{/if}
 
 			<button
 				type="submit"
