@@ -1,5 +1,5 @@
 import { mapDocDataToRdfWebData } from '$lib/server/dataMapper';
-import { getDocument } from '$lib/server/firebase';
+import { getDocument } from '$lib/firebase';
 import { error as svelteError } from '@sveltejs/kit';
 
 export const load = async () => {
