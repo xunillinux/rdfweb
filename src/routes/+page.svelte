@@ -7,6 +7,7 @@
 	import Presstext from './sections/presstext.svelte';
 	import Members from './sections/members.svelte';
 	import Links from './sections/links.svelte';
+	import EditConcerts from './edit/editConcerts.svelte';
 
 	let { data } = $props();
 </script>
@@ -17,18 +18,26 @@
 	<section id="carousel" class="carousel-section">
 		<Carousel />
 	</section>
+
 	<section id="feature" class="feature-section">
 		<Feature feature={data.feature} />
 	</section>
-	<section id="concerts" class="concert-section">
+
+	<section id="concerts" class="concert-section relative">
 		<Concerts concerts={data.concerts} />
+		<div class="absolute bottom-4 right-5 transform">
+			<EditConcerts concerts={data.concerts} />
+		</div>
 	</section>
+
 	<section id="presstexts" class="presstext-section">
 		<Presstext presstexts={data.presstexts} />
 	</section>
+
 	<section id="members" class="members-section">
 		<Members members={data.members} />
 	</section>
+
 	<section id="links" class="links-section">
 		<Links links={data.links} socialMediaLinks={data.socialMediaLinks} />
 	</section>
