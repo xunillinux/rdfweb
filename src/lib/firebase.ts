@@ -28,15 +28,17 @@ function userStore() {
   let unsubscribe: () => void;
 
   if (!auth || !globalThis.window) {
-    const { subscribe } = writable<User | null>(null);
+    const { subscribe, set, update } = writable<{ user: User | null, isLoading: boolean }>({ user: null, isLoading: true });
     return {
       subscribe,
+      setLoading: (isLoading: boolean) => update((state) => ({ ...state, isLoading })),
+      reset: () => set({ user: null, isLoading: true })
     }
   }
 
-  const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
+  const { subscribe, set, update } = writable<{ user: User | null, isLoading: boolean }>({ user: auth?.currentUser ?? null, isLoading: true }, (set) => {
     unsubscribe = onAuthStateChanged(auth, (user) => {
-      set(user);
+      set({ user, isLoading: false });
     });
 
     return () => unsubscribe();
@@ -44,9 +46,10 @@ function userStore() {
 
   return {
     subscribe,
+    setLoading: (isLoading: boolean) => update((state) => ({ ...state, isLoading })),
+    reset: () => set({ user: null, isLoading: true })
   };
 }
 
-export const user = userStore();
-
+export const userData = userStore();
 export { auth, db, getDocument };

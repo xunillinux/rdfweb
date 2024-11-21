@@ -1,15 +1,19 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { auth, user } from '$lib/firebase';
+	import { auth, userData } from '$lib/firebase';
 	import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+	import Fa from 'svelte-fa';
+	import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 	let email = $state('');
 	let password = $state('');
 	let errorMessage = $state<string | null>(null);
+	let isRedirecting = $state(false);
 
 	async function logIn() {
 		try {
 			errorMessage = null;
+			isRedirecting = true;
 			await signInWithEmailAndPassword(auth, email, password);
 			email = '';
 			password = '';
@@ -18,6 +22,9 @@
 			errorMessage = 'Invalid email or password. Please try again.';
 			password = '';
 			console.error('Error signing in:', error);
+			isRedirecting = false;
+		} finally {
+			userData.setLoading(false);
 		}
 	}
 
@@ -26,6 +33,8 @@
 			await signOut(auth);
 		} catch (error) {
 			console.error('Error signing out:', error);
+		} finally {
+			userData.setLoading(false);
 		}
 	}
 
@@ -42,18 +51,16 @@
 
 <div class="flex min-h-screen items-center justify-center bg-gray-100 p-3">
 	<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
-		<h1 class="mb-6 text-center text-2xl font-semibold text-gray-800">
-			{#if $user}
-				Welcome Back!
-			{:else}
-				Login
-			{/if}
-		</h1>
-
-		{#if $user}
+		{#if $userData.isLoading || isRedirecting}
+			<!-- Loading Spinner -->
+			<div class="flex items-center justify-center">
+				<Fa icon={faCircleNotch} class="animate-spin text-black" size="2x" />
+			</div>
+		{:else if $userData.user}
 			<!-- Logged-in User Section -->
+			<h1 class="mb-6 text-center text-2xl font-semibold text-gray-800">Welcome Back!</h1>
 			<p class="mb-4 text-center text-sm text-gray-600">
-				Logged in as {$user.email}
+				Logged in as {$userData.user?.email}
 			</p>
 			<form onsubmit={handleLogout} class="mb-4 text-center">
 				{#if errorMessage}
@@ -68,6 +75,7 @@
 			</form>
 		{:else}
 			<!-- Login Form -->
+			<h1 class="mb-6 text-center text-2xl font-semibold text-gray-800">Login</h1>
 			<form onsubmit={handleSubmit} class="space-y-4">
 				<div>
 					<label for="email" class="mb-1 block text-sm font-medium text-gray-600">Email</label>
