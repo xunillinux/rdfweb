@@ -3,7 +3,7 @@
 	import { Fa } from 'svelte-fa';
 	import SocialMediaLinks from './socialMediaLinks.svelte';
 	import type { SocialMediaLinksType } from '$lib/model/rdfDataModel';
-	import { fade, fly, scale } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 
 	let { socialMediaLinks }: { socialMediaLinks: SocialMediaLinksType } = $props();
@@ -35,36 +35,36 @@
 					scrollToSection(event, '#top');
 				}}
 			>
-				<span class="hidden md:inline">Robot Dog Funeral</span>
-				<span class="md:hidden">RDF</span>
+				<span class="hidden uppercase md:inline">Robot Dog Funeral</span>
+				<span class="uppercase md:hidden">RDF</span>
 			</a>
 
 			<!-- Desktop Navigation -->
 			<div class="hidden space-x-6 text-xl sm:flex">
 				<a
 					href="#listen"
-					class="text-gray-800 hover:underline"
+					class="uppercase text-gray-800 hover:underline"
 					onclick={(event) => {
 						scrollToSection(event, '#feature');
 					}}>Listen</a
 				>
 				<a
 					href="#see"
-					class="text-gray-800 hover:underline"
+					class="uppercase text-gray-800 hover:underline"
 					onclick={(event) => {
 						scrollToSection(event, '#concerts');
 					}}>See</a
 				>
 				<a
 					href="#about"
-					class="text-gray-800 hover:underline"
+					class="uppercase text-gray-800 hover:underline"
 					onclick={(event) => {
 						scrollToSection(event, '#presstexts');
 					}}>About</a
 				>
 				<a
 					href="#contact"
-					class="text-gray-800 hover:underline"
+					class="uppercase text-gray-800 hover:underline"
 					onclick={(event) => {
 						scrollToSection(event, '#links');
 					}}>Contact</a
@@ -94,10 +94,14 @@
 
 				<!-- Centered Links -->
 				<div class="flex flex-grow flex-col items-center justify-center space-y-6">
-					<a href="#listen" class="text-2xl text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#feature')}>Listen</a>
-					<a href="#see" class="text-2xl text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#concerts')}>See</a>
-					<a href="#about" class="text-2xl text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#presstexts')}>About</a>
-					<a href="#contact" class="text-2xl text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#links')}>Contact</a>
+					<a href="#listen" class="text-2xl uppercase text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#feature')}>Listen</a
+					>
+					<a href="#see" class="text-2xl uppercase text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#concerts')}>See</a>
+					<a href="#about" class="text-2xl uppercase text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#presstexts')}
+						>About</a
+					>
+					<a href="#contact" class="text-2xl uppercase text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#links')}>Contact</a
+					>
 				</div>
 
 				<!-- Social Media Links -->

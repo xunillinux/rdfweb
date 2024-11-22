@@ -85,7 +85,7 @@
 		<!-- Overlay Text with SVG Blur and Outline -->
 		<div class="absolute inset-0 flex items-center justify-center text-center">
 			<div
-				class="relative text-5xl font-bold uppercase leading-snug text-white md:text-7xl lg:text-9xl"
+				class="relative text-6xl font-bold uppercase leading-snug text-white md:text-7xl lg:text-9xl"
 				style="filter: url(#blur-effect); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);"
 			>
 				<div>Robot</div>
