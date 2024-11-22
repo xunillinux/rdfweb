@@ -1,4 +1,4 @@
-import { mapDocDataToRdfWebData } from '$lib/server/dataMapper';
+import { mapDocDataToRdfWebData } from '$lib/server/data-mapper';
 import { getDocument } from '$lib/firebase';
 import { error as svelteError } from '@sveltejs/kit';
 

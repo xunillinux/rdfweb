@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 	import { Fa } from 'svelte-fa';
-	import SocialMediaLinks from './socialMediaLinks.svelte';
-	import type { SocialMediaLinksType } from '$lib/model/rdfDataModel';
+	import SocialMediaLinks from './social-media-links.svelte';
+	import type { SocialMediaLinksType } from '$lib/model/rdf-data-model';
 	import { fade, fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 

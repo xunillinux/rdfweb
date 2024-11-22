@@ -7,8 +7,9 @@
 	import Presstext from './sections/presstext.svelte';
 	import Members from './sections/members.svelte';
 	import Links from './sections/links.svelte';
-	import EditConcerts from './edit/editConcerts.svelte';
-	import type { Concert } from '$lib/model/rdfDataModel';
+	import EditConcerts from './edit/edit-concerts.svelte';
+	import type { Concert, RdfWebData } from '$lib/model/rdf-data-model';
+	import { updateDocument, userData } from '$lib/firebase';
 
 	let { data } = $props();
 
@@ -21,6 +22,18 @@
 
 	function onConcertDataChange(updatedConcerts: Concert[]) {
 		concerts = updatedConcerts;
+		updateDocument('rdfweb', 'data', getUpdatedData());
+	}
+
+	function getUpdatedData(): RdfWebData {
+		return {
+			concerts,
+			feature,
+			links,
+			members,
+			presstexts,
+			socialMediaLinks
+		};
 	}
 </script>
 
@@ -37,9 +50,11 @@
 
 	<section id="concerts" class="concert-section relative">
 		<Concerts {concerts} />
-		<div class="absolute bottom-4 right-5 transform">
-			<EditConcerts {concerts} {onConcertDataChange} />
-		</div>
+		{#if $userData.user}
+			<div class="absolute bottom-4 right-5 transform">
+				<EditConcerts {concerts} {onConcertDataChange} />
+			</div>
+		{/if}
 	</section>
 
 	<section id="presstexts" class="presstext-section">

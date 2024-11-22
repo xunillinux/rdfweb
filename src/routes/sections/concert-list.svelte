@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Concert } from '$lib/model/rdfDataModel';
+	import type { Concert } from '$lib/model/rdf-data-model';
 	import { replaceEscapedNewlines } from '$lib/helper/helper';
 
 	let { title, concerts }: { title: string; concerts: Concert[] } = $props();

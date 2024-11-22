@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Concert } from '$lib/model/rdfDataModel';
-	import ConcertList from './concertList.svelte';
+	import type { Concert } from '$lib/model/rdf-data-model';
+	import ConcertList from './concert-list.svelte';
 
 	let { concerts }: { concerts: Concert[] } = $props();
 

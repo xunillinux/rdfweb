@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ModalBtn from '$lib/components/modalBtn.svelte';
+	import ModalBtn from '$lib/components/modal-btn.svelte';
 	import { replaceNewlinesWithSpace } from '$lib/helper/helper';
 	import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-	import type { Concert } from '$lib/model/rdfDataModel';
+	import type { Concert } from '$lib/model/rdf-data-model';
 	import Fa from 'svelte-fa';
 
 	let { concerts, onConcertDataChange }: { concerts: Concert[]; onConcertDataChange: any } = $props();

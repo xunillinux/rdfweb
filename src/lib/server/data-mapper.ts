@@ -1,4 +1,4 @@
-import type { RdfWebData } from "$lib/model/rdfDataModel";
+import type { RdfWebData } from "$lib/model/rdf-data-model";
 import type { DocumentData } from "firebase/firestore";
 
 export function mapDocDataToRdfWebData(docData: DocumentData): RdfWebData {

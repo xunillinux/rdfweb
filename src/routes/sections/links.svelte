@@ -1,8 +1,8 @@
 <script lang="ts">
-	import SocialMediaLinks from './socialMediaLinks.svelte';
+	import SocialMediaLinks from './social-media-links.svelte';
 	import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 	import { Fa } from 'svelte-fa';
-	import type { Link, SocialMediaLinksType } from '$lib/model/rdfDataModel';
+	import type { Link, SocialMediaLinksType } from '$lib/model/rdf-data-model';
 
 	let { links, socialMediaLinks }: { links: Link[]; socialMediaLinks: SocialMediaLinksType } = $props();
 </script>

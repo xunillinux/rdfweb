@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Feature } from '$lib/model/rdfDataModel';
+	import type { Feature } from '$lib/model/rdf-data-model';
 
 	let { feature }: { feature: Feature } = $props();
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Member } from '$lib/model/rdfDataModel';
+	import type { Member } from '$lib/model/rdf-data-model';
 
 	let { members }: { members: Member[] } = $props();
 </script>

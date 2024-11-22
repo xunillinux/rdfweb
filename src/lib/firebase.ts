@@ -1,8 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
-import { doc, getDoc, getFirestore } from "firebase/firestore/lite";
+import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore/lite";
 import { PUBLIC_FB_API_KEY, PUBLIC_FB_AUTH_DOMAIN, PUBLIC_FB_PROJECT_ID, PUBLIC_FB_STORAGE_BUCKET, PUBLIC_FB_MESSAGING_SENDER_ID, PUBLIC_FB_APP_ID, PUBLIC_FB_MEASUREMENT_ID } from "$env/static/public";
 import { writable } from "svelte/store";
+import type { RdfWebData } from "./model/rdf-data-model";
+import { showNotification } from "./helper/notification-helper";
 
 const firebaseConfig = {
   apiKey: PUBLIC_FB_API_KEY,
@@ -22,6 +24,17 @@ const getDocument = async (collectionName: string, docId: string) => {
   const docRef = doc(db, collectionName, docId);
   const docSnap = await getDoc(docRef);
   return docSnap.exists() ? docSnap.data() : null;
+};
+
+const updateDocument = async (collectionName: string, docId: string, data: RdfWebData): Promise<void> => {
+  try {
+    const docRef = doc(db, collectionName, docId);
+    await updateDoc(docRef, data);
+    showNotification('success', 'Data has been successfully saved.');
+  } catch (error) {
+    showNotification('error', 'There was a problem while saving the data. Please try again.');
+    console.log(error);
+  }
 };
 
 function userStore() {
@@ -52,4 +65,4 @@ function userStore() {
 }
 
 export const userData = userStore();
-export { auth, db, getDocument };
+export { auth, db, getDocument, updateDocument };
