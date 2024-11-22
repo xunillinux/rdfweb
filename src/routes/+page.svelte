@@ -9,7 +9,11 @@
 	import Links from './sections/links.svelte';
 	import EditConcerts from './edit/edit-concerts.svelte';
 	import type { Concert, RdfWebData } from '$lib/model/rdf-data-model';
-	import { updateDocument, userData } from '$lib/firebase';
+	import { auth, updateDocument, userData } from '$lib/firebase';
+	import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+	import Fa from 'svelte-fa';
+	import { signOut } from 'firebase/auth';
+	import { showNotification } from '$lib/helper/notification-helper';
 
 	let { data } = $props();
 
@@ -34,6 +38,15 @@
 			presstexts,
 			socialMediaLinks
 		};
+	}
+
+	async function logout() {
+		try {
+			await signOut(auth);
+			showNotification('success', 'Logged out successfully');
+		} catch (error) {
+			showNotification('error', 'There was a problem while logging out. Please try again.');
+		}
 	}
 </script>
 
@@ -71,6 +84,17 @@
 </main>
 
 <Footer />
+
+{#if $userData.user}
+	<button
+		class="fixed bottom-4 left-4 flex items-center rounded bg-gray-800 px-4 py-2 text-white shadow-lg hover:bg-gray-700"
+		onclick={logout}
+		aria-label="Logout"
+	>
+		<Fa icon={faSignOutAlt} class="mr-2" />
+		Logout
+	</button>
+{/if}
 
 <style>
 	.main {
