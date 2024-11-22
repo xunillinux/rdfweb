@@ -34,13 +34,13 @@
 				<h2 class="mb-4 text-2xl font-bold">{title}</h2>
 
 				<!-- Slot for Modal Body -->
-				<div class="mb-6">
+				<div class="mb-6 space-y-4">
 					{@render children()}
 				</div>
 
 				<!-- Footer Buttons -->
 				<div class="flex justify-end space-x-4">
-					<button class="rounded bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300" onclick={closeModal}>
+					<button class="rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300" onclick={closeModal}>
 						{cancelBtnText}
 					</button>
 					<button
