@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PressText } from '$lib/model/rdf-data-model';
-	import { replaceEscapedNewlines } from '$lib/helper/helper';
+	import { replaceEscapedNewlines } from '$lib/helper/format-helper';
 
 	let { presstexts }: { presstexts: PressText[] } = $props();
 

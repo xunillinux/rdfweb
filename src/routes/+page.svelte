@@ -2,7 +2,7 @@
 	import Header from './sections/header.svelte';
 	import Carousel from './sections/carousel.svelte';
 	import Feature from './sections/feature.svelte';
-	import Concerts from './sections/concerts.svelte';
+	import Concerts from './sections/concerts/concerts.svelte';
 	import Footer from './sections/footer.svelte';
 	import Presstext from './sections/presstext.svelte';
 	import Members from './sections/members.svelte';

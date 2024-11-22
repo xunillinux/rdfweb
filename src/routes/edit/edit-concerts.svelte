@@ -1,24 +1,26 @@
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
-	import { replaceNewlinesWithSpace } from '$lib/helper/helper';
+	import { replaceNewlinesWithSpace } from '$lib/helper/format-helper';
 	import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 	import type { Concert } from '$lib/model/rdf-data-model';
 	import Fa from 'svelte-fa';
 
 	let { concerts, onConcertDataChange }: { concerts: Concert[]; onConcertDataChange: any } = $props();
 
-	let newConcert = $state({ date: '', name: '', location: '' });
-	let pastConcertsCollapsed = $state(true);
-
 	let concertData = $state<{ date: string; name: string; location: string }[]>(
-		concerts.map((c) => ({
-			date: c.date.toISOString().split('T')[0],
-			name: c.name,
-			location: c.location
-		}))
+		concerts
+			.map((c) => ({
+				date: c.date.toISOString().split('T')[0],
+				name: c.name,
+				location: c.location
+			}))
+			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 	);
 
+	let newConcert = $state({ date: '', name: '', location: '' });
 	let newConcertData = $state<{ date: string; name: string; location: string }[]>([]);
+
+	let pastConcertsCollapsed = $state(true);
 
 	// Add new concert to the beginning of the array
 	function addConcert(event: Event) {
