@@ -8,9 +8,9 @@
 	let { concerts }: { concerts: Concert[] } = $props();
 
 	let newConcert = $state({ date: '', name: '', location: '' });
-	let pastConcertsCollapsed = $state(true); // State to control collapsible section
+	let pastConcertsCollapsed = $state(true);
 
-	const concertData = $state<{ date: string; name: string; location: string }[]>(
+	let concertData = $state<{ date: string; name: string; location: string }[]>(
 		concerts.map((c) => ({
 			date: c.date.toISOString().split('T')[0],
 			name: c.name,
@@ -22,7 +22,7 @@
 
 	// Add new concert to the beginning of the array
 	function addConcert(event: Event) {
-		event.preventDefault(); // Prevent the default form submission
+		event.preventDefault();
 		newConcertData.unshift({ ...newConcert });
 		newConcert = { date: '', name: '', location: '' };
 	}
@@ -38,13 +38,24 @@
 		console.log('Updated concerts:', concertData);
 	}
 
+	function onCancel() {
+		newConcert = { date: '', name: '', location: '' };
+		newConcertData = [];
+		pastConcertsCollapsed = true;
+		concertData = concerts.map((c) => ({
+			date: c.date.toISOString().split('T')[0],
+			name: c.name,
+			location: c.location
+		}));
+	}
+
 	// Toggle collapsible past concerts
 	function togglePastConcerts() {
 		pastConcertsCollapsed = !pastConcertsCollapsed;
 	}
 </script>
 
-<ModalBtn title="Edit Concerts" btnText="Edit Concerts" {onConfirm}>
+<ModalBtn title="Edit Concerts" btnText="Edit Concerts" {onConfirm} {onCancel}>
 	<div class="p-4">
 		<h2 class="mb-4 text-lg font-bold">Add New Concert</h2>
 
@@ -77,7 +88,7 @@
 				required
 				placeholder="Location"
 			/>
-			<button type="submit" class="mt-4 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"> Add Concert </button>
+			<button type="submit" class="mt-4 rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"> Add Concert </button>
 		</form>
 
 		{#if newConcertData.length > 0}
