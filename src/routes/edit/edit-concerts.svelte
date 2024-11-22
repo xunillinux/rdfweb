@@ -36,6 +36,7 @@
 
 	function onConfirm() {
 		concertData.push(...newConcertData);
+		concertData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 		newConcertData = [];
 
 		concerts = concertData.map((c) => ({
