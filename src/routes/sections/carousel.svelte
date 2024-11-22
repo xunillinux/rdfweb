@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	const landscapeImages = ['/images/carousel_img_1.jpg', '/images/carousel_img_2.jpg'];
 	const portraitImages = [
@@ -63,6 +63,16 @@
 	}
 </script>
 
+<svg class="absolute inset-0 h-0 w-0">
+	<filter id="blur-effect">
+		<feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blurred" />
+		<feMerge>
+			<feMergeNode in="blurred" />
+			<feMergeNode in="SourceGraphic" />
+		</feMerge>
+	</filter>
+</svg>
+
 <div class="relative w-full overflow-hidden" style="height: {carouselHeight};">
 	{#if isImagesPreloaded}
 		<!-- Render Current Slide -->
@@ -72,9 +82,12 @@
 			{/if}
 		{/each}
 
-		<!-- Overlay Text -->
-		<div class="absolute inset-0 flex items-center justify-center text-center text-white">
-			<div class="text-5xl font-bold uppercase leading-snug md:text-7xl lg:text-9xl">
+		<!-- Overlay Text with SVG Blur and Outline -->
+		<div class="absolute inset-0 flex items-center justify-center text-center">
+			<div
+				class="relative text-5xl font-bold uppercase leading-snug text-white md:text-7xl lg:text-9xl"
+				style="filter: url(#blur-effect); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);"
+			>
 				<div>Robot</div>
 				<div>Dog</div>
 				<div>Funeral</div>
