@@ -98,7 +98,11 @@
 				required
 				placeholder="Location"
 			/>
-			<button type="submit" class="mt-4 rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"> Add Concert </button>
+			<!-- Hint -->
+			<p class="text-sm text-gray-500 sm:col-span-1 md:col-span-3">
+				You can add a <span class="font-mono font-bold text-black">\n</span> to Name or Location to add a forced line break on smaller screens.
+			</p>
+			<button type="submit" class="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"> Add Concert </button>
 		</form>
 
 		{#if newConcertData.length > 0}
