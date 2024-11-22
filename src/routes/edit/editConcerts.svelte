@@ -5,7 +5,7 @@
 	import type { Concert } from '$lib/model/rdfDataModel';
 	import Fa from 'svelte-fa';
 
-	let { concerts }: { concerts: Concert[] } = $props();
+	let { concerts, onConcertDataChange }: { concerts: Concert[]; onConcertDataChange: any } = $props();
 
 	let newConcert = $state({ date: '', name: '', location: '' });
 	let pastConcertsCollapsed = $state(true);
@@ -35,10 +35,17 @@
 	function onConfirm() {
 		concertData.push(...newConcertData);
 		newConcertData = [];
-		console.log('Updated concerts:', concertData);
+
+		concerts = concertData.map((c) => ({
+			date: new Date(c.date),
+			name: c.name,
+			location: c.location
+		}));
+
+		onConcertDataChange(concerts);
 	}
 
-	function onCancel() {
+	function onClose() {
 		newConcert = { date: '', name: '', location: '' };
 		newConcertData = [];
 		pastConcertsCollapsed = true;
@@ -55,7 +62,7 @@
 	}
 </script>
 
-<ModalBtn title="Edit Concerts" btnText="Edit Concerts" {onConfirm} {onCancel}>
+<ModalBtn title="Edit Concerts" btnText="Edit Concerts" {onConfirm} {onClose}>
 	<div class="p-4">
 		<h2 class="mb-4 text-lg font-bold">Add New Concert</h2>
 
@@ -101,7 +108,7 @@
 						<div>
 							<p><strong>Date:</strong> {concert.date}</p>
 							<p><strong>Name:</strong> {replaceNewlinesWithSpace(concert.name)}</p>
-							<p><strong>Location:</strong> {concert.location}</p>
+							<p><strong>Location:</strong> {replaceNewlinesWithSpace(concert.location)}</p>
 						</div>
 						<button onclick={() => deleteConcert(index, true)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"> Delete </button>
 					</li>

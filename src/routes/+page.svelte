@@ -8,11 +8,23 @@
 	import Members from './sections/members.svelte';
 	import Links from './sections/links.svelte';
 	import EditConcerts from './edit/editConcerts.svelte';
+	import type { Concert } from '$lib/model/rdfDataModel';
 
 	let { data } = $props();
+
+	let concerts = $state(data.concerts);
+	let feature = $state(data.feature);
+	let links = $state(data.links);
+	let members = $state(data.members);
+	let presstexts = $state(data.presstexts);
+	let socialMediaLinks = $state(data.socialMediaLinks);
+
+	function onConcertDataChange(updatedConcerts: Concert[]) {
+		concerts = updatedConcerts;
+	}
 </script>
 
-<Header socialMediaLinks={data.socialMediaLinks} />
+<Header {socialMediaLinks} />
 
 <main id="top" class="main">
 	<section id="carousel" class="carousel-section">
@@ -20,26 +32,26 @@
 	</section>
 
 	<section id="feature" class="feature-section">
-		<Feature feature={data.feature} />
+		<Feature {feature} />
 	</section>
 
 	<section id="concerts" class="concert-section relative">
-		<Concerts concerts={data.concerts} />
+		<Concerts {concerts} />
 		<div class="absolute bottom-4 right-5 transform">
-			<EditConcerts concerts={data.concerts} />
+			<EditConcerts {concerts} {onConcertDataChange} />
 		</div>
 	</section>
 
 	<section id="presstexts" class="presstext-section">
-		<Presstext presstexts={data.presstexts} />
+		<Presstext {presstexts} />
 	</section>
 
 	<section id="members" class="members-section">
-		<Members members={data.members} />
+		<Members {members} />
 	</section>
 
 	<section id="links" class="links-section">
-		<Links links={data.links} socialMediaLinks={data.socialMediaLinks} />
+		<Links {links} {socialMediaLinks} />
 	</section>
 </main>
 

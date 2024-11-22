@@ -7,9 +7,9 @@
 		confirmBtnText = 'Save',
 		cancelBtnText = 'Cancel',
 		onConfirm,
-		onCancel,
+		onClose,
 		children
-	}: { title: string; btnText: string; confirmBtnText?: string; cancelBtnText?: string; onConfirm: any; onCancel: any; children: any } = $props();
+	}: { title: string; btnText: string; confirmBtnText?: string; cancelBtnText?: string; onConfirm: any; onClose: any; children: any } = $props();
 
 	let isOpen = $state(false);
 
@@ -18,12 +18,8 @@
 	}
 
 	function closeModal() {
+		onClose();
 		isOpen = false;
-	}
-
-	function cancelModal() {
-		onCancel();
-		closeModal();
 	}
 </script>
 
@@ -38,7 +34,7 @@
 		<!-- Greyed-out background with click listener -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onclick={cancelModal}>
+		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onclick={closeModal}>
 			<!-- Modal content with event propagation stopped -->
 			<div
 				class="w-11/12 max-w-4xl overflow-y-auto rounded-lg bg-white p-8 shadow-2xl"
@@ -54,7 +50,7 @@
 
 				<!-- Footer Buttons -->
 				<div class="flex justify-end space-x-4">
-					<button class="rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300" onclick={cancelModal}>
+					<button class="rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300" onclick={closeModal}>
 						{cancelBtnText}
 					</button>
 					<button
