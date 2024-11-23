@@ -46,8 +46,8 @@
 				<!-- Title with Close Button -->
 				<div class="mb-4 flex items-center justify-between">
 					<h2 class="text-2xl font-bold">{title}</h2>
-					<button class="text-gray-500 hover:text-gray-800" aria-label="Close Modal" onclick={closeModal}>
-						<Fa icon={faTimes} scale={1.25} />
+					<button class="-m-2 p-2 text-gray-500 hover:text-gray-800" aria-label="Close Modal" onclick={closeModal}>
+						<Fa icon={faTimes} scale={1.4} />
 					</button>
 				</div>
 
