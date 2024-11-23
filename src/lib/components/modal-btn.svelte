@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Portal from 'svelte-portal';
+	import { faTimes } from '@fortawesome/free-solid-svg-icons';
+	import Fa from 'svelte-fa';
 
 	let {
 		title,
@@ -41,7 +43,13 @@
 				style="max-height: 90vh;"
 				onclick={(event) => event.stopPropagation()}
 			>
-				<h2 class="mb-4 text-2xl font-bold">{title}</h2>
+				<!-- Title with Close Button -->
+				<div class="mb-4 flex items-center justify-between">
+					<h2 class="text-2xl font-bold">{title}</h2>
+					<button class="text-gray-500 hover:text-gray-800" aria-label="Close Modal" onclick={closeModal}>
+						<Fa icon={faTimes} scale={1.25} />
+					</button>
+				</div>
 
 				<!-- Slot for Modal Body -->
 				<div class="mb-6 space-y-4">
