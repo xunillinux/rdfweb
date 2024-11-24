@@ -24,7 +24,6 @@ export type Concert = {
 export type Link = {
   text: string;
   href: string;
-  marginBottom?: string;
 }
 
 export type SocialMediaLinksType = {
