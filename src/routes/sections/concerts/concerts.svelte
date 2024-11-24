@@ -26,13 +26,13 @@
 	}
 </script>
 
-<div class="bg-white px-0 py-12 text-black sm:px-6 sm:py-24">
+<div class="bg-white px-0 py-12 text-black sm:py-24">
 	<div class=" py-6">
 		<!-- Heading -->
 		<h2 class="mb-7 text-center text-4xl font-bold uppercase tracking-wide">Concerts</h2>
 
 		{#if futureConcerts?.length > 0}
-			<div class="mx-auto max-w-xl lg:max-w-4xl">
+			<div class="mx-auto">
 				<div class="grid grid-cols-1">
 					{#each futureConcerts as concert, index}
 						<ConcertRow {concert} isFirstElement={index === 0} />
@@ -59,7 +59,7 @@
 
 		<!-- Past Concerts -->
 		{#if !isPastConcertsHidden}
-			<div class="mx-auto mt-6 max-w-xl lg:max-w-4xl">
+			<div class="mx-auto mt-6">
 				<div class="grid grid-cols-1">
 					{#each pastConcerts as concert, index}
 						<ConcertRow {concert} isFirstElement={index === 0} />
