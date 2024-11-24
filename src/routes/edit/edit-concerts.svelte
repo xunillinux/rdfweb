@@ -66,7 +66,7 @@
 </script>
 
 <ModalBtn title="Edit Concerts" btnText="Edit Concerts" {onConfirm} {onClose}>
-	<div class="p-4">
+	<div class="py-1">
 		<h2 class="mb-4 text-lg font-bold">Add New Concert</h2>
 
 		<!-- Form for adding new concerts -->
@@ -124,7 +124,7 @@
 		{/if}
 
 		<!-- Title with Toggle Icon -->
-		<h2 class="mb-4 mt-8 flex items-center text-lg font-bold">
+		<h2 class="mb-4 mt-4 flex items-center text-lg font-bold">
 			<span>Existing Concerts</span>
 			<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={togglePastConcerts} aria-label="Toggle Past Concerts">
 				<Fa icon={pastConcertsCollapsed ? faChevronDown : faChevronUp} scale={0.8} translateY={0.1} />

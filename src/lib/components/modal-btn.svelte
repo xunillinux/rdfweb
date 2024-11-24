@@ -39,12 +39,12 @@
 		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onclick={closeModal}>
 			<!-- Modal content with event propagation stopped -->
 			<div
-				class="w-11/12 max-w-4xl overflow-y-auto rounded-lg bg-white p-8 shadow-2xl"
+				class="w-11/12 max-w-4xl overflow-y-auto rounded-lg bg-white p-5 shadow-2xl sm:p-8"
 				style="max-height: 90vh;"
 				onclick={(event) => event.stopPropagation()}
 			>
 				<!-- Title with Close Button -->
-				<div class="mb-4 flex items-center justify-between">
+				<div class="mb-3 flex items-center justify-between sm:mb-4">
 					<h2 class="text-2xl font-bold">{title}</h2>
 					<button class="-m-2 p-2 text-gray-500 hover:text-gray-800" aria-label="Close Modal" onclick={closeModal}>
 						<Fa icon={faTimes} scale={1.4} />
@@ -52,7 +52,7 @@
 				</div>
 
 				<!-- Slot for Modal Body -->
-				<div class="mb-6 space-y-4">
+				<div class="mb-6 space-y-2 sm:space-y-4">
 					{@render children()}
 				</div>
 

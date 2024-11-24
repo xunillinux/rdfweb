@@ -53,7 +53,7 @@
 </script>
 
 <ModalBtn title="Edit Links" btnText="Edit Links" {onConfirm} {onClose}>
-	<div class="p-4">
+	<div class="py-1">
 		<h2 class="mb-4 text-lg font-bold">Add New Link</h2>
 
 		<!-- Form for adding new links -->
@@ -63,21 +63,21 @@
 			<button type="submit" class="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600">Add Link</button>
 		</form>
 
-		<h2 class="mb-4 mt-8 text-lg font-bold">Links</h2>
+		<h2 class="mb-4 mt-4 text-lg font-bold">Links</h2>
 
 		<!-- List of existing links -->
 		<ul class="space-y-4">
 			{#each linksData as link, index}
 				<li class="flex items-center justify-between rounded border p-4">
 					<div>
-						<p><strong class="text-lg">{link.text}</strong></p>
-						<a href={link.href} class="text-lg text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Link</a>
+						<p><strong class="sm:text-lg">{link.text}</strong></p>
+						<a href={link.href} class="text-blue-500 hover:underline sm:text-lg" target="_blank" rel="noopener noreferrer">Link</a>
 					</div>
 					<div class="flex space-x-2">
 						<button
 							disabled={index === 0}
 							onclick={() => moveLinkUp(index)}
-							class="rounded bg-gray-500 px-3 py-3 text-white hover:bg-gray-600 disabled:bg-gray-300"
+							class="rounded bg-gray-500 px-2 py-2 text-white hover:bg-gray-600 disabled:bg-gray-300 sm:px-3 sm:py-3"
 						>
 							<Fa icon={faChevronUp} />
 						</button>
@@ -85,12 +85,12 @@
 						<button
 							disabled={index === linksData.length - 1}
 							onclick={() => moveLinkDown(index)}
-							class="rounded bg-gray-500 px-3 py-3 text-white hover:bg-gray-600 disabled:bg-gray-300"
+							class="rounded bg-gray-500 px-2 py-2 text-white hover:bg-gray-600 disabled:bg-gray-300 sm:px-3 sm:py-3"
 						>
 							<Fa icon={faChevronDown} />
 						</button>
 
-						<button onclick={() => deleteLink(index)} class="rounded bg-red-500 px-3 py-3 text-white hover:bg-red-600">
+						<button onclick={() => deleteLink(index)} class="rounded bg-red-500 px-2 py-2 text-white hover:bg-red-600 sm:px-3 sm:py-3">
 							<Fa icon={faTrash} />
 						</button>
 					</div>
