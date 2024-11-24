@@ -70,10 +70,8 @@
 			{#each linksData as link, index}
 				<li class="flex items-center justify-between rounded border p-4">
 					<div>
-						<p>
-							<strong class="text-lg">{link.text}</strong> -
-							<a href={link.href} class="text-lg text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Link</a>
-						</p>
+						<p><strong class="text-lg">{link.text}</strong></p>
+						<a href={link.href} class="text-lg text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Link</a>
 					</div>
 					<div class="flex space-x-2">
 						<button
