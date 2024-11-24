@@ -4,8 +4,8 @@
 
 	let { presstexts }: { presstexts: PressText[] } = $props();
 
-	const pressTextEN = presstexts.find((presstext) => presstext.language?.toUpperCase() === 'EN');
-	const pressTextDE = presstexts.find((presstext) => presstext.language?.toUpperCase() === 'DE');
+	const pressTextEN = $derived(presstexts.find((presstext) => presstext.language?.toUpperCase() === 'EN'));
+	const pressTextDE = $derived(presstexts.find((presstext) => presstext.language?.toUpperCase() === 'DE'));
 </script>
 
 <div class="bg-black px-6 py-12 text-white">
