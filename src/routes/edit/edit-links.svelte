@@ -1,6 +1,5 @@
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
-	import { replaceNewlinesWithSpace } from '$lib/helper/format-helper';
 	import { faChevronUp, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import type { Link } from '$lib/model/rdf-data-model';

@@ -59,7 +59,6 @@
 		}));
 	}
 
-	// Toggle collapsible past concerts
 	function togglePastConcerts() {
 		pastConcertsCollapsed = !pastConcertsCollapsed;
 	}

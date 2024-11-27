@@ -16,6 +16,7 @@
 	import { signOut } from 'firebase/auth';
 	import { showNotification } from '$lib/helper/notification-helper';
 	import EditLinks from './edit/edit-links.svelte';
+	import EditFeature from './edit/edit-feature.svelte';
 
 	let { data } = $props();
 
@@ -67,8 +68,13 @@
 		<Carousel />
 	</section>
 
-	<section id="feature" class="feature-section">
+	<section id="feature" class="feature-section relative">
 		<Feature {feature} />
+		{#if $userData.user}
+			<div class="absolute bottom-4 right-5 transform">
+				<EditFeature {feature} />
+			</div>
+		{/if}
 	</section>
 
 	<section id="concerts" class="concert-section relative">
