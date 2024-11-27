@@ -2,6 +2,8 @@
 	import type { Feature } from '$lib/model/rdf-data-model';
 
 	let { feature }: { feature: Feature } = $props();
+
+	let isImageLoaded = $state(false);
 </script>
 
 <div class="flex flex-col items-center bg-black py-24 text-white">
@@ -20,7 +22,19 @@
 
 	<!-- Image -->
 	<div class="mt-6 p-6">
-		<img src={feature.image} alt="Feature" class="w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192" />
+		<!-- Placeholder -->
+		{#if !isImageLoaded}
+			<div class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full sm:max-w-128 md:max-w-160 lg:max-w-192"></div>
+		{/if}
+
+		<!-- Image -->
+		<img
+			src={feature.image}
+			alt="Feature"
+			class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192"
+			onload={() => (isImageLoaded = true)}
+			style:display={!isImageLoaded ? 'none' : 'block'}
+		/>
 	</div>
 
 	<!-- Links -->

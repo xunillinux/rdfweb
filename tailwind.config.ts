@@ -7,9 +7,9 @@ import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+  content: ['./src/**/*.{html,js,svelte,ts}'],
 
-	theme: {
+  theme: {
     extend: {
       fontFamily: {
         separat: ['Separat', ...defaultTheme.fontFamily.sans],
@@ -26,5 +26,5 @@ export default {
     },
   },
 
-	plugins: [typography, forms, containerQueries, aspectRatio]
+  plugins: [typography, forms, containerQueries, aspectRatio]
 } satisfies Config;

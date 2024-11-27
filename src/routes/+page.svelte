@@ -9,7 +9,7 @@
 	import Links from './sections/links.svelte';
 	import EditConcerts from './edit/edit-concerts.svelte';
 	import EditPresstexts from './edit/edit-presstexts.svelte';
-	import type { Concert, Link, PressText, RdfWebData } from '$lib/model/rdf-data-model';
+	import type { Concert, Link, PressText, RdfWebData, Feature as FeatureType } from '$lib/model/rdf-data-model';
 	import { auth, updateDocument, userData } from '$lib/firebase';
 	import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
@@ -26,6 +26,11 @@
 	let members = $state(data.members);
 	let presstexts = $state(data.presstexts);
 	let socialMediaLinks = $state(data.socialMediaLinks);
+
+	function onFeatureDataChange(updatedFeature: FeatureType) {
+		feature = updatedFeature;
+		//Todo saveChanges();
+	}
 
 	function onConcertDataChange(updatedConcerts: Concert[]) {
 		concerts = updatedConcerts;
@@ -72,7 +77,7 @@
 		<Feature {feature} />
 		{#if $userData.user}
 			<div class="absolute bottom-4 right-5 transform">
-				<EditFeature {feature} />
+				<EditFeature {feature} {onFeatureDataChange} />
 			</div>
 		{/if}
 	</section>
