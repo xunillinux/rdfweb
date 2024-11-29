@@ -66,5 +66,9 @@ function userStore() {
   };
 }
 
+export async function getIdToken() {
+  return await auth.currentUser?.getIdToken();
+}
+
 export const userData = userStore();
 export { auth, db, getDocument, updateDocument };

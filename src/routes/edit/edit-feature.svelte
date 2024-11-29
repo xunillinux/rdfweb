@@ -1,26 +1,55 @@
 <script lang="ts">
-	import type { Feature } from '$lib/model/rdf-data-model';
 	import ModalBtn from '$lib/components/modal-btn.svelte';
+	import type { Feature } from '$lib/model/rdf-data-model';
+	import { faChevronDown, faChevronUp, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
-	import { faChevronUp, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons';
-	import { auth } from '$lib/firebase';
-	import { getAuth } from 'firebase/auth';
+	import { uploadR2File } from '../api/r2-upload/r2-upload';
 
 	let { feature, onFeatureDataChange }: { feature: Feature; onFeatureDataChange: any } = $props();
 
 	let featureData = $state(JSON.parse(JSON.stringify(feature)) as Feature);
 
 	let featureHeadingCollapsed = $state(false);
-	let featureImageCollapsed = $state(true);
+	let featureImageCollapsed = $state(false);
 	let featureLinksCollapsed = $state(true);
-
-	let previewURL: string | null = $state(null);
 
 	let newLink = $state({ text: '', href: '' });
 
-	function previewImage(e: any) {
-		const file = e.target.files[0];
+	let files: any = $state(null);
+	let file: File = $derived(files?.length > 0 ? files[0] : null);
+
+	function onConfirm() {
+		featureHeadingCollapsed = false;
+		featureImageCollapsed = false;
+		featureLinksCollapsed = true;
+		files = null;
+		onFeatureDataChange(featureData);
+	}
+
+	function onClose() {
+		featureHeadingCollapsed = false;
+		featureImageCollapsed = false;
+		featureLinksCollapsed = true;
+		files = null;
+		featureData = JSON.parse(JSON.stringify(feature)) as Feature;
+	}
+
+	function previewImage() {
 		featureData.image = URL.createObjectURL(file);
+	}
+
+	async function handleUpload(file: File): Promise<void> {
+		try {
+			if (!file) {
+				throw new Error('No file selected');
+			}
+
+			const uploadedUrl = await uploadR2File(file);
+			featureData.image = uploadedUrl;
+			console.log('File uploaded successfully:', uploadedUrl);
+		} catch (error) {
+			console.error('Error uploading file. Please try again.', error);
+		}
 	}
 
 	// Add new link to the beginning of the array
@@ -53,22 +82,6 @@
 		}
 	}
 
-	function onConfirm() {
-		featureHeadingCollapsed = false;
-		featureImageCollapsed = true;
-		featureLinksCollapsed = true;
-		previewURL = null;
-		onFeatureDataChange(featureData);
-	}
-
-	function onClose() {
-		featureHeadingCollapsed = false;
-		featureImageCollapsed = true;
-		featureLinksCollapsed = true;
-		previewURL = null;
-		featureData = JSON.parse(JSON.stringify(feature)) as Feature;
-	}
-
 	function toggleFeatureHeadingCollapsed() {
 		featureHeadingCollapsed = !featureHeadingCollapsed;
 	}
@@ -79,50 +92,6 @@
 
 	function toggleFeatureLinksCollapsed() {
 		featureLinksCollapsed = !featureLinksCollapsed;
-	}
-
-	let file: any = $state(null);
-
-	async function handleUpload() {
-		if (!file) {
-			alert('Please select a file to upload');
-			return;
-		}
-
-		$inspect(file);
-
-		const auth = getAuth();
-		const firebaseToken = await auth.currentUser?.getIdToken();
-
-		// Fetch presigned URL
-		const response = await fetch('/api/r2-upload', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				firebaseToken,
-				fileName: file.name,
-				contentType: file.type
-			})
-		});
-
-		const { uploadUrl } = await response.json();
-		if (!uploadUrl) {
-			alert('Failed to get upload URL');
-			return;
-		}
-
-		// Upload file directly to Cloudflare R2
-		const uploadResponse = await fetch(uploadUrl, {
-			method: 'PUT',
-			body: file,
-			headers: { 'Content-Type': file.type } // Ensure correct Content-Type
-		});
-
-		if (uploadResponse.ok) {
-			alert('File uploaded successfully!');
-		} else {
-			alert('File upload failed');
-		}
 	}
 </script>
 
@@ -135,9 +104,6 @@
 				<Fa icon={featureHeadingCollapsed ? faChevronDown : faChevronUp} scale={0.8} translateY={0.1} />
 			</button>
 		</h2>
-
-		<input type="file" bind:this={file} />
-		<button onclick={handleUpload}>Upload</button>
 
 		{#if !featureHeadingCollapsed}
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -186,7 +152,15 @@
 				class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"
 			>
 				Choose Image
-				<input id="file-upload" onchange={previewImage} name="photoURL" type="file" class="hidden" accept="image/png, image/jpeg, image/webp" />
+				<input
+					id="file-upload"
+					onchange={previewImage}
+					bind:files
+					name="photoURL"
+					type="file"
+					class="hidden"
+					accept="image/png, image/jpeg, image/webp"
+				/>
 			</label>
 		{/if}
 
