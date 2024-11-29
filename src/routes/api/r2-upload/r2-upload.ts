@@ -1,6 +1,6 @@
 import { getIdToken } from "$lib/firebase";
 
-export async function uploadR2File(file: File): Promise<string> {
+export async function uploadR2File(file: File, fileNameOverwrite: string): Promise<string> {
   if (!file) {
     throw new Error("No file provided");
   }
@@ -14,7 +14,7 @@ export async function uploadR2File(file: File): Promise<string> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       firebaseToken,
-      fileName: file.name,
+      fileName: fileNameOverwrite ?? file.name,
       contentType: file.type,
     }),
   });
@@ -39,5 +39,5 @@ export async function uploadR2File(file: File): Promise<string> {
     throw new Error(`Failed to upload file: ${uploadResponse.statusText}`);
   }
 
-  return uploadUrl.split("?")[0]; // Return the file URL without query parameters
+  return fileNameOverwrite ?? file.name; // Return the file URL without query parameters
 }

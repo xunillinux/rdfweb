@@ -29,7 +29,7 @@
 
 	function onFeatureDataChange(updatedFeature: FeatureType) {
 		feature = updatedFeature;
-		//Todo saveChanges();
+		saveChanges();
 	}
 
 	function onConcertDataChange(updatedConcerts: Concert[]) {

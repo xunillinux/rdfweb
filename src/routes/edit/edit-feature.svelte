@@ -18,12 +18,22 @@
 	let files: any = $state(null);
 	let file: File = $derived(files?.length > 0 ? files[0] : null);
 
-	function onConfirm() {
-		featureHeadingCollapsed = false;
-		featureImageCollapsed = false;
-		featureLinksCollapsed = true;
-		files = null;
-		onFeatureDataChange(featureData);
+	async function onConfirm() {
+		try {
+			const uploadedUrl = await handleUpload();
+			if (uploadedUrl) {
+				onFeatureDataChange(featureData);
+			} else {
+				console.warn('No image uploaded. Skipping feature data change.');
+			}
+		} catch (error) {
+			console.error('Error in onConfirm:', error);
+		} finally {
+			featureHeadingCollapsed = false;
+			featureImageCollapsed = false;
+			featureLinksCollapsed = true;
+			files = null;
+		}
 	}
 
 	function onClose() {
@@ -38,17 +48,19 @@
 		featureData.image = URL.createObjectURL(file);
 	}
 
-	async function handleUpload(file: File): Promise<void> {
+	async function handleUpload(): Promise<string | null> {
 		try {
 			if (!file) {
 				throw new Error('No file selected');
 			}
 
-			const uploadedUrl = await uploadR2File(file);
+			const uploadedUrl = await uploadR2File(file, 'FeatureImage.png');
 			featureData.image = uploadedUrl;
 			console.log('File uploaded successfully:', uploadedUrl);
+			return uploadedUrl;
 		} catch (error) {
 			console.error('Error uploading file. Please try again.', error);
+			return null;
 		}
 	}
 
