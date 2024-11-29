@@ -3,6 +3,8 @@
 	import ModalBtn from '$lib/components/modal-btn.svelte';
 	import Fa from 'svelte-fa';
 	import { faChevronUp, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import { auth } from '$lib/firebase';
+	import { getAuth } from 'firebase/auth';
 
 	let { feature, onFeatureDataChange }: { feature: Feature; onFeatureDataChange: any } = $props();
 
@@ -78,6 +80,50 @@
 	function toggleFeatureLinksCollapsed() {
 		featureLinksCollapsed = !featureLinksCollapsed;
 	}
+
+	let file: any = $state(null);
+
+	async function handleUpload() {
+		if (!file) {
+			alert('Please select a file to upload');
+			return;
+		}
+
+		$inspect(file);
+
+		const auth = getAuth();
+		const firebaseToken = await auth.currentUser?.getIdToken();
+
+		// Fetch presigned URL
+		const response = await fetch('/api/r2-upload', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				firebaseToken,
+				fileName: file.name,
+				contentType: file.type
+			})
+		});
+
+		const { uploadUrl } = await response.json();
+		if (!uploadUrl) {
+			alert('Failed to get upload URL');
+			return;
+		}
+
+		// Upload file directly to Cloudflare R2
+		const uploadResponse = await fetch(uploadUrl, {
+			method: 'PUT',
+			body: file,
+			headers: { 'Content-Type': file.type } // Ensure correct Content-Type
+		});
+
+		if (uploadResponse.ok) {
+			alert('File uploaded successfully!');
+		} else {
+			alert('File upload failed');
+		}
+	}
 </script>
 
 <ModalBtn title="Edit Feature" btnText="Edit Feature" {onConfirm} {onClose}>
@@ -89,6 +135,9 @@
 				<Fa icon={featureHeadingCollapsed ? faChevronDown : faChevronUp} scale={0.8} translateY={0.1} />
 			</button>
 		</h2>
+
+		<input type="file" bind:this={file} />
+		<button onclick={handleUpload}>Upload</button>
 
 		{#if !featureHeadingCollapsed}
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
