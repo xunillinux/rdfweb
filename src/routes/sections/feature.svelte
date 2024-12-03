@@ -4,6 +4,8 @@
 
 	let { feature }: { feature: Feature } = $props();
 
+	let imageSource = $derived(r2bucketEndpoint + feature.image);
+
 	let isImageLoaded = $state(false);
 </script>
 
@@ -30,7 +32,7 @@
 
 		<!-- Image -->
 		<img
-			src={r2bucketEndpoint + feature.image}
+			src={imageSource}
 			alt="Feature"
 			class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192"
 			onload={() => (isImageLoaded = true)}

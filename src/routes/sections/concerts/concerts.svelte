@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Concert } from '$lib/model/rdf-data-model';
-	import { replaceEscapedNewlines } from '$lib/helper/format-helper';
 	import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import { normalizeDate, normalizedToday } from '$lib/helper/date-helper';

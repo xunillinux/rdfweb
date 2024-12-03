@@ -14,6 +14,8 @@
 	let featureImageCollapsed = $state(false);
 	let featureLinksCollapsed = $state(true);
 
+	$inspect(featureData);
+
 	let newLink = $state({ text: '', href: '' });
 
 	let files: any = $state(null);
@@ -23,12 +25,10 @@
 
 	async function onConfirm() {
 		try {
-			const uploadedUrl = await handleUpload();
-			if (uploadedUrl) {
-				onFeatureDataChange(featureData);
-			} else {
-				console.warn('No image uploaded. Skipping feature data change.');
+			if (file) {
+				await handleUpload();
 			}
+			onFeatureDataChange(featureData);
 		} catch (error) {
 			console.error('Error in onConfirm:', error);
 		} finally {
