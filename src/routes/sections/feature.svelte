@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_R2_DEV_BUCKET_ENDPOINT } from '$env/static/public';
-	import { bucketEndpoint } from '$lib/config';
+	import { r2bucketEndpoint } from '$lib/config';
 	import type { Feature } from '$lib/model/rdf-data-model';
 
 	let { feature }: { feature: Feature } = $props();
@@ -31,7 +30,7 @@
 
 		<!-- Image -->
 		<img
-			src={bucketEndpoint + feature.image}
+			src={r2bucketEndpoint + feature.image}
 			alt="Feature"
 			class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192"
 			onload={() => (isImageLoaded = true)}

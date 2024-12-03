@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
+	import { r2bucketEndpoint } from '$lib/config';
 	import type { Feature } from '$lib/model/rdf-data-model';
 	import { faChevronDown, faChevronUp, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
@@ -18,6 +19,8 @@
 	let files: any = $state(null);
 	let file: File = $derived(files?.length > 0 ? files[0] : null);
 
+	let previewImageUrl: string | null = $state(null);
+
 	async function onConfirm() {
 		try {
 			const uploadedUrl = await handleUpload();
@@ -32,6 +35,7 @@
 			featureHeadingCollapsed = false;
 			featureImageCollapsed = false;
 			featureLinksCollapsed = true;
+			previewImageUrl = null;
 			files = null;
 		}
 	}
@@ -41,11 +45,13 @@
 		featureImageCollapsed = false;
 		featureLinksCollapsed = true;
 		files = null;
+		previewImageUrl = null;
 		featureData = JSON.parse(JSON.stringify(feature)) as Feature;
 	}
 
 	function previewImage() {
-		featureData.image = URL.createObjectURL(file);
+		previewImageUrl = URL.createObjectURL(file);
+		featureData.image = previewImageUrl;
 	}
 
 	async function handleUpload(): Promise<string | null> {
@@ -158,7 +164,13 @@
 		</h2>
 
 		{#if !featureImageCollapsed}
-			<img src={featureData.image ?? '/images/s.jpg'} alt="photoURL" width="256" height="256" class="mx-auto mb-4 rounded-lg shadow-md sm:mx-0" />
+			<img
+				src={previewImageUrl ?? r2bucketEndpoint + featureData.image}
+				alt="photoURL"
+				width="256"
+				height="256"
+				class="mx-auto mb-4 rounded-lg shadow-md sm:mx-0"
+			/>
 			<label
 				for="file-upload"
 				class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"

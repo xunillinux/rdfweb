@@ -1,11 +1,10 @@
+import { PUBLIC_FB_API_KEY, PUBLIC_FB_APP_ID, PUBLIC_FB_AUTH_DOMAIN, PUBLIC_FB_MEASUREMENT_ID, PUBLIC_FB_MESSAGING_SENDER_ID, PUBLIC_FB_PROJECT_ID, PUBLIC_FB_STORAGE_BUCKET } from "$env/static/public";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
-import { getStorage } from "firebase/storage";
 import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore/lite";
-import { PUBLIC_FB_API_KEY, PUBLIC_FB_AUTH_DOMAIN, PUBLIC_FB_PROJECT_ID, PUBLIC_FB_STORAGE_BUCKET, PUBLIC_FB_MESSAGING_SENDER_ID, PUBLIC_FB_APP_ID, PUBLIC_FB_MEASUREMENT_ID } from "$env/static/public";
 import { writable } from "svelte/store";
-import type { RdfWebData } from "./model/rdf-data-model";
 import { showNotification } from "./helper/notification-helper";
+import type { RdfWebData } from "./model/rdf-data-model";
 
 const firebaseConfig = {
   apiKey: PUBLIC_FB_API_KEY,
@@ -20,7 +19,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-export const storage = getStorage();
 
 const getDocument = async (collectionName: string, docId: string) => {
   const docRef = doc(db, collectionName, docId);
@@ -72,3 +70,4 @@ export async function getIdToken() {
 
 export const userData = userStore();
 export { auth, db, getDocument, updateDocument };
+
