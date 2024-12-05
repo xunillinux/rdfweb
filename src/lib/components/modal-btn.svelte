@@ -61,10 +61,11 @@
 					<button class="rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300" onclick={closeModal}>
 						{cancelBtnText}
 					</button>
+
 					<button
 						class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
-						onclick={() => {
-							onConfirm();
+						onclick={async () => {
+							await onConfirm();
 							closeModal();
 						}}
 					>

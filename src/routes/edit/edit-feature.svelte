@@ -26,7 +26,9 @@
 	async function onConfirm() {
 		try {
 			if (file) {
-				await handleUpload();
+				const uploadedUrl = await handleUpload();
+				const cacheBuster = `?t=${Date.now()}`;
+				featureData.image = uploadedUrl + cacheBuster;
 			}
 			onFeatureDataChange(featureData);
 		} catch (error) {
@@ -46,7 +48,7 @@
 		featureLinksCollapsed = true;
 		files = null;
 		previewImageUrl = null;
-		featureData = JSON.parse(JSON.stringify(feature)) as Feature;
+		// featureData = JSON.parse(JSON.stringify(feature)) as Feature;
 	}
 
 	function previewImage() {
@@ -61,7 +63,7 @@
 			}
 
 			const uploadedUrl = await uploadR2File(file, 'FeatureImage.png');
-			featureData.image = uploadedUrl;
+
 			console.log('File uploaded successfully:', uploadedUrl);
 			return uploadedUrl;
 		} catch (error) {
