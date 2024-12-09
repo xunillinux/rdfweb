@@ -4,6 +4,7 @@
 	import Fa from 'svelte-fa';
 	import { normalizeDate, normalizedToday } from '$lib/helper/date-helper';
 	import ConcertRow from './concert-row.svelte';
+	import { fade, slide } from 'svelte/transition';
 
 	let { concerts }: { concerts: Concert[] } = $props();
 
@@ -58,7 +59,7 @@
 
 		<!-- Past Concerts -->
 		{#if !isPastConcertsHidden}
-			<div class="mx-auto mt-6">
+			<div class="mx-auto mt-6" transition:slide={{ duration: 200 }}>
 				<div class="grid grid-cols-1">
 					{#each pastConcerts as concert, index}
 						<ConcertRow {concert} isFirstElement={index === 0} />
