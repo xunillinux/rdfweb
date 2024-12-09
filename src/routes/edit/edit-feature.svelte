@@ -14,8 +14,6 @@
 	let featureImageCollapsed = $state(false);
 	let featureLinksCollapsed = $state(true);
 
-	$inspect(featureData);
-
 	let newLink = $state({ text: '', href: '' });
 
 	let files: any = $state(null);

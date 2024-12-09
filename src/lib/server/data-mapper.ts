@@ -3,6 +3,7 @@ import type { DocumentData } from "firebase/firestore";
 
 export function mapDocDataToRdfWebData(docData: DocumentData): RdfWebData {
   return {
+    headerImages: docData.headerImages ?? null,
     feature: docData.feature ?? null,
     concerts: docData.concerts?.map((concert: any) => {
       return {

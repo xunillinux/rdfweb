@@ -8,6 +8,7 @@ export const load = async () => {
 		if (docData) {
 			const rdfWebData = mapDocDataToRdfWebData(docData);
 			return {
+				headerImages: rdfWebData.headerImages,
 				feature: rdfWebData.feature,
 				concerts: rdfWebData.concerts,
 				presstexts: rdfWebData.presstexts,

@@ -9,7 +9,7 @@
 	import Links from './sections/links.svelte';
 	import EditConcerts from './edit/edit-concerts.svelte';
 	import EditPresstexts from './edit/edit-presstexts.svelte';
-	import type { Concert, Link, PressText, RdfWebData, Feature as FeatureType } from '$lib/model/rdf-data-model';
+	import type { Concert, Link, PressText, RdfWebData, Feature as FeatureType, Images, Member } from '$lib/model/rdf-data-model';
 	import { auth, updateDocument, userData } from '$lib/firebase';
 	import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
@@ -17,15 +17,23 @@
 	import { showNotification } from '$lib/helper/notification-helper';
 	import EditLinks from './edit/edit-links.svelte';
 	import EditFeature from './edit/edit-feature.svelte';
+	import EditCarousel from './edit/edit-carousel.svelte';
+	import EditMembers from './edit/edit-members.svelte';
 
 	let { data } = $props();
 
+	let headerImages = $state(data.headerImages);
 	let concerts = $state(data.concerts);
 	let feature = $state(data.feature);
 	let links = $state(data.links);
 	let members = $state(data.members);
 	let presstexts = $state(data.presstexts);
 	let socialMediaLinks = $state(data.socialMediaLinks);
+
+	function onHeaderImagesChange(updatedHeaderImages: Images) {
+		headerImages = updatedHeaderImages;
+		// TODO saveChanges()
+	}
 
 	function onFeatureDataChange(updatedFeature: FeatureType) {
 		feature = updatedFeature;
@@ -42,6 +50,11 @@
 		saveChanges();
 	}
 
+	function onMembersDataChange(updatedMembers: Member[]) {
+		members = updatedMembers;
+		// TODO saveChanges();
+	}
+
 	function onLinksDataChange(updatedLinks: Link[]) {
 		links = updatedLinks;
 		saveChanges();
@@ -53,7 +66,7 @@
 	}
 
 	function getUpdatedData(): RdfWebData {
-		return { concerts, feature, links, members, presstexts, socialMediaLinks };
+		return { headerImages, concerts, feature, links, members, presstexts, socialMediaLinks };
 	}
 
 	async function logout() {
@@ -69,8 +82,13 @@
 <Header {socialMediaLinks} />
 
 <main id="top" class="w-100">
-	<section id="carousel" class="carousel-section">
+	<section id="carousel" class="carousel-section relative">
 		<Carousel />
+		{#if $userData.user}
+			<div class="absolute bottom-4 right-5 transform">
+				<EditCarousel {headerImages} {onHeaderImagesChange} />
+			</div>
+		{/if}
 	</section>
 
 	<section id="feature" class="feature-section relative">
@@ -100,8 +118,13 @@
 		{/if}
 	</section>
 
-	<section id="members" class="members-section">
+	<section id="members" class="members-section relative">
 		<Members {members} />
+		{#if $userData.user}
+			<div class="absolute bottom-4 right-5 transform">
+				<EditMembers {members} {onMembersDataChange} />
+			</div>
+		{/if}
 	</section>
 
 	<section id="links" class="links-section relative">

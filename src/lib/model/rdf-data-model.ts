@@ -1,4 +1,5 @@
 export type RdfWebData = {
+  headerImages: Images;
   feature: Feature;
   concerts: Concert[];
   members: Member[];
@@ -7,8 +8,13 @@ export type RdfWebData = {
   socialMediaLinks: SocialMediaLinksType;
 }
 
+export type Images = {
+  portraits: string[];
+  landscapes: string[];
+}
+
 export type Feature = {
-  image: string; // should be blob
+  image: string;
   heading: string;
   subheading: string;
   caption: string;
@@ -41,5 +47,5 @@ export type PressText = {
 export type Member = {
   name: string;
   role: string;
-  image: string; // should be blob
+  image: string;
 }
