@@ -48,7 +48,7 @@
 		featureLinksCollapsed = true;
 		files = null;
 		previewImageUrl = null;
-		// featureData = JSON.parse(JSON.stringify(feature)) as Feature;
+		featureData = JSON.parse(JSON.stringify(feature)) as Feature;
 	}
 
 	function previewImage() {
