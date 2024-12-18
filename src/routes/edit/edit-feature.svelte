@@ -5,6 +5,7 @@
 	import { faChevronDown, faChevronUp, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import { uploadR2File } from '../api/r2-upload/r2-upload';
+	import { getCacheBusterToken } from '$lib/helper/cache-buster-helper';
 
 	let { feature, onFeatureDataChange }: { feature: Feature; onFeatureDataChange: any } = $props();
 
@@ -25,7 +26,7 @@
 		try {
 			if (file) {
 				const uploadedUrl = await handleUpload();
-				const cacheBuster = `?t=${Date.now()}`;
+				const cacheBuster = getCacheBusterToken();
 				featureData.image = uploadedUrl + cacheBuster;
 			}
 			onFeatureDataChange(featureData);
@@ -175,7 +176,7 @@
 				for="file-upload"
 				class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"
 			>
-				Choose Image
+				Select Image
 				<input
 					id="file-upload"
 					onchange={previewImage}

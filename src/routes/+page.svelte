@@ -1,24 +1,24 @@
 <script lang="ts">
-	import Header from './sections/header.svelte';
-	import Carousel from './sections/carousel.svelte';
-	import Feature from './sections/feature.svelte';
-	import Concerts from './sections/concerts/concerts.svelte';
-	import Footer from './sections/footer.svelte';
-	import Presstext from './sections/presstext.svelte';
-	import Members from './sections/members.svelte';
-	import Links from './sections/links.svelte';
-	import EditConcerts from './edit/edit-concerts.svelte';
-	import EditPresstexts from './edit/edit-presstexts.svelte';
-	import type { Concert, Link, PressText, RdfWebData, Feature as FeatureType, Images, Member } from '$lib/model/rdf-data-model';
 	import { auth, updateDocument, userData } from '$lib/firebase';
-	import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-	import Fa from 'svelte-fa';
-	import { signOut } from 'firebase/auth';
 	import { showNotification } from '$lib/helper/notification-helper';
-	import EditLinks from './edit/edit-links.svelte';
-	import EditFeature from './edit/edit-feature.svelte';
+	import type { Concert, Feature as FeatureType, HeaderImage, Link, Member, PressText, RdfWebData } from '$lib/model/rdf-data-model';
+	import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+	import { signOut } from 'firebase/auth';
+	import Fa from 'svelte-fa';
 	import EditCarousel from './edit/edit-carousel.svelte';
+	import EditConcerts from './edit/edit-concerts.svelte';
+	import EditFeature from './edit/edit-feature.svelte';
+	import EditLinks from './edit/edit-links.svelte';
 	import EditMembers from './edit/edit-members.svelte';
+	import EditPresstexts from './edit/edit-presstexts.svelte';
+	import Carousel from './sections/carousel.svelte';
+	import Concerts from './sections/concerts/concerts.svelte';
+	import Feature from './sections/feature.svelte';
+	import Footer from './sections/footer.svelte';
+	import Header from './sections/header.svelte';
+	import Links from './sections/links.svelte';
+	import Members from './sections/members.svelte';
+	import Presstext from './sections/presstext.svelte';
 
 	let { data } = $props();
 
@@ -30,9 +30,9 @@
 	let presstexts = $state(data.presstexts);
 	let socialMediaLinks = $state(data.socialMediaLinks);
 
-	function onHeaderImagesChange(updatedHeaderImages: Images) {
+	function onHeaderImagesChange(updatedHeaderImages: HeaderImage[]) {
 		headerImages = updatedHeaderImages;
-		// TODO saveChanges()
+		saveChanges();
 	}
 
 	function onFeatureDataChange(updatedFeature: FeatureType) {
@@ -83,7 +83,7 @@
 
 <main id="top" class="w-100">
 	<section id="carousel" class="carousel-section relative">
-		<Carousel />
+		<Carousel {headerImages} />
 		{#if $userData.user}
 			<div class="absolute bottom-4 right-5 transform">
 				<EditCarousel {headerImages} {onHeaderImagesChange} />
@@ -149,5 +149,3 @@
 		Logout
 	</button>
 {/if}
-
-<style></style>

@@ -1,5 +1,5 @@
 export type RdfWebData = {
-  headerImages: Images;
+  headerImages: HeaderImage[];
   feature: Feature;
   concerts: Concert[];
   members: Member[];
@@ -8,9 +8,14 @@ export type RdfWebData = {
   socialMediaLinks: SocialMediaLinksType;
 }
 
-export type Images = {
-  portraits: string[];
-  landscapes: string[];
+export type HeaderImage = {
+  src: string;
+  category: ImageCategory;
+}
+
+export enum ImageCategory {
+  Portrait = "portrait",
+  Landscape = "landscape"
 }
 
 export type Feature = {
