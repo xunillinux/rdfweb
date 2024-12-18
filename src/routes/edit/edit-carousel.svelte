@@ -1,13 +1,14 @@
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
-	import { ImageCategory, type HeaderImage } from '$lib/model/rdf-data-model';
-	import Fa from 'svelte-fa';
-	import { uploadR2File } from '../api/r2-upload/r2-upload';
-	import { faTrash } from '@fortawesome/free-solid-svg-icons';
-	import { v4 as uuidv4 } from 'uuid';
 	import { r2bucketEndpoint } from '$lib/config';
-	import { deleteR2File } from '../api/r2-delete/r2-delete';
 	import { getCacheBusterToken, removeCacheBusterToken } from '$lib/helper/cache-buster-helper';
+	import { ImageCategory, type HeaderImage } from '$lib/model/rdf-data-model';
+	import { faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import Fa from 'svelte-fa';
+	import { v4 as uuidv4 } from 'uuid';
+	import { deleteR2File } from '../api/r2-delete/r2-delete';
+	import { uploadR2File } from '../api/r2-upload/r2-upload';
+	import SavingSpinner from '$lib/components/saving-spinner.svelte';
 
 	let { headerImages, onHeaderImagesChange }: { headerImages: HeaderImage[]; onHeaderImagesChange: (images: HeaderImage[]) => void } = $props();
 
@@ -18,6 +19,8 @@
 	let selectedImage: { src: string } | null = $state(null);
 
 	let imagesToDelete: string[] = $state([]);
+
+	let isSaving = $state(false);
 
 	// Handle file selection and categorize images
 	function handleFileSelection(event: Event) {
@@ -51,6 +54,8 @@
 	// Confirm and upload images
 	async function onConfirm() {
 		try {
+			isSaving = true;
+
 			// Delete old images
 			for (const fileName of imagesToDelete) {
 				await deleteR2File(removeCacheBusterToken(fileName));
@@ -70,6 +75,7 @@
 			console.error('Error updating images:', error);
 		} finally {
 			resetState();
+			isSaving = false;
 		}
 	}
 
@@ -89,62 +95,66 @@
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 
-<ModalBtn title="Edit Images" btnText="Edit Images" {onConfirm} {onClose}>
-	<div class="py-1">
-		<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-			{#each headerImagesData as image, index}
-				<div class="relative">
-					<img
-						src={r2bucketEndpoint + image.src}
-						alt="Landscape"
-						class="h-32 w-full cursor-pointer object-cover"
-						onclick={() => viewImage(image.src)}
-					/>
-					<button class="absolute right-1 top-1 rounded bg-red-500 p-2 text-white" onclick={() => removeExistingImage(index)}>
-						<Fa icon={faTrash} />
-					</button>
-				</div>
-			{/each}
-			{#each newImages as { previewUrl }, index}
-				<div class="relative">
-					<img src={previewUrl} alt="New Landscape" class="h-32 w-full cursor-pointer object-cover" onclick={() => viewImage(previewUrl)} />
+<ModalBtn title="Edit Images" btnText="Edit Images" {onConfirm} {onClose} {isSaving}>
+	{#if !isSaving}
+		<div class="py-1">
+			<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+				{#each headerImagesData as image, index}
+					<div class="relative">
+						<img
+							src={r2bucketEndpoint + image.src}
+							alt="Landscape"
+							class="h-32 w-full cursor-pointer object-cover"
+							onclick={() => viewImage(r2bucketEndpoint + image.src)}
+						/>
+						<button class="absolute right-1 top-1 rounded bg-red-500 p-2 text-white" onclick={() => removeExistingImage(index)}>
+							<Fa icon={faTrash} />
+						</button>
+					</div>
+				{/each}
+				{#each newImages as { previewUrl }, index}
+					<div class="relative">
+						<img src={previewUrl} alt="New Landscape" class="h-32 w-full cursor-pointer object-cover" onclick={() => viewImage(previewUrl)} />
 
-					<button class="absolute right-1 top-1 rounded bg-red-500 p-2 text-white" onclick={() => removeNewImage(index)}>
-						<Fa icon={faTrash} />
-					</button>
-				</div>
-			{/each}
-		</div>
-		{#if (headerImagesData?.length ?? 0) === 0 && (newImages?.length ?? 0) === 0}
-			<p>There are currently no images selected.</p>
-		{/if}
-
-		<!-- Image Upload Section -->
-		<div class="mb-4 mt-6">
-			<label
-				for="file-upload"
-				class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"
-			>
-				Select Images
-				<input
-					id="file-upload"
-					onchange={handleFileSelection}
-					name="photoURL"
-					type="file"
-					multiple
-					class="hidden"
-					accept="image/png, image/jpeg, image/webp"
-				/>
-			</label>
-		</div>
-
-		<!-- Full-Size Image Modal -->
-		{#if selectedImage}
-			<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 px-4" onclick={() => (selectedImage = null)}>
-				<div class="relative rounded-lg bg-white p-4 shadow-lg">
-					<img src={selectedImage.src} alt="Selected" class="max-h-[80vh] max-w-full rounded" />
-				</div>
+						<button class="absolute right-1 top-1 rounded bg-red-500 p-2 text-white" onclick={() => removeNewImage(index)}>
+							<Fa icon={faTrash} />
+						</button>
+					</div>
+				{/each}
 			</div>
-		{/if}
-	</div>
+			{#if (headerImagesData?.length ?? 0) === 0 && (newImages?.length ?? 0) === 0}
+				<p>There are currently no images selected.</p>
+			{/if}
+
+			<!-- Image Upload Section -->
+			<div class="mb-4 mt-6">
+				<label
+					for="file-upload"
+					class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"
+				>
+					Select Images
+					<input
+						id="file-upload"
+						onchange={handleFileSelection}
+						name="photoURL"
+						type="file"
+						multiple
+						class="hidden"
+						accept="image/png, image/jpeg, image/webp"
+					/>
+				</label>
+			</div>
+
+			<!-- Full-Size Image Modal -->
+			{#if selectedImage}
+				<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 px-4" onclick={() => (selectedImage = null)}>
+					<div class="relative rounded-lg bg-white p-4 shadow-lg">
+						<img src={selectedImage.src} alt="Selected" class="max-h-[80vh] max-w-full rounded" />
+					</div>
+				</div>
+			{/if}
+		</div>
+	{:else}
+		<SavingSpinner />
+	{/if}
 </ModalBtn>

@@ -10,8 +10,18 @@
 		cancelBtnText = 'Cancel',
 		onConfirm,
 		onClose,
+		isSaving,
 		children
-	}: { title: string; btnText: string; confirmBtnText?: string; cancelBtnText?: string; onConfirm: any; onClose: any; children: any } = $props();
+	}: {
+		title: string;
+		btnText: string;
+		confirmBtnText?: string;
+		cancelBtnText?: string;
+		onConfirm: any;
+		onClose: any;
+		isSaving: boolean;
+		children: any;
+	} = $props();
 
 	let isOpen = $state(false);
 
@@ -36,7 +46,12 @@
 		<!-- Greyed-out background with click listener -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onclick={closeModal}>
+		<div
+			class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+			onclick={() => {
+				if (!isSaving) closeModal();
+			}}
+		>
 			<!-- Modal content with event propagation stopped -->
 			<div
 				class="w-11/12 max-w-4xl overflow-y-auto rounded-lg bg-white p-5 shadow-2xl sm:p-8"
@@ -46,7 +61,12 @@
 				<!-- Title with Close Button -->
 				<div class="mb-3 flex items-center justify-between sm:mb-4">
 					<h2 class="text-2xl font-bold">{title}</h2>
-					<button class="-m-2 p-2 text-gray-500 hover:text-gray-800" aria-label="Close Modal" onclick={closeModal}>
+					<button
+						class="-m-2 p-2 text-gray-500 hover:text-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+						aria-label="Close Modal"
+						onclick={closeModal}
+						disabled={isSaving}
+					>
 						<Fa icon={faTimes} scale={1.4} />
 					</button>
 				</div>
@@ -58,16 +78,21 @@
 
 				<!-- Footer Buttons -->
 				<div class="flex justify-end space-x-4">
-					<button class="rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300" onclick={closeModal}>
+					<button
+						class="rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
+						onclick={closeModal}
+						disabled={isSaving}
+					>
 						{cancelBtnText}
 					</button>
 
 					<button
-						class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+						class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 disabled:cursor-not-allowed disabled:opacity-50"
 						onclick={async () => {
 							await onConfirm();
 							closeModal();
 						}}
+						disabled={isSaving}
 					>
 						{confirmBtnText}
 					</button>
