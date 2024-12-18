@@ -63,7 +63,7 @@
 
 			// Upload new images
 			for (const { file, category } of newImages) {
-				const uniqueFileName = `headerImage_${uuidv4()}.png`;
+				const uniqueFileName = `HeaderImage_${uuidv4()}.png`;
 				const uploadedUrl = await uploadR2File(file, uniqueFileName);
 				const cacheBuster = getCacheBusterToken();
 				headerImagesData.push({ src: uploadedUrl + cacheBuster, category });
@@ -75,7 +75,6 @@
 			console.error('Error updating images:', error);
 		} finally {
 			resetState();
-			isSaving = false;
 		}
 	}
 
@@ -88,6 +87,7 @@
 		newImages = [];
 		imagesToDelete = [];
 		selectedImage = null;
+		isSaving = false;
 	}
 </script>
 

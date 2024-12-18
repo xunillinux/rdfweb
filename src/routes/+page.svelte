@@ -52,7 +52,7 @@
 
 	function onMembersDataChange(updatedMembers: Member[]) {
 		members = updatedMembers;
-		// TODO saveChanges();
+		saveChanges();
 	}
 
 	function onLinksDataChange(updatedLinks: Link[]) {

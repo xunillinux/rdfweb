@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { r2bucketEndpoint } from '$lib/config';
 	import type { Member } from '$lib/model/rdf-data-model';
 
 	let { members }: { members: Member[] } = $props();
@@ -9,7 +10,7 @@
 		{#each members as member}
 			<div class="flex flex-col items-center">
 				<!-- Portrait -->
-				<img src={member.image} alt={member.name} class="w-100% rounded-md object-cover sm:w-60" />
+				<img src={r2bucketEndpoint + member.image} alt={member.name} class="w-100% rounded-md object-cover sm:w-60" />
 
 				<!-- Name -->
 				<p class="mt-4 text-xl font-bold uppercase">{member.name}</p>
