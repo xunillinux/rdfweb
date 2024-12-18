@@ -3,7 +3,7 @@
 	import { r2bucketEndpoint } from '$lib/config';
 	import { getCacheBusterToken, removeCacheBusterToken } from '$lib/helper/cache-buster-helper';
 	import { ImageCategory, type HeaderImage } from '$lib/model/rdf-data-model';
-	import { faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import { faPenToSquare, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import { v4 as uuidv4 } from 'uuid';
 	import { deleteR2File } from '../api/r2-delete/r2-delete';
@@ -95,7 +95,7 @@
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 
-<ModalBtn title="Edit Images" btnText="Edit Images" {onConfirm} {onClose} {isSaving}>
+<ModalBtn title="Edit Images" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose} {isSaving}>
 	{#if !isSaving}
 		<div class="py-1">
 			<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">

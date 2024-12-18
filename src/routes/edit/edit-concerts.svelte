@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
 	import { replaceNewlinesWithSpace } from '$lib/helper/format-helper';
-	import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+	import { faChevronUp, faChevronDown, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 	import type { Concert } from '$lib/model/rdf-data-model';
 	import Fa from 'svelte-fa';
 
@@ -64,7 +64,7 @@
 	}
 </script>
 
-<ModalBtn title="Edit Concerts" btnText="Edit Concerts" {onConfirm} {onClose}>
+<ModalBtn title="Edit Concerts" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
 	<div class="py-1">
 		<h2 class="mb-4 text-lg font-bold">Add New Concert</h2>
 

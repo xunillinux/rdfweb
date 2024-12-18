@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
-	import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+	import { faChevronUp, faChevronDown, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import type { PressText } from '$lib/model/rdf-data-model';
 
@@ -44,7 +44,7 @@
 	}
 </script>
 
-<ModalBtn title="Edit Presstexts" btnText="Edit Presstexts" {onConfirm} {onClose}>
+<ModalBtn title="Edit Presstexts" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
 	<div class="py-1">
 		<!-- Title with Toggle Icon -->
 		<h2 class="mb-4 flex items-center text-lg font-bold">

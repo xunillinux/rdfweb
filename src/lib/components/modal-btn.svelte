@@ -1,11 +1,12 @@
 <script lang="ts">
 	import Portal from 'svelte-portal';
-	import { faTimes } from '@fortawesome/free-solid-svg-icons';
+	import { faTimes, type IconDefinition } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 
 	let {
 		title,
 		btnText,
+		btnFaIcon,
 		confirmBtnText = 'Save',
 		cancelBtnText = 'Cancel',
 		onConfirm,
@@ -14,12 +15,13 @@
 		children
 	}: {
 		title: string;
-		btnText: string;
+		btnText?: string;
+		btnFaIcon?: IconDefinition;
 		confirmBtnText?: string;
 		cancelBtnText?: string;
 		onConfirm: any;
 		onClose: any;
-		isSaving: boolean;
+		isSaving?: boolean;
 		children: any;
 	} = $props();
 
@@ -36,8 +38,16 @@
 </script>
 
 <!-- Trigger Button -->
-<button class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600" onclick={openModal}>
-	{btnText}
+<button
+	class={`flex items-center rounded bg-green-500 text-white hover:bg-green-600 ${btnText ? 'px-4 py-2' : 'h-10 w-10 justify-center'}`}
+	onclick={openModal}
+>
+	{#if btnFaIcon}
+		<Fa icon={btnFaIcon} />
+	{/if}
+	{#if btnText}
+		<span class={btnFaIcon ? 'ml-2' : ''}>{btnText}</span>
+	{/if}
 </button>
 
 <!-- Modal -->

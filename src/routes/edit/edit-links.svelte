@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
-	import { faChevronUp, faChevronDown, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import { faChevronUp, faChevronDown, faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import type { Link } from '$lib/model/rdf-data-model';
 
@@ -51,7 +51,7 @@
 	}
 </script>
 
-<ModalBtn title="Edit Links" btnText="Edit Links" {onConfirm} {onClose}>
+<ModalBtn title="Edit Links" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
 	<div class="py-1">
 		<h2 class="mb-4 text-lg font-bold">Add New Link</h2>
 

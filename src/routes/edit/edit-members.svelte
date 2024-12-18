@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
 	import type { Member } from '$lib/model/rdf-data-model';
+	import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 	let { members, onMembersDataChange }: { members: Member[]; onMembersDataChange: any } = $props();
 
@@ -15,7 +16,7 @@
 	}
 </script>
 
-<ModalBtn title="Edit Members" btnText="Edit Members" {onConfirm} {onClose}>
+<ModalBtn title="Edit Members" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
 	<div class="py-1">
 		<h2 class="my-4 flex items-center text-lg font-bold">
 			<span>Member 1</span>

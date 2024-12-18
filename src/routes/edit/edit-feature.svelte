@@ -2,7 +2,7 @@
 	import ModalBtn from '$lib/components/modal-btn.svelte';
 	import { r2bucketEndpoint } from '$lib/config';
 	import type { Feature } from '$lib/model/rdf-data-model';
-	import { faChevronDown, faChevronUp, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import { faChevronDown, faChevronUp, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import { uploadR2File } from '../api/r2-upload/r2-upload';
 	import { getCacheBusterToken } from '$lib/helper/cache-buster-helper';
@@ -114,7 +114,7 @@
 	}
 </script>
 
-<ModalBtn title="Edit Feature" btnText="Edit Feature" {onConfirm} {onClose}>
+<ModalBtn title="Edit Feature" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
 	<div class="py-1">
 		<!-- Title with Toggle Icon -->
 		<h2 class="mb-4 flex items-center text-lg font-bold">
