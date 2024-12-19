@@ -8,7 +8,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import { deleteR2File } from '../api/r2-delete/r2-delete';
 	import { uploadR2File } from '../api/r2-upload/r2-upload';
-	import SavingSpinner from '$lib/components/saving-spinner.svelte';
+	import LoadingSpinner from '$lib/components/loading-spinner.svelte';
 
 	let { headerImages, onHeaderImagesChange }: { headerImages: HeaderImage[]; onHeaderImagesChange: (images: HeaderImage[]) => void } = $props();
 
@@ -21,6 +21,14 @@
 	let imagesToDelete: string[] = $state([]);
 
 	let isSaving = $state(false);
+	let isDeletingImages = $state(false);
+	let isUploadingImages = $state(false);
+
+	const spinnerText = $derived.by(() => {
+		if (isDeletingImages) return 'Deleting Images...';
+		if (isUploadingImages) return 'Compressing and uploading images...';
+		return 'Saving Changes...';
+	});
 
 	// Handle file selection and categorize images
 	function handleFileSelection(event: Event) {
@@ -58,18 +66,21 @@
 
 			// Delete old images
 			for (const fileName of imagesToDelete) {
+				isDeletingImages = true;
 				await deleteR2File(removeCacheBusterToken(fileName));
+				isDeletingImages = false;
 			}
 
 			// Upload new images
 			for (const { file, category } of newImages) {
-				const uniqueFileName = `HeaderImage_${uuidv4()}.png`;
+				isUploadingImages = true;
+				const uniqueFileName = `HeaderImage_${uuidv4()}.webp`;
 				const uploadedUrl = await uploadR2File(file, uniqueFileName);
 				const cacheBuster = getCacheBusterToken();
 				headerImagesData.push({ src: uploadedUrl + cacheBuster, category });
+				isUploadingImages = false;
 			}
 
-			// TODO: Handle deletion from R2 if needed
 			onHeaderImagesChange(headerImagesData);
 		} catch (error) {
 			console.error('Error updating images:', error);
@@ -155,6 +166,6 @@
 			{/if}
 		</div>
 	{:else}
-		<SavingSpinner />
+		<LoadingSpinner text={spinnerText} />
 	{/if}
 </ModalBtn>

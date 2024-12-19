@@ -61,7 +61,7 @@
 				throw new Error('No file selected');
 			}
 
-			const uploadedUrl = await uploadR2File(file, 'FeatureImage.png');
+			const uploadedUrl = await uploadR2File(file, 'FeatureImage.webp');
 
 			console.log('File uploaded successfully:', uploadedUrl);
 			return uploadedUrl;

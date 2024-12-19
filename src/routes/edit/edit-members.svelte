@@ -5,7 +5,7 @@
 	import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 	import { uploadR2File } from '../api/r2-upload/r2-upload';
 	import { r2bucketEndpoint } from '$lib/config';
-	import SavingSpinner from '$lib/components/saving-spinner.svelte';
+	import LoadingSpinner from '$lib/components/loading-spinner.svelte';
 
 	let { members, onMembersDataChange }: { members: Member[]; onMembersDataChange: any } = $props();
 
@@ -21,7 +21,7 @@
 
 			if (previewFiles?.size > 0) {
 				for (const [key, previewFile] of previewFiles.entries()) {
-					const uploadedUrl = await handleUpload(previewFile.file, `MembersImage_${key}.png`);
+					const uploadedUrl = await handleUpload(previewFile.file, `MembersImage_${key}.webp`);
 					const cacheBuster = getCacheBusterToken();
 					membersData[key].image = uploadedUrl + cacheBuster;
 					console.log(membersData[key].image);
@@ -137,6 +137,6 @@
 			</div>
 		</div>
 	{:else}
-		<SavingSpinner />
+		<LoadingSpinner text="Saving changes..." />
 	{/if}
 </ModalBtn>

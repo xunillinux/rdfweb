@@ -1,9 +1,13 @@
 import { getIdToken } from "$lib/firebase";
+import { optimizeImage } from "$lib/helper/image-compression";
 
 export async function uploadR2File(file: File, fileNameOverwrite: string): Promise<string> {
   if (!file) {
     throw new Error("No file provided");
   }
+
+  // Optimize the image before uploading
+  const optimizedFile = await optimizeImage(file);
 
   // Get Firebase token
   const firebaseToken = await getIdToken();
@@ -14,8 +18,8 @@ export async function uploadR2File(file: File, fileNameOverwrite: string): Promi
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       firebaseToken,
-      fileName: fileNameOverwrite ?? file.name,
-      contentType: file.type,
+      fileName: fileNameOverwrite ? fileNameOverwrite : optimizedFile.name,
+      contentType: optimizedFile.type,
     }),
   });
 
@@ -28,16 +32,16 @@ export async function uploadR2File(file: File, fileNameOverwrite: string): Promi
     throw new Error("Upload URL not provided");
   }
 
-  // Upload file to Cloudflare R2
+  // Upload optimized file to Cloudflare R2
   const uploadResponse = await fetch(uploadUrl, {
     method: "PUT",
-    body: file,
-    headers: { "Content-Type": file.type },
+    body: optimizedFile,
+    headers: { "Content-Type": optimizedFile.type },
   });
 
   if (!uploadResponse.ok) {
     throw new Error(`Failed to upload file: ${uploadResponse.statusText}`);
   }
 
-  return fileNameOverwrite ?? file.name; // Return the file URL without query parameters
+  return fileNameOverwrite ?? optimizedFile.name; // Return the file URL without query parameters
 }
