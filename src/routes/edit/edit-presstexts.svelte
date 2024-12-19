@@ -3,6 +3,7 @@
 	import { faChevronUp, faChevronDown, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import type { PressText } from '$lib/model/rdf-data-model';
+	import Tiptap from '$lib/components/tiptap.svelte';
 
 	let { presstexts, onPressTextDataChange }: { presstexts: PressText[]; onPressTextDataChange: any } = $props();
 
@@ -46,6 +47,10 @@
 
 <ModalBtn title="Edit Presstexts" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
 	<div class="py-1">
+		<div class="py-2">
+			<Tiptap />
+		</div>
+
 		<!-- Title with Toggle Icon -->
 		<h2 class="mb-4 flex items-center text-lg font-bold">
 			<span>EN</span>
