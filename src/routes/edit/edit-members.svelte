@@ -83,52 +83,58 @@
 <ModalBtn title="Edit Members" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose} {isSaving}>
 	{#if !isSaving}
 		<div class="py-1">
-			{#each membersData as member, index}
-				<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-					<input
-						id="member-name-{index}"
-						name="member-name-{index}"
-						type="text"
-						bind:value={member.name}
-						class="w-full rounded border p-2"
-						required
-						placeholder="Name"
-					/>
-					<input
-						id="member-role-{index}"
-						name="member-role-{index}"
-						type="text"
-						bind:value={member.role}
-						class="w-full rounded border p-2"
-						required
-						placeholder="Role"
-					/>
-				</div>
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+				{#each membersData as member, index}
+					<div class="rounded-lg border p-4">
+						<!-- Member Name and Role -->
+						<div class="grid grid-cols-1 gap-4">
+							<input
+								id="member-name-{index}"
+								name="member-name-{index}"
+								type="text"
+								bind:value={member.name}
+								class="w-full rounded border p-2"
+								required
+								placeholder="Name"
+							/>
+							<input
+								id="member-role-{index}"
+								name="member-role-{index}"
+								type="text"
+								bind:value={member.role}
+								class="w-full rounded border p-2"
+								required
+								placeholder="Role"
+							/>
+						</div>
 
-				<div class="py-4">
-					<img
-						src={previewFiles.get(index)?.previewUrl ?? r2bucketEndpoint + membersData[index].image}
-						alt="photoURL"
-						width="256"
-						height="256"
-						class="mx-auto mb-4 rounded-lg shadow-md sm:mx-0"
-					/>
-					<label
-						for="file-upload-{index}"
-						class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"
-					>
-						Select Image
-						<input
-							id="file-upload-{index}"
-							onchange={(event) => onFileChange(event, index)}
-							name="photoURL"
-							type="file"
-							class="hidden"
-							accept="image/png, image/jpeg, image/webp"
-						/>
-					</label>
-				</div>
-			{/each}
+						<!-- Member Image -->
+						<div class="py-4">
+							<img
+								src={previewFiles.get(index)?.previewUrl ?? r2bucketEndpoint + membersData[index].image}
+								alt="photoURL"
+								width="256"
+								height="256"
+								class="mx-auto mb-4 rounded-lg shadow-md sm:mx-0"
+							/>
+							<label
+								for="file-upload-{index}"
+								class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"
+							>
+								Select Image
+								<input
+									id="file-upload-{index}"
+									onchange={(event) => onFileChange(event, index)}
+									name="photoURL"
+									type="file"
+									class="hidden"
+									accept="image/png, image/jpeg, image/webp"
+								/>
+							</label>
+						</div>
+					</div>
+				{/each}
+			</div>
 		</div>
 	{:else}
 		<SavingSpinner />
