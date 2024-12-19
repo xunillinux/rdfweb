@@ -15,11 +15,6 @@
 
 	let isCurrentLandscape = $state(false);
 
-	$effect(() => {
-		window.innerWidth;
-		console.log(window.innerWidth);
-	});
-
 	onMount(() => {
 		updateImagesBasedOnRatio();
 
@@ -33,6 +28,12 @@
 			clearInterval(interval);
 			window.removeEventListener('resize', onScreenResize);
 		};
+	});
+
+	$effect(() => {
+		portraitImages;
+		landscapeImages;
+		updateImagesBasedOnRatio();
 	});
 
 	async function onScreenResize() {
@@ -69,7 +70,11 @@
 	}
 
 	function fadeToNextSlide() {
-		currentSlide = (currentSlide + 1) % images.length;
+		if (images.length === 0) {
+			currentSlide = 0;
+		} else {
+			currentSlide = (currentSlide + 1) % images.length;
+		}
 	}
 </script>
 

@@ -33,7 +33,6 @@ const updateDocument = async (collectionName: string, docId: string, data: RdfWe
     showNotification('success', 'Data has been successfully saved.');
   } catch (error) {
     showNotification('error', 'There was a problem while saving the data. Please try again.');
-    console.log(error);
   }
 };
 

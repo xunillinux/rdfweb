@@ -4,8 +4,8 @@
 	import Fa from 'svelte-fa';
 	import { Editor, EditorContent, createEditor } from 'svelte-tiptap';
 	import type { Readable } from 'svelte/store';
-	import LinkModal from '../link-modal.svelte';
 	import { defaultEditorProps, extensions } from './tiptap-config';
+	import LinkModal from '../link-modal.svelte';
 
 	let { content = $bindable('') }: { content: string } = $props();
 

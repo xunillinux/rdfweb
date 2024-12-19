@@ -31,7 +31,6 @@
 					const uploadedUrl = await handleUpload(previewFile.file, `MembersImage_${key}.webp`);
 					const cacheBuster = getCacheBusterToken();
 					membersData[key].image = uploadedUrl + cacheBuster;
-					console.log(membersData[key].image);
 				}
 				isUploadingImages = false;
 			}
@@ -80,7 +79,6 @@
 
 			const uploadedUrl = await uploadR2File(file, fileName);
 
-			console.log('File uploaded successfully:', uploadedUrl);
 			return uploadedUrl;
 		} catch (error) {
 			console.error('Error uploading file. Please try again.', error);

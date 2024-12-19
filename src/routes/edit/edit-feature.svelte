@@ -79,7 +79,6 @@
 
 			const uploadedUrl = await uploadR2File(file, 'FeatureImage.webp');
 
-			console.log('File uploaded successfully:', uploadedUrl);
 			return uploadedUrl;
 		} catch (error) {
 			console.error('Error uploading file. Please try again.', error);

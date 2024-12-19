@@ -21,7 +21,6 @@
 		} catch (error) {
 			errorMessage = 'Invalid email or password. Please try again.';
 			password = '';
-			console.error('Error signing in:', error);
 			isRedirecting = false;
 		} finally {
 			userData.setLoading(false);
