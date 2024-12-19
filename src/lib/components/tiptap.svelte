@@ -7,12 +7,13 @@
 	import Link from '@tiptap/extension-link';
 	import { faBold, faItalic, faLink, faUnderline } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
+	import LinkModal from './link-modal.svelte';
 
 	const extensions = [
 		StarterKit,
 		Underline,
 		Link.configure({
-			openOnClick: false,
+			openOnClick: true,
 			autolink: true,
 			defaultProtocol: 'https',
 			protocols: ['http', 'https', 'mailto'],
@@ -22,7 +23,9 @@
 			isAllowedUri: (url, ctx) => ctx.defaultValidate(url) && !url.startsWith('./')
 		})
 	];
+
 	let editor = $state() as Readable<Editor>;
+	let showModal = $state(false); // Control modal visibility
 
 	onMount(() => {
 		editor = createEditor({
@@ -32,7 +35,7 @@
       `,
 			editorProps: {
 				attributes: {
-					class: 'border border-gray-400 p-4 min-h-[12rem] max-h-[12rem] overflow-y-auto'
+					class: 'border border-gray-400 p-4 min-h-[12rem] max-h-[12rem] overflow-y-auto outline-none'
 				}
 			}
 		});
@@ -50,8 +53,19 @@
 		$editor.chain().focus().toggleUnderline().run();
 	};
 
-	const toggleLink = (href: string) => {
-		$editor.chain().focus().toggleLink({ href }).run();
+	const openLinkModal = () => {
+		if ($editor.isActive('link')) {
+			$editor.chain().focus().unsetLink().run();
+		} else {
+			showModal = true;
+		}
+	};
+
+	const insertLink = (url: string) => {
+		if (url) {
+			const formattedUrl = /^(http|https|mailto):/.test(url) ? url : `https://${url}`;
+			$editor.chain().focus().toggleLink({ href: formattedUrl }).run();
+		}
 	};
 
 	const isActive = (name: string, attrs = {}) => $editor.isActive(name, attrs);
@@ -71,10 +85,17 @@
 			<Fa icon={faUnderline} />
 		</button>
 
-		<button type="button" class={isActive('link') ? 'rounded bg-gray-200 p-1' : 'p-1'} onclick={() => toggleLink('asdf')}>
+		<!-- Link Button -->
+		<button type="button" class={isActive('link') ? 'rounded bg-gray-200 p-1' : 'p-1'} onclick={openLinkModal}>
 			<Fa icon={faLink} />
 		</button>
 	</div>
 {/if}
 
+<!-- Editor Content -->
 <EditorContent editor={$editor} />
+
+<!-- Link Modal -->
+{#if showModal}
+	<LinkModal onSubmit={insertLink} onClose={() => (showModal = false)} />
+{/if}
