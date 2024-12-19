@@ -1,42 +1,24 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import type { Readable } from 'svelte/store';
-	import { Editor, EditorContent, createEditor } from 'svelte-tiptap';
-	import StarterKit from '@tiptap/starter-kit';
-	import Underline from '@tiptap/extension-underline';
-	import Link from '@tiptap/extension-link';
 	import { faBold, faItalic, faLink, faUnderline } from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
-	import LinkModal from './link-modal.svelte';
+	import { Editor, EditorContent, createEditor } from 'svelte-tiptap';
+	import type { Readable } from 'svelte/store';
+	import LinkModal from '../link-modal.svelte';
+	import { defaultEditorProps, extensions } from './tiptap-config';
 
-	const extensions = [
-		StarterKit,
-		Underline,
-		Link.configure({
-			openOnClick: true,
-			autolink: true,
-			defaultProtocol: 'https',
-			protocols: ['http', 'https', 'mailto'],
-			HTMLAttributes: {
-				class: 'text-blue-500 hover:underline'
-			},
-			isAllowedUri: (url, ctx) => ctx.defaultValidate(url) && !url.startsWith('./')
-		})
-	];
+	let { content = $bindable('') }: { content: string } = $props();
 
 	let editor = $state() as Readable<Editor>;
-	let showModal = $state(false); // Control modal visibility
+	let showModal = $state(false);
 
 	onMount(() => {
 		editor = createEditor({
 			extensions,
-			content: `
-        <p>This is still the text editor you're used to, but enriched with node views.</p>
-      `,
-			editorProps: {
-				attributes: {
-					class: 'border border-gray-400 p-4 min-h-[12rem] max-h-[12rem] overflow-y-auto outline-none'
-				}
+			content,
+			editorProps: defaultEditorProps,
+			onUpdate: ({ editor }) => {
+				content = editor.getHTML();
 			}
 		});
 	});

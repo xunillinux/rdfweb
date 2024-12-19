@@ -1,9 +1,10 @@
+<!-- edit-presstexts.svelte -->
 <script lang="ts">
 	import ModalBtn from '$lib/components/modal-btn.svelte';
 	import { faChevronUp, faChevronDown, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import type { PressText } from '$lib/model/rdf-data-model';
-	import Tiptap from '$lib/components/tiptap.svelte';
+	import TiptapEditor from '$lib/components/tiptap/tiptap-editor.svelte';
 
 	let { presstexts, onPressTextDataChange }: { presstexts: PressText[]; onPressTextDataChange: any } = $props();
 
@@ -47,47 +48,26 @@
 
 <ModalBtn title="Edit Presstexts" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
 	<div class="py-1">
-		<div class="py-2">
-			<Tiptap />
-		</div>
-
-		<!-- Title with Toggle Icon -->
+		<!-- English Press Text -->
 		<h2 class="mb-4 flex items-center text-lg font-bold">
 			<span>EN</span>
-			<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={toggleENCollapsed} aria-label="Toggle Past Concerts">
+			<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={toggleENCollapsed} aria-label="Toggle EN Press Text">
 				<Fa icon={isENCollapsed ? faChevronDown : faChevronUp} scale={0.8} translateY={0.1} />
 			</button>
 		</h2>
-
 		{#if !isENCollapsed}
-			<textarea
-				id="presstext-en"
-				name="presstext-en"
-				bind:value={presstextEN.text}
-				class="w-full rounded border p-2"
-				required
-				placeholder="Presstext"
-				rows="11"
-			></textarea>
+			<TiptapEditor bind:content={presstextEN.text} />
 		{/if}
 
-		<!-- Title with Toggle Icon -->
+		<!-- German Press Text -->
 		<h2 class="my-4 flex items-center text-lg font-bold">
 			<span>DE</span>
-			<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={toggleDECollapsed} aria-label="Toggle Past Concerts">
+			<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={toggleDECollapsed} aria-label="Toggle DE Press Text">
 				<Fa icon={isDECollapsed ? faChevronDown : faChevronUp} scale={0.8} translateY={0.1} />
 			</button>
 		</h2>
 		{#if !isDECollapsed}
-			<textarea
-				id="presstext-de"
-				name="presstext-de"
-				bind:value={presstextDE.text}
-				class="w-full rounded border p-2"
-				required
-				placeholder="Presstext"
-				rows="11"
-			></textarea>
+			<TiptapEditor bind:content={presstextDE.text} />
 		{/if}
 	</div>
 </ModalBtn>
