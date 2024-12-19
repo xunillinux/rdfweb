@@ -22,6 +22,12 @@
 			}
 		});
 	});
+
+	$effect(() => {
+		if (editor && content !== $editor.getHTML()) {
+			$editor.commands.setContent(content);
+		}
+	});
 </script>
 
 <!-- Render the editor content -->
