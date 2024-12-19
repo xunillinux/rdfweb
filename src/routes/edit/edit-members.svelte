@@ -14,18 +14,26 @@
 	let previewFiles: Map<number, { file: File; previewUrl: string }> = $state(new Map());
 
 	let isSaving = $state(false);
+	let isUploadingImages = $state(false);
+
+	const spinnerText = $derived.by(() => {
+		if (isUploadingImages) return 'Compressing and uploading image...';
+		return 'Saving Changes...';
+	});
 
 	async function onConfirm() {
 		try {
 			isSaving = true;
 
 			if (previewFiles?.size > 0) {
+				isUploadingImages = true;
 				for (const [key, previewFile] of previewFiles.entries()) {
 					const uploadedUrl = await handleUpload(previewFile.file, `MembersImage_${key}.webp`);
 					const cacheBuster = getCacheBusterToken();
 					membersData[key].image = uploadedUrl + cacheBuster;
 					console.log(membersData[key].image);
 				}
+				isUploadingImages = false;
 			}
 			onMembersDataChange(membersData);
 		} catch (error) {
@@ -43,6 +51,7 @@
 		membersData = JSON.parse(JSON.stringify(members)) as Member[];
 		previewFiles = new Map();
 		isSaving = false;
+		isUploadingImages = false;
 	}
 
 	function onFileChange(event: Event, index: number) {
@@ -137,6 +146,6 @@
 			</div>
 		</div>
 	{:else}
-		<LoadingSpinner text="Saving changes..." />
+		<LoadingSpinner text={spinnerText} />
 	{/if}
 </ModalBtn>

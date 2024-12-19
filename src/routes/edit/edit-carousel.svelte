@@ -68,8 +68,8 @@
 			for (const fileName of imagesToDelete) {
 				isDeletingImages = true;
 				await deleteR2File(removeCacheBusterToken(fileName));
-				isDeletingImages = false;
 			}
+			isDeletingImages = false;
 
 			// Upload new images
 			for (const { file, category } of newImages) {
@@ -78,8 +78,8 @@
 				const uploadedUrl = await uploadR2File(file, uniqueFileName);
 				const cacheBuster = getCacheBusterToken();
 				headerImagesData.push({ src: uploadedUrl + cacheBuster, category });
-				isUploadingImages = false;
 			}
+			isUploadingImages = false;
 
 			onHeaderImagesChange(headerImagesData);
 		} catch (error) {
@@ -99,6 +99,8 @@
 		imagesToDelete = [];
 		selectedImage = null;
 		isSaving = false;
+		isDeletingImages = false;
+		isUploadingImages = false;
 	}
 </script>
 
