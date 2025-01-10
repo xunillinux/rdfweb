@@ -41,7 +41,7 @@
 			</div>
 		{:else}
 			<div class="flex h-20 items-center justify-center text-center text-lg text-gray-600">
-				<p>There are no upcoming concerts :(</p>
+				<p>New concerts to be announced soon :)</p>
 			</div>
 		{/if}
 
