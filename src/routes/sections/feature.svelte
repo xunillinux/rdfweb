@@ -20,7 +20,7 @@
 
 	<!-- Caption -->
 	{#if feature.caption}
-		<p class="mt-3 text-center text-2xl uppercase">{feature.caption}</p>
+		<p class="mt-3 text-center text-3xl uppercase">{feature.caption}</p>
 	{/if}
 
 	<!-- Image -->
