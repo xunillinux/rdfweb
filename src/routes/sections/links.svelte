@@ -14,7 +14,7 @@
 				href={link.href}
 				target={link.href.startsWith('mailto:') ? '_self' : '_blank'}
 				rel="noopener noreferrer"
-				class="text-2xl font-bold uppercase hover:underline sm:text-3xl"
+				class="text-3xl font-bold uppercase hover:underline"
 			>
 				{#if link.href.startsWith('mailto:')}
 					<!-- Flex container for icon and text -->

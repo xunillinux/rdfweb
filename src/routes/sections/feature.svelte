@@ -44,7 +44,7 @@
 	<div class="mt-12 space-y-4 text-center">
 		{#each feature.featureLinks as featureLink}
 			<div>
-				<a href={featureLink.href} class="text-2xl font-bold uppercase hover:underline" target="_blank">{featureLink.text}</a>
+				<a href={featureLink.href} class="text-3xl font-bold uppercase hover:underline" target="_blank">{featureLink.text}</a>
 			</div>
 		{/each}
 	</div>
