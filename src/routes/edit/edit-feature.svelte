@@ -174,35 +174,49 @@
 
 			<!-- Title with Toggle Icon -->
 			<h2 class="my-4 flex items-center text-lg font-bold">
-				<span>Feature Image</span>
+				<span>Feature Content</span>
 				<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={toggleFeatureImageCollapsed} aria-label="Toggle Feature Image">
 					<Fa icon={featureImageCollapsed ? faChevronDown : faChevronUp} scale={0.8} translateY={0.1} />
 				</button>
 			</h2>
 
 			{#if !featureImageCollapsed}
-				<img
-					src={previewImageUrl ?? r2bucketEndpoint + featureData.image}
-					alt="photoURL"
-					width="256"
-					height="256"
-					class="mx-auto mb-4 rounded-lg shadow-md sm:mx-0"
-				/>
-				<label
-					for="file-upload"
-					class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"
-				>
-					Select Image
-					<input
-						id="file-upload"
-						onchange={previewImage}
-						bind:files
-						name="photoURL"
-						type="file"
-						class="hidden"
-						accept="image/png, image/jpeg, image/webp"
+				<!-- Toggle between Image and Video -->
+				<div class="mb-4 flex gap-4">
+					<label class="flex items-center gap-2">
+						<input type="radio" checked={!featureData.isVideo} onchange={() => (featureData.isVideo = false)} /> Image
+					</label>
+					<label class="flex items-center gap-2">
+						<input type="radio" checked={featureData.isVideo} onchange={() => (featureData.isVideo = true)} /> Video
+					</label>
+				</div>
+
+				{#if featureData.isVideo}
+					<input type="text" bind:value={featureData.youtubeURL} class="w-full rounded border p-2" placeholder="Enter YouTube URL" />
+				{:else}
+					<img
+						src={previewImageUrl ?? r2bucketEndpoint + featureData.image}
+						alt="photoURL"
+						width="256"
+						height="256"
+						class="mx-auto mb-4 rounded-lg shadow-md sm:mx-0"
 					/>
-				</label>
+					<label
+						for="file-upload"
+						class="mx-auto block w-[256px] rounded border border-gray-300 bg-gray-100 px-4 py-2 text-center text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring focus:ring-blue-300 sm:mx-0"
+					>
+						Select Image
+						<input
+							id="file-upload"
+							onchange={previewImage}
+							bind:files
+							name="photoURL"
+							type="file"
+							class="hidden"
+							accept="image/png, image/jpeg, image/webp"
+						/>
+					</label>
+				{/if}
 			{/if}
 
 			<!-- Title with Toggle Icon -->
