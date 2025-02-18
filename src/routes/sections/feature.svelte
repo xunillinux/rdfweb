@@ -24,7 +24,7 @@
 	{/if}
 
 	<!-- Image -->
-	<div class="mt-6 p-6">
+	<div class="mt-12 p-6">
 		{#if feature.isVideo}
 			<!-- Embedded YouTube Video -->
 			<iframe
@@ -56,7 +56,7 @@
 	</div>
 
 	<!-- Links -->
-	<div class="mt-6 space-y-4 text-center">
+	<div class="mt-12 space-y-4 text-center">
 		{#each feature.featureLinks as featureLink}
 			<div>
 				<a href={featureLink.href} class="text-4xl uppercase hover:underline" target="_blank">{featureLink.text}</a>
