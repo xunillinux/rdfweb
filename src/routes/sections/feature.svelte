@@ -25,23 +25,38 @@
 
 	<!-- Image -->
 	<div class="mt-6 p-6">
-		<!-- Placeholder -->
-		{#if !isImageLoaded}
-			<div class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full sm:max-w-128 md:max-w-160 lg:max-w-192"></div>
-		{/if}
+		{#if feature.isVideo}
+			<!-- Embedded YouTube Video -->
+			<iframe
+				src={feature.youtubeURL}
+				class="max-h-[300px] max-w-full sm:max-h-[325px] sm:max-w-[578px] lg:max-h-[350] lg:max-w-[622px] xl:max-h-[450] xl:max-w-[800px]"
+				height="350"
+				width="650"
+				title="YouTube video player"
+				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen
+			>
+			</iframe>
+		{:else}
+			<!-- Placeholder -->
+			{#if !isImageLoaded}
+				<div class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full sm:max-w-128 md:max-w-160 lg:max-w-192"></div>
+			{/if}
 
-		<!-- Image -->
-		<img
-			src={imageSource}
-			alt="Feature"
-			class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192"
-			onload={() => (isImageLoaded = true)}
-			style:display={!isImageLoaded ? 'none' : 'block'}
-		/>
+			<!-- Image -->
+			<img
+				src={imageSource}
+				alt="Feature"
+				class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192"
+				onload={() => (isImageLoaded = true)}
+				style:display={!isImageLoaded ? 'none' : 'block'}
+			/>
+		{/if}
 	</div>
 
 	<!-- Links -->
-	<div class="mt-12 space-y-4 text-center">
+	<div class="mt-6 space-y-4 text-center">
 		{#each feature.featureLinks as featureLink}
 			<div>
 				<a href={featureLink.href} class="text-4xl uppercase hover:underline" target="_blank">{featureLink.text}</a>

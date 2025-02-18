@@ -7,7 +7,7 @@
 	let { links, socialMediaLinks }: { links: Link[]; socialMediaLinks: SocialMediaLinksType } = $props();
 </script>
 
-<div class="bg-white py-12 text-black">
+<div class="bg-white py-24 text-black">
 	<div class="flex flex-col items-center space-y-6">
 		{#each links as link}
 			<a
