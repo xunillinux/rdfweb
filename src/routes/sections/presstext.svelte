@@ -13,7 +13,7 @@
 		{#if pressTextEN}
 			<div class="max-w-4xl border-black py-6 sm:mx-auto">
 				<h2 class="mb-4 hidden text-3xl font-bold uppercase sm:block">{pressTextEN.language}</h2>
-				<h2 class="mb-4 block text-3xl font-bold uppercase sm:hidden">About</h2>
+				<h2 class="mb-7 text-center text-4xl font-bold uppercase tracking-wide sm:hidden">About</h2>
 				<TiptapViewer content={pressTextEN.text} viewerClass="whitespace-pre-line leading-relaxed lg:text-xl" />
 			</div>
 		{/if}
