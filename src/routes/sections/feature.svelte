@@ -46,7 +46,7 @@
 
 		{#if feature.videoCaption}
 			<p class="mt-12 text-center text-4xl uppercase">{feature.videoCaption}</p>
-			<p class="mb-6 mt-3 text-center text-4xl uppercase">{feature.videoTitle}</p>
+			<p class="mb-6 mt-3 text-center text-4xl font-bold uppercase">{feature.videoTitle}</p>
 		{:else}
 			<p class="mb-6 mt-12 text-center text-4xl uppercase">{feature.videoTitle}</p>
 		{/if}
