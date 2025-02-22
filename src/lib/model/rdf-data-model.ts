@@ -21,7 +21,8 @@ export enum ImageCategory {
 export type Feature = {
   image: string;
   youtubeURL: string;
-  isVideo: boolean;
+  videoTitle: string;
+  videoCaption: string;
   heading: string;
   subheading: string;
   caption: string;

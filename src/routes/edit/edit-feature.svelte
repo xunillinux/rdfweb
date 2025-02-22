@@ -15,6 +15,7 @@
 	let featureHeadingCollapsed = $state(false);
 	let featureImageCollapsed = $state(false);
 	let featureLinksCollapsed = $state(true);
+	let featureVideoCollapsed = $state(true);
 
 	let newLink = $state({ text: '', href: '' });
 
@@ -66,6 +67,7 @@
 		featureHeadingCollapsed = false;
 		featureImageCollapsed = false;
 		featureLinksCollapsed = true;
+		featureVideoCollapsed = true;
 		previewImageUrl = null;
 		files = null;
 		featureData = JSON.parse(JSON.stringify(feature)) as Feature;
@@ -127,6 +129,10 @@
 	function toggleFeatureLinksCollapsed() {
 		featureLinksCollapsed = !featureLinksCollapsed;
 	}
+
+	function toggleFeatureVideoCollapsed() {
+		featureVideoCollapsed = !featureVideoCollapsed;
+	}
 </script>
 
 <ModalBtn title="Edit Feature" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
@@ -175,25 +181,14 @@
 			<!-- Title with Toggle Icon -->
 			<h2 class="my-4 flex items-center text-lg font-bold">
 				<span>Feature Content</span>
-				<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={toggleFeatureImageCollapsed} aria-label="Toggle Feature Image">
+				<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={toggleFeatureImageCollapsed} aria-label="Toggle Feature Content">
 					<Fa icon={featureImageCollapsed ? faChevronDown : faChevronUp} scale={0.8} translateY={0.1} />
 				</button>
 			</h2>
 
 			{#if !featureImageCollapsed}
-				<!-- Toggle between Image and Video -->
-				<div class="mb-4 flex gap-4">
-					<label class="flex items-center gap-2">
-						<input type="radio" checked={!featureData.isVideo} onchange={() => (featureData.isVideo = false)} /> Image
-					</label>
-					<label class="flex items-center gap-2">
-						<input type="radio" checked={featureData.isVideo} onchange={() => (featureData.isVideo = true)} /> Video
-					</label>
-				</div>
-
-				{#if featureData.isVideo}
-					<input type="text" bind:value={featureData.youtubeURL} class="w-full rounded border p-2" placeholder="Enter YouTube URL" />
-				{:else}
+				<!-- Image Section -->
+				<div class="mb-4">
 					<img
 						src={previewImageUrl ?? r2bucketEndpoint + featureData.image}
 						alt="photoURL"
@@ -216,7 +211,7 @@
 							accept="image/png, image/jpeg, image/webp"
 						/>
 					</label>
-				{/if}
+				</div>
 			{/if}
 
 			<!-- Title with Toggle Icon -->
@@ -287,6 +282,23 @@
 						</li>
 					{/each}
 				</ul>
+			{/if}
+
+			<!-- Title with Toggle Icon -->
+			<h2 class="my-4 flex items-center text-lg font-bold">
+				<span>Feature Video</span>
+				<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={toggleFeatureVideoCollapsed} aria-label="Toggle Feature Video">
+					<Fa icon={featureVideoCollapsed ? faChevronDown : faChevronUp} scale={0.8} translateY={0.1} />
+				</button>
+			</h2>
+
+			{#if !featureVideoCollapsed}
+				<!-- Video Section -->
+				<div class="mb-4">
+					<input type="text" bind:value={featureData.videoCaption} class="mb-2 w-full rounded border p-2" placeholder="Enter Video Caption" />
+					<input type="text" bind:value={featureData.videoTitle} class="mb-2 w-full rounded border p-2" placeholder="Enter Video Title" />
+					<input type="text" bind:value={featureData.youtubeURL} class="w-full rounded border p-2" placeholder="Enter YouTube URL" />
+				</div>
 			{/if}
 		</div>
 	{:else}

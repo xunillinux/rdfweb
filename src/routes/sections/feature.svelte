@@ -25,8 +25,33 @@
 
 	<!-- Image -->
 	<div class="mt-12 p-6">
-		{#if feature.isVideo}
-			<!-- Embedded YouTube Video -->
+		<!-- Placeholder -->
+		{#if !isImageLoaded}
+			<div class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full sm:max-w-128 md:max-w-160 lg:max-w-192"></div>
+		{/if}
+
+		<!-- Image -->
+		<img
+			src={imageSource}
+			alt="Feature"
+			class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192"
+			onload={() => (isImageLoaded = true)}
+			style:display={!isImageLoaded ? 'none' : 'block'}
+		/>
+	</div>
+
+	<!-- Video -->
+	{#if feature.youtubeURL}
+		<!-- Embedded YouTube Video -->
+
+		{#if feature.videoCaption}
+			<p class="mt-12 text-center text-4xl uppercase">{feature.videoCaption}</p>
+			<p class="mb-6 mt-3 text-center text-4xl uppercase">{feature.videoTitle}</p>
+		{:else}
+			<p class="mb-6 mt-12 text-center text-4xl uppercase">{feature.videoTitle}</p>
+		{/if}
+
+		<div class="mb-6 mt-12 space-y-4 text-center">
 			<iframe
 				src={feature.youtubeURL}
 				class="max-h-[300px] max-w-full sm:max-h-[325px] sm:max-w-[578px] lg:max-h-[350] lg:max-w-[622px] xl:max-h-[450] xl:max-w-[800px]"
@@ -38,22 +63,8 @@
 				allowfullscreen
 			>
 			</iframe>
-		{:else}
-			<!-- Placeholder -->
-			{#if !isImageLoaded}
-				<div class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full sm:max-w-128 md:max-w-160 lg:max-w-192"></div>
-			{/if}
-
-			<!-- Image -->
-			<img
-				src={imageSource}
-				alt="Feature"
-				class="sm:max-h-128 md:max-h-160 lg:max-h-192 h-full w-full object-cover sm:max-w-128 md:max-w-160 lg:max-w-192"
-				onload={() => (isImageLoaded = true)}
-				style:display={!isImageLoaded ? 'none' : 'block'}
-			/>
-		{/if}
-	</div>
+		</div>
+	{/if}
 
 	<!-- Links -->
 	<div class="mt-12 space-y-4 text-center">
