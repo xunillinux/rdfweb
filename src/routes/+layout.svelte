@@ -4,7 +4,13 @@
 </script>
 
 <svelte:head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" sizes="32x32" type="image/png" />
+	<link rel="apple-touch-icon" href="%sveltekit.assets%/favicon.png" />
+
 	<title>Robot Dog Funeral</title>
+
+	<!-- Primary Meta Tags -->
 	<meta
 		name="description"
 		content="Robot Dog Funeral - An indie rock/post-punk band with electrifying music. Check out our latest album 'Dead Inside'!"
@@ -22,14 +28,11 @@
 	<meta property="og:type" content="website" />
 
 	<!-- Favicon -->
-	<link rel="icon" href="/favicon.png" sizes="32x32" type="image/png" />
-	<link rel="apple-touch-icon" href="/favicon.png" />
 	<meta name="theme-color" content="#000000" />
 
 	<!-- Canonical URL -->
 	<link rel="canonical" href="https://robotdogfuneral.com" />
 
-	<!-- Structured Data for SEO -->
 	<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",
