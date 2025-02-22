@@ -72,6 +72,10 @@
 					Logout
 				</button>
 			</form>
+			<!-- To Homepage Link -->
+			<div class="mt-4 text-center">
+				<a href="/" class="text-blue-500 hover:underline">To Homepage</a>
+			</div>
 		{:else}
 			<!-- Login Form -->
 			<h1 class="mb-6 text-center text-2xl font-semibold text-gray-800">Login</h1>
@@ -113,6 +117,10 @@
 					Login
 				</button>
 			</form>
+			<!-- To Homepage Link -->
+			<div class="mt-4 text-center">
+				<a href="/" class="text-blue-500 hover:underline">To Homepage</a>
+			</div>
 		{/if}
 	</div>
 </div>
