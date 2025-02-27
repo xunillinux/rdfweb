@@ -10,7 +10,7 @@
 	let concertData = $state<{ date: string; name: string; location: string }[]>(
 		concerts
 			.map((c) => ({
-			    date: new Date(c.date ? `${c.date}T00:00:00Z` : Date.now()).toISOString().split('T')[0],
+			    date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
 			    name: c.name,
 			    location: c.location
 			}))
@@ -53,7 +53,7 @@
 		newConcertData = [];
 		pastConcertsCollapsed = true;
 		concertData = concerts.map((c) => ({
-		    date: new Date(c.date ? `${c.date}T00:00:00Z` : Date.now()).toISOString().split('T')[0],
+		    date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
 		    name: c.name,
 		    location: c.location
 		}));
