@@ -1,15 +1,13 @@
 <script>
+	import { browser } from '$app/environment';
+
 	export let error;
 	export let status;
 
-	// Get the current URL
-	const currentUrl = window.location.href;
-
-	// Get browser details
-	const browserInfo = navigator.userAgent;
-
-	// Check if online or offline
-	const isOnline = navigator.onLine ? "Online" : "Offline";
+	// Only access window & navigator in the browser
+	let currentUrl = browser ? window.location.href : 'Unknown';
+	let browserInfo = browser ? navigator.userAgent : 'Unknown';
+	let isOnline = browser ? (navigator.onLine ? "Online" : "Offline") : 'Unknown';
 </script>
 
 <div class="flex min-h-screen items-center justify-center bg-gray-100">
