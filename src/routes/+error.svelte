@@ -1,8 +1,7 @@
 <script>
 	import { browser } from '$app/environment';
 
-	export let error;
-	export let status;
+	let { error, status } = $props();
 
 	// Only access window & navigator in the browser
 	let currentUrl = browser ? window.location.href : 'Unknown';
