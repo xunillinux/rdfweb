@@ -10,9 +10,9 @@
 	let concertData = $state<{ date: string; name: string; location: string }[]>(
 		concerts
 			.map((c) => ({
-				date: c.date.toISOString().split('T')[0],
-				name: c.name,
-				location: c.location
+			    date: new Date(c.date ? `${c.date}T00:00:00Z` : Date.now()).toISOString().split('T')[0],
+			    name: c.name,
+			    location: c.location
 			}))
 			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 	);
