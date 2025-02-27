@@ -1,6 +1,10 @@
 <script>
 	export let error;
 	export let status;
+
+	if (error?.status === 404) {
+		throw redirect(302, '/');
+    	}
 </script>
 
 <div class="flex min-h-screen items-center justify-center bg-gray-100">
