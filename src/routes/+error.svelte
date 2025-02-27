@@ -1,10 +1,12 @@
 <script>
+	import { goto } from '$app/navigation';
+
 	export let error;
 	export let status;
 
 	if (error?.status === 404) {
-		throw redirect(302, '/');
-    	}
+		goto('/');
+	}
 </script>
 
 <div class="flex min-h-screen items-center justify-center bg-gray-100">
