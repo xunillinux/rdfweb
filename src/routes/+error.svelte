@@ -1,32 +1,46 @@
+<!-- src/routes/+error.svelte -->
 <script>
-	import { page } from '$app/state';
-	import { browser } from '$app/environment';
+  import { page } from '$app/stores';
 
-	let { error, status } = $props();
-
-	// Only access window & navigator in the browser
-	let currentUrl = browser ? window.location.href : 'Unknown';
-	let browserInfo = browser ? navigator.userAgent : 'Unknown';
-	let isOnline = browser ? (navigator.onLine ? 'Online' : 'Offline') : 'Unknown';
+  // Access error details from the $page store
+  const { status, error } = $page;
 </script>
 
-<div class="flex min-h-screen items-center justify-center bg-gray-100">
-	<div class="w-full max-w-md rounded-lg bg-white p-6 text-center shadow-lg">
-		<h1 class="mb-4 text-3xl font-bold text-red-600">Error {status}</h1>
-		<p class="text-gray-800">{error?.message || 'An unknown error occurred.'}</p>
-
-		<!-- Debugging Info -->
-		<div class="mt-4 p-3 text-left text-sm bg-gray-200 rounded">
-			<strong>Debug Info:</strong>
-			<p><strong>URL:</strong> {currentUrl}</p>
-			<p><strong>Browser:</strong> {browserInfo}</p>
-			<p><strong>Network:</strong> {isOnline}</p>
-			<p><strong>Full Error Details:</strong></p>
-			<pre class="mt-2 bg-gray-300 p-2 rounded text-left text-xs">
-{JSON.stringify(error, null, 2)}
-			</pre>
-		</div>
-
-		<a href="/" class="mt-4 inline-block text-blue-500 underline">Back to Homepage</a>
-	</div>
+<div class="error-page">
+  <h1>Error {status}</h1>
+  <p>{error?.message || 'An unexpected error occurred.'}</p>
+  <pre>{JSON.stringify(error, null, 2)}</pre>
+  <a href="/">Back to Homepage</a>
 </div>
+
+/* src/routes/+error.svelte */
+<style>
+  .error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    text-align: center;
+  }
+  h1 {
+    color: #e74c3c;
+  }
+  pre {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    max-width: 80%;
+    margin-top: 20px;
+  }
+  a {
+    margin-top: 20px;
+    color: #3498db;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
