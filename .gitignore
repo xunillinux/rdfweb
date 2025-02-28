@@ -22,3 +22,5 @@ vite.config.ts.timestamp-*
 
 # Firebase
 service-account.json
+# Local Netlify folder
+.netlify
