@@ -10,9 +10,9 @@
 	let concertData = $state<{ date: string; name: string; location: string }[]>(
 		concerts
 			.map((c) => ({
-			    date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
-			    name: c.name,
-			    location: c.location
+				date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
+				name: c.name,
+				location: c.location
 			}))
 			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 	);
@@ -53,9 +53,9 @@
 		newConcertData = [];
 		pastConcertsCollapsed = true;
 		concertData = concerts.map((c) => ({
-		    date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
-		    name: c.name,
-		    location: c.location
+			date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
+			name: c.name,
+			location: c.location
 		}));
 	}
 

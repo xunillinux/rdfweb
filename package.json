@@ -49,6 +49,7 @@
 		"browser-image-compression": "^2.0.2",
 		"firebase": "^11.0.1",
 		"firebase-admin": "^13.0.1",
+		"patch-package": "^8.0.0",
 		"svelte-fa": "^4.0.3",
 		"svelte-portal": "^2.2.1",
 		"svelte-tiptap": "^2.1.0",
