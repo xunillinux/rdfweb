@@ -1,6 +1,7 @@
 <script>
 	import { r2bucketEndpoint } from '$lib/config';
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	let isMobile = $state();
 	let videoElement = $state();
@@ -36,6 +37,7 @@
 	{#if isMobile == true}
 		<video
 			bind:this={videoElement}
+			transition:fade
 			poster={portraitPoster}
 			autoplay
 			muted
@@ -52,6 +54,7 @@
 	{:else if isMobile === false}
 		<video
 			bind:this={videoElement}
+			transition:fade
 			poster={landscapePoster}
 			autoplay
 			muted
