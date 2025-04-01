@@ -68,7 +68,10 @@
 	{/if}
 
 	<!-- Blur layer over video -->
+
+	<!--
 	<div class="absolute inset-0 z-0 bg-black/10 backdrop-blur-md"></div>
+  -->
 
 	<!-- Blur filter for text -->
 	<svg class="absolute inset-0 h-0 w-0">
