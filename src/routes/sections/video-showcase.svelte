@@ -31,7 +31,7 @@
 	});
 </script>
 
-<section id="showcase-video" class="relative mt-[65px] h-[calc(100vh-65px)] overflow-hidden">
+<section id="showcase-video" class="relative mt-[65px] h-[calc(100vh-65px)] overflow-hidden bg-black">
 	<!-- Video -->
 	{#if isMobile == true}
 		<video
