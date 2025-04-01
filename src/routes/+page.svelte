@@ -19,6 +19,7 @@
 	import Links from './sections/links.svelte';
 	import Members from './sections/members.svelte';
 	import Presstext from './sections/presstext.svelte';
+	import VideoShowcase from './sections/video-showcase.svelte';
 
 	let { data } = $props();
 
@@ -82,6 +83,9 @@
 <Header {socialMediaLinks} />
 
 <main id="top" class="w-100">
+	<VideoShowcase />
+
+	<!--
 	<section id="carousel" class="carousel-section relative">
 		<Carousel {headerImages} />
 		{#if $userData.user}
@@ -90,6 +94,7 @@
 			</div>
 		{/if}
 	</section>
+	-->
 
 	<section id="feature" class="feature-section relative">
 		<Feature {feature} />
