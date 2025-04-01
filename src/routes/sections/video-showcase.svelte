@@ -6,6 +6,8 @@
 	let isMobile = $state();
 	let videoElement = $state();
 
+	let isSlowConnection = $state(false);
+
 	let landscapeHeight = 1080;
 	let portraitHeight = 1280;
 
