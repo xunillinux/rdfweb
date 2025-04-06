@@ -92,7 +92,7 @@
 	<!-- Text Overlay -->
 	<div class="z-1 pointer-events-none absolute inset-0 flex items-center justify-center text-center">
 		<div
-			class="relative text-6xl font-bold uppercase leading-snug text-white md:text-7xl lg:text-9xl"
+			class="relative text-7xl font-bold uppercase leading-tight text-white md:text-7xl md:leading-snug lg:text-9xl"
 			style="filter: url(#blur-effect); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);"
 		>
 			<div>Robot</div>
