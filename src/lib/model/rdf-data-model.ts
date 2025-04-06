@@ -33,6 +33,7 @@ export type Concert = {
   date: Date;
   name: string;
   location: string;
+  ticketUrl: string;
 }
 
 export type Link = {

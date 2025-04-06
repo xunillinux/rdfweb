@@ -7,18 +7,19 @@
 
 	let { concerts, onConcertDataChange }: { concerts: Concert[]; onConcertDataChange: any } = $props();
 
-	let concertData = $state<{ date: string; name: string; location: string }[]>(
+	let concertData = $state<{ date: string; name: string; location: string; ticketUrl: string }[]>(
 		concerts
 			.map((c) => ({
 				date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
 				name: c.name,
-				location: c.location
+				location: c.location,
+				ticketUrl: c.ticketUrl
 			}))
 			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 	);
 
-	let newConcert = $state({ date: '', name: '', location: '' });
-	let newConcertData = $state<{ date: string; name: string; location: string }[]>([]);
+	let newConcert = $state({ date: '', name: '', location: '', ticketUrl: '' });
+	let newConcertData = $state<{ date: string; name: string; location: string; ticketUrl: string }[]>([]);
 
 	let pastConcertsCollapsed = $state(true);
 
@@ -26,7 +27,7 @@
 	function addConcert(event: Event) {
 		event.preventDefault();
 		newConcertData.unshift({ ...newConcert });
-		newConcert = { date: '', name: '', location: '' };
+		newConcert = { date: '', name: '', location: '', ticketUrl: '' };
 	}
 
 	// Delete a concert
@@ -42,20 +43,22 @@
 		concerts = concertData.map((c) => ({
 			date: new Date(c.date),
 			name: c.name,
-			location: c.location
+			location: c.location,
+			ticketUrl: c.ticketUrl ?? ''
 		}));
 
 		onConcertDataChange(concerts);
 	}
 
 	function onClose() {
-		newConcert = { date: '', name: '', location: '' };
+		newConcert = { date: '', name: '', location: '', ticketUrl: '' };
 		newConcertData = [];
 		pastConcertsCollapsed = true;
 		concertData = concerts.map((c) => ({
 			date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
 			name: c.name,
-			location: c.location
+			location: c.location,
+			ticketUrl: c.ticketUrl
 		}));
 	}
 
@@ -101,6 +104,14 @@
 			<p class="text-sm text-gray-500 sm:col-span-1 md:col-span-3">
 				You can add <span class="font-mono font-bold text-black">\n</span> to Name or Location to add a forced line break on smaller screens.
 			</p>
+			<input
+				id="concert-ticketurl"
+				name="concert-ticketurl"
+				type="text"
+				bind:value={newConcert.ticketUrl}
+				class="w-full rounded border p-2"
+				placeholder="Ticket Url"
+			/>
 			<button type="submit" class="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"> Add Concert </button>
 		</form>
 
@@ -115,6 +126,9 @@
 							<p><strong>Date:</strong> {concert.date}</p>
 							<p><strong>Name:</strong> {replaceNewlinesWithSpace(concert.name)}</p>
 							<p><strong>Location:</strong> {replaceNewlinesWithSpace(concert.location)}</p>
+							{#if concert.ticketUrl}
+								<p><strong>Ticket Url:</strong> {replaceNewlinesWithSpace(concert.ticketUrl)}</p>
+							{/if}
 						</div>
 						<button onclick={() => deleteConcert(index, true)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"> Delete </button>
 					</li>
@@ -139,6 +153,9 @@
 							<p><strong>Date:</strong> {concert.date}</p>
 							<p><strong>Name:</strong> {replaceNewlinesWithSpace(concert.name)}</p>
 							<p><strong>Location:</strong> {concert.location}</p>
+							{#if concert.ticketUrl}
+								<p><strong>Ticket Url:</strong> {replaceNewlinesWithSpace(concert.ticketUrl)}</p>
+							{/if}
 						</div>
 						<button onclick={() => deleteConcert(index, false)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"> Delete </button>
 					</li>

@@ -35,7 +35,7 @@
 			<div class="mx-auto">
 				<div class="grid grid-cols-1">
 					{#each futureConcerts as concert, index}
-						<ConcertRow {concert} isFirstElement={index === 0} />
+						<ConcertRow {concert} isFirstElement={index === 0} showTicketUrl={true} />
 					{/each}
 				</div>
 			</div>

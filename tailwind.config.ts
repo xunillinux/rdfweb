@@ -11,6 +11,9 @@ export default {
 
   theme: {
     extend: {
+      screens: {
+        xs: '480px', // Add your desired min-width here
+      },
       fontFamily: {
         separat: ['Separat', ...defaultTheme.fontFamily.sans],
       },
