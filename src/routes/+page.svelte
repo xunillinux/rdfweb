@@ -82,7 +82,9 @@
 
 <Header {socialMediaLinks} />
 
-<main id="top" class="w-100">
+<div id="top"></div>
+
+<main class="w-100">
 	<VideoShowcase />
 
 	<!--

@@ -22,6 +22,16 @@
 		}
 		isMenuOpen = false;
 	}
+
+	$effect(() => {
+		if (isMenuOpen) {
+			document.body.style.overflow = 'hidden';
+			document.documentElement.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+			document.documentElement.style.overflow = '';
+		}
+	});
 </script>
 
 <header class="bg-white shadow-md">
