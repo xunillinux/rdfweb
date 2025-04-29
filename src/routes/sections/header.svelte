@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+	import MobileNavigationOverlay from '$lib/components/mobile-navigation-overlay.svelte';
+	import type { SocialMediaLinksType } from '$lib/model/rdf-data-model';
+	import { faBars } from '@fortawesome/free-solid-svg-icons';
 	import { Fa } from 'svelte-fa';
 	import SocialMediaLinks from './social-media-links.svelte';
-	import type { SocialMediaLinksType } from '$lib/model/rdf-data-model';
-	import { fade, fly } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
+	import AnimatedBurgerIcon from '$lib/components/animated-burger-icon.svelte';
 
 	let { socialMediaLinks }: { socialMediaLinks: SocialMediaLinksType } = $props();
 
@@ -15,7 +15,7 @@
 	}
 
 	function scrollToSection(event: any, id: string) {
-		event.preventDefault();
+		event?.preventDefault();
 		const section = document.querySelector(id);
 		if (section) {
 			section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -25,19 +25,24 @@
 
 	$effect(() => {
 		if (isMenuOpen) {
+			const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+			document.body.style.paddingRight = `${scrollbarWidth}px`;
 			document.body.style.overflow = 'hidden';
-			document.documentElement.style.overflow = 'hidden';
 		} else {
 			document.body.style.overflow = '';
-			document.documentElement.style.overflow = '';
+			document.body.style.paddingRight = '';
 		}
+		return () => {
+			// Cleanup
+			document.body.style.overflow = '';
+			document.body.style.paddingRight = '';
+		};
 	});
 </script>
 
-<header class="bg-white shadow-md">
-	<nav class="mx-auto w-full px-6 py-4">
-		<div class="flex items-center justify-between">
-			<!-- Logo -->
+<header class="fixed top-0 z-20 h-16 w-full bg-white shadow-md">
+	<nav class="relative mx-auto flex h-full w-full items-center px-6">
+		<div class="flex w-full items-center justify-between">
 			<a
 				href="#top"
 				class="text-2xl font-bold text-gray-800 sm:block"
@@ -49,7 +54,7 @@
 				<span class="uppercase md:hidden">RDF</span>
 			</a>
 
-			<!-- Desktop Navigation -->
+			<!-- Desktop Navigation Bar -->
 			<div class="hidden space-x-6 text-xl sm:flex">
 				<a
 					href="#listen"
@@ -85,49 +90,18 @@
 			</div>
 
 			<!-- Mobile Burger Icon -->
-			<button class="text-gray-800 focus:outline-none sm:hidden" onclick={toggleMenu}>
-				<Fa icon={faBars} scale={1.5} />
+			<button
+				class="relative z-50 text-gray-800 focus:outline-none sm:hidden"
+				onclick={toggleMenu}
+				aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+				aria-expanded={isMenuOpen}
+			>
+				<AnimatedBurgerIcon isOpen={isMenuOpen} />
 			</button>
 		</div>
 
-		<!-- Fullscreen Mobile Navigation -->
 		{#if isMenuOpen}
-			<div
-				in:fly={{ duration: 250, x: 100, y: 0, easing: quintOut }}
-				out:fade={{ easing: quintOut }}
-				class="fixed inset-0 z-50 flex flex-col bg-white"
-			>
-				<!-- Close Button -->
-				<button class="absolute right-6 top-6 text-gray-800 focus:outline-none" onclick={toggleMenu}>
-					<Fa icon={faTimes} scale={1.5} />
-				</button>
-
-				<!-- Centered Links -->
-				<div class="flex flex-grow flex-col items-center justify-center space-y-6">
-					<a href="#listen" class="text-2xl uppercase text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#feature')}>Listen</a
-					>
-					<a href="#see" class="text-2xl uppercase text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#concerts')}>See</a>
-					<a href="#about" class="text-2xl uppercase text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#presstexts')}
-						>About</a
-					>
-					<a href="#contact" class="text-2xl uppercase text-gray-800 hover:underline" onclick={(event) => scrollToSection(event, '#links')}>Contact</a
-					>
-				</div>
-
-				<!-- Social Media Links -->
-				<div class="flex justify-center pb-8">
-					<SocialMediaLinks {socialMediaLinks} textSize="text-3xl" spaceX="space-x-12" translateY="0.15" />
-				</div>
-			</div>
+			<MobileNavigationOverlay bind:isOpen={isMenuOpen} {scrollToSection} {socialMediaLinks} />
 		{/if}
 	</nav>
 </header>
-
-<style>
-	header {
-		position: fixed;
-		top: 0;
-		width: 100%;
-		z-index: 10;
-	}
-</style>
