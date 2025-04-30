@@ -1,4 +1,8 @@
 <script lang="ts">
+	import AnimatedFacebookIcon from '$lib/components/animated-facebook-icon.svelte';
+	import AnimatedInstaIcon from '$lib/components/animated-insta-icon.svelte';
+	import AnimatedSpotifyIcon from '$lib/components/animated-spotify-icon.svelte';
+	import AnimatedYtIcon from '$lib/components/animated-yt-icon.svelte';
 	import type { SocialMediaLinksType } from '$lib/model/rdf-data-model';
 	import { faInstagram, faYoutube, faFacebook, faSpotify } from '@fortawesome/free-brands-svg-icons';
 	import { Fa } from 'svelte-fa';
@@ -16,22 +20,22 @@
 <div class="flex {spaceX} {textSize}">
 	{#if socialMediaLinks.linkInstagram}
 		<a href={socialMediaLinks.linkInstagram} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center">
-			<Fa icon={faInstagram} {translateY} />
+			<AnimatedInstaIcon />
 		</a>
 	{/if}
 	{#if socialMediaLinks.linkYoutube}
 		<a href={socialMediaLinks.linkYoutube} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center">
-			<Fa icon={faYoutube} {translateY} />
+			<AnimatedYtIcon />
 		</a>
 	{/if}
 	{#if socialMediaLinks.linkSpotify}
 		<a href={socialMediaLinks.linkSpotify} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center">
-			<Fa icon={faSpotify} {translateY} />
+			<AnimatedSpotifyIcon />
 		</a>
 	{/if}
 	{#if socialMediaLinks.linkFacebook}
 		<a href={socialMediaLinks.linkFacebook} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center">
-			<Fa icon={faFacebook} {translateY} />
+			<AnimatedFacebookIcon />
 		</a>
 	{/if}
 </div>
