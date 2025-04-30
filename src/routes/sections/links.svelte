@@ -1,8 +1,7 @@
 <script lang="ts">
-	import SocialMediaLinks from './social-media-links.svelte';
-	import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
-	import { Fa } from 'svelte-fa';
+	import HoverMailIconLink from '$lib/components/hover-mail-icon-link.svelte';
 	import type { Link, SocialMediaLinksType } from '$lib/model/rdf-data-model';
+	import SocialMediaLinks from './social-media-links.svelte';
 
 	let { links, socialMediaLinks }: { links: Link[]; socialMediaLinks: SocialMediaLinksType } = $props();
 </script>
@@ -19,8 +18,7 @@
 				{#if link.href.startsWith('mailto:')}
 					<!-- Flex container for icon and text -->
 					<div class="flex items-center space-x-2">
-						<Fa icon={faEnvelope} class="fa-solid" translateY="0.02" />
-						<span>{link.text}</span>
+						<HoverMailIconLink text={link.text} />
 					</div>
 				{:else}
 					{link.text}
