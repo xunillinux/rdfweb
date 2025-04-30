@@ -1,9 +1,20 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	let animate = false;
+
+	onMount(() => {
+		// Trigger animation once on component mount
+		animate = true;
+
+		// Optional: remove the animation class after it plays to allow future re-triggers
+		setTimeout(() => (animate = false), 500); // match animation duration
+	});
+
 	const size = 30;
 	const color = 'currentColor';
 </script>
 
-<div class="icon-wrapper" style="width: {size}px; height: {size}px; color: {color};">
+<div class="icon-wrapper {animate ? 'bounce' : ''}" style="width: {size}px; height: {size}px; color: {color};">
 	<slot />
 </div>
 
@@ -27,6 +38,10 @@
 		display: inline-block;
 		cursor: pointer;
 		transition: transform 0.3s ease;
+	}
+
+	.icon-wrapper.bounce {
+		animation: iconBounce 0.5s ease forwards;
 	}
 
 	.icon-wrapper:hover {
