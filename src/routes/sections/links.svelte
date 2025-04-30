@@ -9,21 +9,20 @@
 <div class="bg-white py-24 text-black">
 	<div class="flex flex-col items-center space-y-6">
 		{#each links as link}
-			<a
-				href={link.href}
-				target={link.href.startsWith('mailto:') ? '_self' : '_blank'}
-				rel="noopener noreferrer"
-				class="text-4xl font-bold uppercase hover:underline sm:text-3xl"
-			>
-				{#if link.href.startsWith('mailto:')}
-					<!-- Flex container for icon and text -->
-					<div class="flex items-center space-x-2">
-						<HoverMailIconLink text={link.text} />
-					</div>
-				{:else}
+			{#if link.href.startsWith('mailto:')}
+				<div class="flex items-center space-x-2">
+					<HoverMailIconLink text={link.text} />
+				</div>
+			{:else}
+				<a
+					href={link.href}
+					target={link.href.startsWith('mailto:') ? '_self' : '_blank'}
+					rel="noopener noreferrer"
+					class="text-4xl font-bold uppercase hover:underline sm:text-3xl"
+				>
 					{link.text}
-				{/if}
-			</a>
+				</a>
+			{/if}
 		{/each}
 
 		<div class="pt-6">
