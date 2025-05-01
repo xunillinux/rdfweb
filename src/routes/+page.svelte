@@ -5,13 +5,11 @@
 	import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 	import { signOut } from 'firebase/auth';
 	import Fa from 'svelte-fa';
-	import EditCarousel from './edit/edit-carousel.svelte';
 	import EditConcerts from './edit/edit-concerts.svelte';
 	import EditFeature from './edit/edit-feature.svelte';
 	import EditLinks from './edit/edit-links.svelte';
 	import EditMembers from './edit/edit-members.svelte';
 	import EditPresstexts from './edit/edit-presstexts.svelte';
-	import Carousel from './sections/carousel.svelte';
 	import Concerts from './sections/concerts/concerts.svelte';
 	import Feature from './sections/feature.svelte';
 	import Footer from './sections/footer.svelte';

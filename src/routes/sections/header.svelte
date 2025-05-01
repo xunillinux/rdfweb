@@ -1,10 +1,8 @@
 <script lang="ts">
+	import AnimatedBurgerIcon from '$lib/components/animated-burger-icon.svelte';
 	import MobileNavigationOverlay from '$lib/components/mobile-navigation-overlay.svelte';
 	import type { SocialMediaLinksType } from '$lib/model/rdf-data-model';
-	import { faBars } from '@fortawesome/free-solid-svg-icons';
-	import { Fa } from 'svelte-fa';
 	import SocialMediaLinks from './social-media-links.svelte';
-	import AnimatedBurgerIcon from '$lib/components/animated-burger-icon.svelte';
 
 	let { socialMediaLinks }: { socialMediaLinks: SocialMediaLinksType } = $props();
 
@@ -26,14 +24,17 @@
 	$effect(() => {
 		if (isMenuOpen) {
 			const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-			document.body.style.paddingRight = `${scrollbarWidth}px`;
+			document.documentElement.style.overflow = 'hidden';
 			document.body.style.overflow = 'hidden';
+			document.body.style.paddingRight = `${scrollbarWidth}px`;
 		} else {
+			document.documentElement.style.overflow = '';
 			document.body.style.overflow = '';
 			document.body.style.paddingRight = '';
 		}
+
 		return () => {
-			// Cleanup
+			document.documentElement.style.overflow = '';
 			document.body.style.overflow = '';
 			document.body.style.paddingRight = '';
 		};
