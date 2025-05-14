@@ -6,7 +6,7 @@
 </script>
 
 <a
-	href={'mailto:' + href}
+	href={href}
 	class="flex items-center space-x-2 text-4xl font-bold uppercase hover:underline sm:text-3xl"
 	onmouseenter={() => (isHovered = true)}
 	onmouseleave={() => (isHovered = false)}
