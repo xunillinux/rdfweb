@@ -11,7 +11,7 @@
 		{#each links as link}
 			{#if link.href.startsWith('mailto:')}
 				<div class="flex items-center space-x-2">
-					<HoverMailIconLink text={link.text} />
+					<HoverMailIconLink text={link.text} href={link.href} />
 				</div>
 			{:else}
 				<a
