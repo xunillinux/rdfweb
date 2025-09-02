@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { r2bucketEndpoint } from '$lib/config';
+	import { replaceEscapedNewlines } from '$lib/helper/format-helper';
 	import type { Feature } from '$lib/model/rdf-data-model';
 
 	let { feature }: { feature: Feature } = $props();
@@ -13,14 +14,14 @@
 	<!-- Heading -->
 	<div class="text-center">
 		{#if feature.subheading}
-			<h3 class="text-4xl uppercase">{feature.subheading}</h3>
+			<h3 class="whitespace-pre-line text-4xl uppercase">{feature.subheading}</h3>
 		{/if}
-		<h2 class="mt-3 text-4xl font-bold uppercase">{feature.heading}</h2>
+		<h2 class="mt-3 whitespace-pre-line text-4xl font-bold uppercase">{replaceEscapedNewlines(feature.heading)}</h2>
 	</div>
 
 	<!-- Caption -->
 	{#if feature.caption}
-		<p class="mt-3 text-center text-4xl uppercase">{feature.caption}</p>
+		<p class="mt-3 whitespace-pre-line text-center text-4xl uppercase">{feature.caption}</p>
 	{/if}
 
 	<!-- Image -->
