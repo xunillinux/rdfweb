@@ -34,6 +34,7 @@ export type Concert = {
   name: string;
   location: string;
   ticketUrl: string;
+  isSpecial: boolean;
 }
 
 export type Link = {

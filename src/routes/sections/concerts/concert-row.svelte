@@ -1,30 +1,39 @@
 <script lang="ts">
+	import { replaceEscapedNewlines } from '$lib/helper/format-helper';
 	import type { Concert } from '$lib/model/rdf-data-model';
+	import { faStar } from '@fortawesome/free-regular-svg-icons';
+	import { faTicket } from '@fortawesome/free-solid-svg-icons';
+	import Fa from 'svelte-fa';
 
 	let { concert, isFirstElement, showTicketUrl = false }: { concert: Concert; isFirstElement: boolean; showTicketUrl?: boolean } = $props();
-	import { replaceEscapedNewlines } from '$lib/helper/format-helper';
-	import Fa from 'svelte-fa';
-	import { faTicket } from '@fortawesome/free-solid-svg-icons';
 </script>
 
-<div class="text-md grid grid-cols-2 border-black py-2 sm:py-4 sm:text-xl md:text-2xl {isFirstElement ? 'border-t' : ''} border-b">
-	<!-- Left Column: Date -->
-	<div class="border-r border-black pr-3 text-right sm:pr-6">
+<div class="text-md relative grid grid-cols-2 py-2 sm:py-4 sm:text-xl md:text-2xl {isFirstElement ? 'border-t' : ''} border-b border-black">
+	{#if concert.isSpecial}
+		<div class="absolute inset-0 flex items-center justify-center">
+			<span class="z-10 block bg-white p-1">
+				<Fa icon={faStar} class="ml-0.5 text-yellow-600" size="xs" />
+			</span>
+		</div>
+	{/if}
+
+	<div class="pr-3 text-right sm:pr-6">
 		<p class="uppercase">
 			{concert.date.toLocaleString('en-US', { month: 'long', day: 'numeric' })}
 		</p>
 		<p class="uppercase">{concert.date.getFullYear()}</p>
 	</div>
 
-	<!-- Right Column: Name and Location -->
-	<div class="pl-3 text-left sm:pl-6">
+	<div class="border-l border-black pl-3 text-left sm:pl-6">
 		<div class="grid grid-cols-[1fr_auto]">
 			<div>
-				<p class="whitespace-pre-line uppercase lg:whitespace-normal">{replaceEscapedNewlines(concert.name)}</p>
+				<p class="whitespace-pre-line uppercase lg:whitespace-normal">
+					{replaceEscapedNewlines(concert.name)}
+				</p>
 				<p class="whitespace-pre-line uppercase lg:whitespace-normal">{replaceEscapedNewlines(concert.location)}</p>
 			</div>
 
-			{#if showTicketUrl && concert.ticketUrl}
+			{#if true && concert.ticketUrl}
 				<div class="flex items-center justify-center pr-4 sm:pr-8">
 					<a
 						href={concert.ticketUrl}
@@ -33,8 +42,7 @@
 						class="flex items-center uppercase text-black hover:text-red-500"
 						aria-label="Get Tickets"
 					>
-						<Fa icon={faTicket} />
-						<span class="xs:inline ml-2 hidden">Tickets</span>
+						<Fa icon={faTicket} /> <span class="ml-2 hidden xs:inline">Tickets</span>
 					</a>
 				</div>
 			{/if}

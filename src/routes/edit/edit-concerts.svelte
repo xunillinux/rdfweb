@@ -7,30 +7,29 @@
 
 	let { concerts, onConcertDataChange }: { concerts: Concert[]; onConcertDataChange: any } = $props();
 
-	let concertData = $state<{ date: string; name: string; location: string; ticketUrl: string }[]>(
+	let concertData = $state<{ date: string; name: string; location: string; ticketUrl: string; isSpecial: boolean }[]>(
 		concerts
 			.map((c) => ({
 				date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
 				name: c.name,
 				location: c.location,
-				ticketUrl: c.ticketUrl
+				ticketUrl: c.ticketUrl,
+				isSpecial: c.isSpecial
 			}))
 			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 	);
 
-	let newConcert = $state({ date: '', name: '', location: '', ticketUrl: '' });
-	let newConcertData = $state<{ date: string; name: string; location: string; ticketUrl: string }[]>([]);
+	let newConcert = $state({ date: '', name: '', location: '', ticketUrl: '', isSpecial: false });
+	let newConcertData = $state<{ date: string; name: string; location: string; ticketUrl: string; isSpecial: boolean }[]>([]);
 
-	let pastConcertsCollapsed = $state(true);
+	let pastConcertsCollapsed = $state(true); // Add new concert to the beginning of the array
 
-	// Add new concert to the beginning of the array
 	function addConcert(event: Event) {
 		event.preventDefault();
 		newConcertData.unshift({ ...newConcert });
-		newConcert = { date: '', name: '', location: '', ticketUrl: '' };
-	}
+		newConcert = { date: '', name: '', location: '', ticketUrl: '', isSpecial: false };
+	} // Delete a concert
 
-	// Delete a concert
 	function deleteConcert(index: number, isNewConcert: boolean) {
 		isNewConcert ? newConcertData.splice(index, 1) : concertData.splice(index, 1);
 	}
@@ -44,21 +43,23 @@
 			date: new Date(c.date),
 			name: c.name,
 			location: c.location,
-			ticketUrl: c.ticketUrl ?? ''
+			ticketUrl: c.ticketUrl ?? '',
+			isSpecial: c.isSpecial
 		}));
 
 		onConcertDataChange(concerts);
 	}
 
 	function onClose() {
-		newConcert = { date: '', name: '', location: '', ticketUrl: '' };
+		newConcert = { date: '', name: '', location: '', ticketUrl: '', isSpecial: false };
 		newConcertData = [];
 		pastConcertsCollapsed = true;
 		concertData = concerts.map((c) => ({
 			date: new Date(c.date.getTime() - c.date.getTimezoneOffset() * 60000).toISOString().split('T')[0],
 			name: c.name,
 			location: c.location,
-			ticketUrl: c.ticketUrl
+			ticketUrl: c.ticketUrl,
+			isSpecial: c.isSpecial
 		}));
 	}
 
@@ -70,8 +71,6 @@
 <ModalBtn title="Edit Concerts" btnText="Edit" btnFaIcon={faPenToSquare} {onConfirm} {onClose}>
 	<div class="py-1">
 		<h2 class="mb-4 text-lg font-bold">Add New Concert</h2>
-
-		<!-- Form for adding new concerts -->
 		<form onsubmit={addConcert} class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
 			<input
 				id="concert-date"
@@ -100,11 +99,9 @@
 				required
 				placeholder="Location"
 			/>
-			<!-- Hint -->
 			<p class="text-sm text-gray-500 sm:col-span-1 md:col-span-3">
 				You can add <span class="font-mono font-bold text-black">\n</span> to Name or Location to add a forced line break on smaller screens.
-			</p>
-			<input
+			</p><input
 				id="concert-ticketurl"
 				name="concert-ticketurl"
 				type="text"
@@ -112,13 +109,14 @@
 				class="w-full rounded border p-2"
 				placeholder="Ticket Url"
 			/>
-			<button type="submit" class="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"> Add Concert </button>
+			<div class="flex items-center">
+				<input type="checkbox" id="new-concert-special" bind:checked={newConcert.isSpecial} class="mr-2 h-4 w-4 text-gray-600 focus:ring-gray-500" />
+				<label for="new-concert-special" class="text-sm">Is Special Concert</label>
+			</div><button type="submit" class="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"> Add Concert </button>
 		</form>
 
 		{#if newConcertData.length > 0}
 			<h2 class="mb-4 mt-8 text-lg font-bold">New Concerts</h2>
-
-			<!-- List of new concerts -->
 			<ul class="space-y-4">
 				{#each newConcertData as concert, index}
 					<li class="flex items-center justify-between rounded border p-4">
@@ -129,14 +127,14 @@
 							{#if concert.ticketUrl}
 								<p><strong>Ticket Url:</strong> {replaceNewlinesWithSpace(concert.ticketUrl)}</p>
 							{/if}
-						</div>
-						<button onclick={() => deleteConcert(index, true)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"> Delete </button>
+							<p><strong>Is Special:</strong> {concert.isSpecial ? 'Yes' : 'No'}</p>
+						</div><button onclick={() => deleteConcert(index, true)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600">
+							Delete
+						</button>
 					</li>
 				{/each}
 			</ul>
 		{/if}
-
-		<!-- Title with Toggle Icon -->
 		<h2 class="mb-4 mt-4 flex items-center text-lg font-bold">
 			<span>Existing Concerts</span>
 			<button class="ml-2 text-gray-500 hover:text-gray-700" onclick={togglePastConcerts} aria-label="Toggle Past Concerts">
@@ -144,7 +142,6 @@
 			</button>
 		</h2>
 
-		<!-- List of existing concerts -->
 		{#if !pastConcertsCollapsed}
 			<ul class="space-y-4">
 				{#each concertData as concert, index}
@@ -156,8 +153,17 @@
 							{#if concert.ticketUrl}
 								<p><strong>Ticket Url:</strong> {replaceNewlinesWithSpace(concert.ticketUrl)}</p>
 							{/if}
-						</div>
-						<button onclick={() => deleteConcert(index, false)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"> Delete </button>
+							<div class="mt-2 flex items-center">
+								<input
+									type="checkbox"
+									id="existing-concert-special-{index}"
+									bind:checked={concert.isSpecial}
+									class="mr-2 h-4 w-4 text-gray-600 focus:ring-gray-500"
+								/> <label for="existing-concert-special-{index}" class="text-sm">Is Special Concert</label>
+							</div>
+						</div><button onclick={() => deleteConcert(index, false)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600">
+							Delete
+						</button>
 					</li>
 				{/each}
 			</ul>

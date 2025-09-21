@@ -10,7 +10,8 @@ export function mapDocDataToRdfWebData(docData: DocumentData): RdfWebData {
         date: concert.date.toDate(),
         name: concert.name,
         location: concert.location,
-        ticketUrl: concert.ticketUrl
+        ticketUrl: concert.ticketUrl,
+        isSpecial: concert.isSpecial
       };
     }) ?? null,
     presstexts: docData.presstexts ?? null,
