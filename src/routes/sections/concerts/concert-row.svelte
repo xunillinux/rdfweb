@@ -12,7 +12,7 @@
 	{#if concert.isSpecial}
 		<div class="absolute inset-0 flex items-center justify-center">
 			<span class="z-10 block bg-white p-1">
-				<Fa icon={faStar} class="ml-0.5 text-yellow-600" size="xs" />
+				<Fa icon={faStar} translateX=".04" class="text-yellow-600" size="xs" />
 			</span>
 		</div>
 	{/if}
