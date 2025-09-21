@@ -33,7 +33,7 @@
 				<p class="whitespace-pre-line uppercase lg:whitespace-normal">{replaceEscapedNewlines(concert.location)}</p>
 			</div>
 
-			{#if true && concert.ticketUrl}
+			{#if showTicketUrl && concert.ticketUrl}
 				<div class="flex items-center justify-center pr-4 sm:pr-8">
 					<a
 						href={concert.ticketUrl}
