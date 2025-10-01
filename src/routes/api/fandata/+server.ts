@@ -11,11 +11,6 @@ function emailToDocId(email: string): string {
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-/**
- * POST /api/fandata
- *
- * Expected JSON body: { name:string, email:string, streaming:string, wantsUpdates:boolean }
- */
 export async function POST({ request }) {
   try {
     const raw = await request.json();

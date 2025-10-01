@@ -20,7 +20,7 @@
 		if (!isVisible) return;
 
 		const handleScroll = () => {
-			const isAtBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 5;
+			const isAtBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 20;
 
 			expanded = !isAtBottom;
 		};
