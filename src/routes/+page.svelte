@@ -33,6 +33,9 @@
 
 	let showModal = $state(false);
 
+	let superFanButtonEl: SuperFanButton;
+	let footerEl: HTMLElement;
+
 	function openModal() {
 		showModal = true;
 	}
@@ -81,6 +84,24 @@
 			showNotification('error', 'There was a problem while logging out. Please try again.');
 		}
 	}
+
+	$effect(() => {
+		if (!footerEl || !superFanButtonEl) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				const entry = entries[0];
+				superFanButtonEl.onFooterVisible(entry.isIntersecting);
+			},
+			{ threshold: 0.9 }
+		);
+
+		observer.observe(footerEl);
+
+		return () => {
+			observer.disconnect();
+		};
+	});
 </script>
 
 <Header {socialMediaLinks} />
@@ -136,13 +157,15 @@
 	</section>
 </main>
 
-<SuperFanButton on:open={openModal} />
+<SuperFanButton on:open={openModal} bind:this={superFanButtonEl} />
 
 {#if showModal}
 	<SuperFanModal onClose={closeModal} />
 {/if}
 
-<Footer />
+<div bind:this={footerEl}>
+	<Footer />
+</div>
 
 {#if $userData.user}
 	<button

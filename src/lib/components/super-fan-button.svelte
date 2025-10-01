@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
 	import { faHeart } from '@fortawesome/free-solid-svg-icons';
 	import { createEventDispatcher } from 'svelte';
+	import Fa from 'svelte-fa';
 
 	let expanded = $state(true);
 	const ANIM_DURATION = 1200;
@@ -12,27 +12,13 @@
 		const timer = setTimeout(() => {
 			isVisible = true;
 		}, 1500);
-
 		return () => clearTimeout(timer);
 	});
 
-	$effect(() => {
+	export function onFooterVisible(isIntersecting: boolean) {
 		if (!isVisible) return;
-
-		const handleScroll = () => {
-			const isAtBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 20;
-
-			expanded = !isAtBottom;
-		};
-
-		window.addEventListener('scroll', handleScroll, { passive: true });
-
-		handleScroll();
-
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-		};
-	});
+		expanded = !isIntersecting;
+	}
 
 	const dispatch = createEventDispatcher();
 
@@ -44,7 +30,10 @@
 {#if isVisible}
 	<div class="container" class:expanded on:click={handleClick}>
 		<button class="button {expanded ? 'expanded' : 'collapsed'}" style="--anim-duration:{ANIM_DURATION}ms" aria-label="Join our fanbase">
-			<Fa icon={faHeart} /> <span class="label">Join our fanbase</span>
+			<Fa icon={faHeart} />
+			{#if expanded}
+				<span class="label">Join our fanbase</span>
+			{/if}
 		</button>
 	</div>
 {/if}
@@ -109,6 +98,7 @@
 	}
 
 	.label {
+		display: inline-block;
 		white-space: nowrap;
 		overflow: hidden;
 		transition:
