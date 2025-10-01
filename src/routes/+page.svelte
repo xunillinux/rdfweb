@@ -18,6 +18,8 @@
 	import Members from './sections/members.svelte';
 	import Presstext from './sections/presstext.svelte';
 	import VideoShowcase from './sections/video-showcase.svelte';
+	import SuperFanButton from '$lib/components/super-fan-button.svelte';
+	import SuperFanModal from '$lib/components/super-fan-modal.svelte';
 
 	let { data } = $props();
 
@@ -29,9 +31,13 @@
 	let presstexts = $state(data.presstexts);
 	let socialMediaLinks = $state(data.socialMediaLinks);
 
-	function onHeaderImagesChange(updatedHeaderImages: HeaderImage[]) {
-		headerImages = updatedHeaderImages;
-		saveChanges();
+	let showModal = $state(false);
+
+	function openModal() {
+		showModal = true;
+	}
+	function closeModal() {
+		showModal = false;
 	}
 
 	function onFeatureDataChange(updatedFeature: FeatureType) {
@@ -61,7 +67,6 @@
 
 	function saveChanges() {
 		updateDocument('rdfweb', 'data', getUpdatedData());
-		// TODO on fail reset data with initial data
 	}
 
 	function getUpdatedData(): RdfWebData {
@@ -84,17 +89,6 @@
 
 <main class="w-100">
 	<VideoShowcase />
-
-	<!--
-	<section id="carousel" class="carousel-section relative">
-		<Carousel {headerImages} />
-		{#if $userData.user}
-			<div class="absolute bottom-4 right-5 transform">
-				<EditCarousel {headerImages} {onHeaderImagesChange} />
-			</div>
-		{/if}
-	</section>
-	-->
 
 	<section id="feature" class="feature-section relative">
 		<Feature {feature} />
@@ -141,6 +135,12 @@
 		{/if}
 	</section>
 </main>
+
+<SuperFanButton on:open={openModal} />
+
+{#if showModal}
+	<SuperFanModal onClose={closeModal} />
+{/if}
 
 <Footer />
 

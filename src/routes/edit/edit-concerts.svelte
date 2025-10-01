@@ -22,13 +22,13 @@
 	let newConcert = $state({ date: '', name: '', location: '', ticketUrl: '', isSpecial: false });
 	let newConcertData = $state<{ date: string; name: string; location: string; ticketUrl: string; isSpecial: boolean }[]>([]);
 
-	let pastConcertsCollapsed = $state(true); // Add new concert to the beginning of the array
+	let pastConcertsCollapsed = $state(true);
 
 	function addConcert(event: Event) {
 		event.preventDefault();
 		newConcertData.unshift({ ...newConcert });
 		newConcert = { date: '', name: '', location: '', ticketUrl: '', isSpecial: false };
-	} // Delete a concert
+	}
 
 	function deleteConcert(index: number, isNewConcert: boolean) {
 		isNewConcert ? newConcertData.splice(index, 1) : concertData.splice(index, 1);
@@ -101,7 +101,8 @@
 			/>
 			<p class="text-sm text-gray-500 sm:col-span-1 md:col-span-3">
 				You can add <span class="font-mono font-bold text-black">\n</span> to Name or Location to add a forced line break on smaller screens.
-			</p><input
+			</p>
+			<input
 				id="concert-ticketurl"
 				name="concert-ticketurl"
 				type="text"
@@ -112,7 +113,8 @@
 			<div class="flex items-center">
 				<input type="checkbox" id="new-concert-special" bind:checked={newConcert.isSpecial} class="mr-2 h-4 w-4 text-gray-600 focus:ring-gray-500" />
 				<label for="new-concert-special" class="text-sm">Is Special Concert</label>
-			</div><button type="submit" class="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"> Add Concert </button>
+			</div>
+			<button type="submit" class="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"> Add Concert </button>
 		</form>
 
 		{#if newConcertData.length > 0}
@@ -128,9 +130,8 @@
 								<p><strong>Ticket Url:</strong> {replaceNewlinesWithSpace(concert.ticketUrl)}</p>
 							{/if}
 							<p><strong>Is Special:</strong> {concert.isSpecial ? 'Yes' : 'No'}</p>
-						</div><button onclick={() => deleteConcert(index, true)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600">
-							Delete
-						</button>
+						</div>
+						<button onclick={() => deleteConcert(index, true)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"> Delete </button>
 					</li>
 				{/each}
 			</ul>
@@ -161,9 +162,8 @@
 									class="mr-2 h-4 w-4 text-gray-600 focus:ring-gray-500"
 								/> <label for="existing-concert-special-{index}" class="text-sm">Is Special Concert</label>
 							</div>
-						</div><button onclick={() => deleteConcert(index, false)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600">
-							Delete
-						</button>
+						</div>
+						<button onclick={() => deleteConcert(index, false)} class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"> Delete </button>
 					</li>
 				{/each}
 			</ul>
