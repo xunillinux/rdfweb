@@ -1,14 +1,14 @@
-import { R2_ACCESS_KEY_ID, R2_BUCKET, R2_ENDPOINT, R2_SECRET_ACCESS_KEY } from "$env/static/private";
 import { adminAuth } from "$lib/server/firebase-admin";
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { json } from "@sveltejs/kit";
+import { env } from '$env/dynamic/private';
 
 const s3 = new S3Client({
   region: 'auto', // Required for R2
-  endpoint: R2_ENDPOINT,
+  endpoint: env.R2_ENDPOINT,
   credentials: {
-    accessKeyId: R2_ACCESS_KEY_ID,
-    secretAccessKey: R2_SECRET_ACCESS_KEY,
+    accessKeyId: env.R2_ACCESS_KEY_ID,
+    secretAccessKey: env.R2_SECRET_ACCESS_KEY,
   },
   forcePathStyle: true, // Ensure this is set for R2
 });
@@ -23,7 +23,7 @@ export async function DELETE({ request }) {
     }
 
     const command = new DeleteObjectCommand({
-      Bucket: R2_BUCKET,
+      Bucket: env.R2_BUCKET,
       Key: fileName
     });
 
