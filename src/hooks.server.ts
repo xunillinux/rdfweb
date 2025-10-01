@@ -26,8 +26,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const preflightHeaders = new Headers({
 			'Access-Control-Allow-Origin': requestOrigin!,
 			'Access-Control-Allow-Methods': 'GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS',
-			'Access-Control-Allow-Headers':
-				'Content-Type,Authorization,Accept,X-Requested-With',
+			'Access-Control-Allow-Headers':	'Content-Type,Authorization,Accept,X-Requested-With',
 			'Access-Control-Max-Age': '86400'
 		});
 
