@@ -5,8 +5,8 @@
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { showNotification } from '$lib/helper/notification-helper';
+	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	let { onClose }: { onClose: () => void } = $props();
@@ -86,9 +86,8 @@
 
 		isSubmitting = true;
 
-		// --- FIX 3: The submit function now just executes the challenge ---
-		// The new $effect above will handle the submission once the token arrives.
 		if (turnstileWidgetId && (window as any).turnstile) {
+			(window as any).turnstile.reset(turnstileWidgetId);
 			(window as any).turnstile.execute(turnstileWidgetId);
 		} else {
 			isSubmitting = false;
@@ -202,7 +201,7 @@
 					/>
 				</div>
 				<div class="ml-3 text-sm">
-					<label for="updates" class="font-medium text-gray-700"> I want to receive updates </label>
+					<label for="updates" class="font-medium text-gray-700"> I want to receive updates about upcoming shows and new releases</label>
 				</div>
 			</div>
 
