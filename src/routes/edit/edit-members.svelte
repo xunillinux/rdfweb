@@ -118,7 +118,7 @@
 						<!-- Member Image -->
 						<div class="py-4">
 							<img
-								src={previewFiles.get(index)?.previewUrl ?? r2bucketEndpoint + membersData[index].image}
+								src={previewFiles.get(index)?.previewUrl ?? r2bucketEndpoint + '/' + membersData[index].image}
 								alt="photoURL"
 								width="256"
 								height="256"

@@ -115,7 +115,7 @@
 				{#each headerImagesData as image, index}
 					<div class="relative">
 						<img
-							src={r2bucketEndpoint + image.src}
+							src={r2bucketEndpoint + '/' + image.src}
 							alt="Landscape"
 							class="h-32 w-full cursor-pointer object-cover"
 							onclick={() => viewImage(r2bucketEndpoint + image.src)}

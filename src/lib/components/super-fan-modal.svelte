@@ -1,10 +1,10 @@
-<script lang="ts" module>
+<script lang="ts" module nonce="{$page.data.cspNonce}">
 	import { PUBLIC_TURNSTILE_SITE_KEY } from '$env/static/public';
 	export const turnstileSiteKey = PUBLIC_TURNSTILE_SITE_KEY;
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<script lang="ts">
+<script lang="ts" nonce="{$page.data.cspNonce}">
 	import { showNotification } from '$lib/helper/notification-helper';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -207,7 +207,7 @@
 
 			<p class="mt-4 text-xs text-gray-500">Your data is processed in compliance with GDPR. We value your privacy and will never share your infos!</p>
 
-			<div bind:this={turnstileContainer} data-appearance="interaction-only" class="mx-auto my-4 w-max"></div>
+			<div bind:this={turnstileContainer} data-appearance="interaction-only" nonce={$page.data.cspNonce} class="mx-auto my-4 w-max"></div>
 
 			<div class="mt-6 flex justify-end gap-3">
 				<button type="button" class="rounded-md bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-800" onclick={onClose}>Cancel</button>
