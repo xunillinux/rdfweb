@@ -5,8 +5,7 @@
 
 	let { feature }: { feature: Feature } = $props();
 
-	let imageSource = $derived(r2bucketEndpoint + '/' + feature.image);
-
+	let imageSource = $derived(r2bucketEndpoint + feature.image);
 	let isImageLoaded = $state(false);
 </script>
 

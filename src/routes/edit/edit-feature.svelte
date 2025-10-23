@@ -190,7 +190,7 @@
 				<!-- Image Section -->
 				<div class="mb-4">
 					<img
-						src={previewImageUrl ?? r2bucketEndpoint + '/' + featureData.image}
+						src={previewImageUrl ?? r2bucketEndpoint + featureData.image}
 						alt="photoURL"
 						width="256"
 						height="256"

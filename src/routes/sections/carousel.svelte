@@ -92,12 +92,7 @@
 	<!-- Render Current Slide -->
 	{#each images as image, index (image)}
 		{#if index === currentSlide}
-			<img
-				src={r2bucketEndpoint + '/' + image.src}
-				alt="Header"
-				class="absolute inset-0 h-full w-full object-cover"
-				transition:fade={{ duration: 500 }}
-			/>
+			<img src={r2bucketEndpoint + image.src} alt="Header" class="absolute inset-0 h-full w-full object-cover" transition:fade={{ duration: 500 }} />
 		{/if}
 	{/each}
 

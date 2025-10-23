@@ -9,14 +9,14 @@
 	let landscapeHeight = 1080;
 	let portraitHeight = 1280;
 
-	const portraitPoster = r2bucketEndpoint + '/video-showcase-portrait-poster.jpg';
-	const landscapePoster = r2bucketEndpoint + '/video-showcase-landscape-poster.jpg';
+	const portraitPoster = r2bucketEndpoint + 'video-showcase-portrait-poster.jpg';
+	const landscapePoster = r2bucketEndpoint + 'video-showcase-landscape-poster.jpg';
 
-	const portraitVideoWebm = r2bucketEndpoint + '/video-showcase-portrait_resized.webm';
-	const landscapeVideoWebm = r2bucketEndpoint + '/video-showcase-landscape_resized.webm';
+	const portraitVideoWebm = r2bucketEndpoint + 'video-showcase-portrait_resized.webm';
+	const landscapeVideoWebm = r2bucketEndpoint + 'video-showcase-landscape_resized.webm';
 
-	const portraitVideoMp4 = r2bucketEndpoint + '/video-showcase-portrait_resized.mp4';
-	const landscapeVideoMp4 = r2bucketEndpoint + '/video-showcase-landscape_resized.mp4';
+	const portraitVideoMp4 = r2bucketEndpoint + 'video-showcase-portrait_resized.mp4';
+	const landscapeVideoMp4 = r2bucketEndpoint + 'video-showcase-landscape_resized.mp4';
 
 	onMount(() => {
 		const handleResize = () => {

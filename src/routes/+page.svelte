@@ -160,7 +160,7 @@
 <SuperFanButton on:open={openModal} bind:this={superFanButtonEl} />
 
 {#if showModal}
-	<SuperFanModal onClose={closeModal} />
+	<SuperFanModal cspNonce={data.cspNonce} onClose={closeModal} />
 {/if}
 
 <div bind:this={footerEl}>

@@ -1,15 +1,15 @@
-<script lang="ts" module nonce="{$page.data.cspNonce}">
+<script lang="ts" module>
 	import { PUBLIC_TURNSTILE_SITE_KEY } from '$env/static/public';
 	export const turnstileSiteKey = PUBLIC_TURNSTILE_SITE_KEY;
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-<script lang="ts" nonce="{$page.data.cspNonce}">
+<script lang="ts">
 	import { showNotification } from '$lib/helper/notification-helper';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
-	let { onClose }: { onClose: () => void } = $props();
+	let { cspNonce, onClose }: { cspNonce: string; onClose: () => void } = $props();
 
 	let name = $state('');
 	let email = $state('');
@@ -34,6 +34,7 @@
 			script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad';
 			script.async = true;
 			script.defer = true;
+			script.nonce = cspNonce;
 			(window as any).onTurnstileLoad = renderTurnstile;
 			document.head.appendChild(script);
 		}
@@ -207,7 +208,7 @@
 
 			<p class="mt-4 text-xs text-gray-500">Your data is processed in compliance with GDPR. We value your privacy and will never share your infos!</p>
 
-			<div bind:this={turnstileContainer} data-appearance="interaction-only" nonce={$page.data.cspNonce} class="mx-auto my-4 w-max"></div>
+			<div bind:this={turnstileContainer} data-appearance="interaction-only" class="mx-auto my-4 w-max"></div>
 
 			<div class="mt-6 flex justify-end gap-3">
 				<button type="button" class="rounded-md bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-800" onclick={onClose}>Cancel</button>
