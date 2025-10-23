@@ -52,7 +52,6 @@
 		turnstileWidgetId = (window as any).turnstile.render(turnstileContainer, {
 			sitekey: turnstileSiteKey,
 			mode: 'invisible',
-			// --- FIX 1: The callback should ONLY set the token ---
 			callback: (token: string) => {
 				turnstileToken = token;
 			}
@@ -67,15 +66,12 @@
 
 	$effect(() => {
 		if (!valid) {
-			// Clear token and reset widget if form becomes invalid
 			turnstileToken = null;
 			resetTurnstile();
 		}
 	});
 
-	// --- FIX 2: Add an effect to trigger submission AFTER the token is received ---
 	$effect(() => {
-		// This runs only when a token is received AND we are in a submitting state
 		if (turnstileToken && isSubmitting) {
 			handleActualSubmit();
 		}
@@ -116,8 +112,8 @@
 			onClose();
 		} catch (e) {
 			console.error(e);
-			showNotification('error', 'Something went wrong – try again later.');
-			turnstileToken = null; // Clear the failed token
+			showNotification('error', 'Something went wrong - try again later.');
+			turnstileToken = null;
 			resetTurnstile();
 		} finally {
 			isSubmitting = false;
