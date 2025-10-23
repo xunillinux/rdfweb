@@ -202,8 +202,6 @@
 				</div>
 			</div>
 
-			<p class="mt-4 text-xs text-gray-500">Your data is processed in compliance with GDPR. We value your privacy and will never share your infos!</p>
-
 			<div bind:this={turnstileContainer} data-appearance="always-visible" data-theme="light" class="mx-auto my-4 w-max"></div>
 
 			<div class="mt-6 flex justify-end gap-3">
