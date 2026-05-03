@@ -28,8 +28,13 @@
 </script>
 
 {#if isVisible}
-	<div class="container" class:expanded on:click={handleClick}>
-		<button class="button {expanded ? 'expanded' : 'collapsed'}" style="--anim-duration:{ANIM_DURATION}ms" aria-label="Join our fanbase">
+	<div class="container" class:expanded>
+		<button
+			class="button {expanded ? 'expanded' : 'collapsed'}"
+			onclick={handleClick}
+			style="--anim-duration:{ANIM_DURATION}ms"
+			aria-label="Join our fanbase"
+		>
 			<Fa icon={faHeart} />
 			{#if expanded}
 				<span class="label">Join our fanbase</span>
@@ -47,7 +52,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-		cursor: pointer;
+		pointer-events: none;
 		transition: transform 0.6s ease;
 	}
 
@@ -60,6 +65,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		pointer-events: auto;
+		cursor: pointer;
 		transition:
 			width 0.6s ease,
 			height 0.6s ease,
